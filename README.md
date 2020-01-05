@@ -9,13 +9,7 @@ Scans assemblies and adds handlers, preprocessors, and postprocessors implementa
 1. Marker type from assembly which will be scanned
 
     ```cs
-    container.AddMediatR(typeof(MyHandler));
-    ```
-
-1. Marker type from assemblies which will be scanned
-
-    ```cs
-    container.AddMediatR(typeof(MyHandler),typeof(MyHandlerFromAnotherAssembly));
+    container.AddMediatR(typeof(MyHandler), type2 /*, ...*/);
     ```
 
 1. List of assemblies which will be scanned.
@@ -152,3 +146,10 @@ and all user defined implementation of processors and handlers:
             cfg.UsingPipelineProcessorBehaviors(typeof(CustomPipelineBehavior<,>));
         });
    ```
+
+# Thanks to:
+
+- Jimmy Boggard for MediatR
+- Steven van Deursen for SimpleInjector
+
+Code originates from MediatR.Extensions.Microsoft.DependencyInjection and was changed to work with SimpleInjector.
