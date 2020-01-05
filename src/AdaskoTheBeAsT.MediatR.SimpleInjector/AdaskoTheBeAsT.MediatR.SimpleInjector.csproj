@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryType>github</RepositoryType>
+    <PackageProjectUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</RepositoryUrl>
+    <Description>MediatR extensions for SimpleInjector</Description>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.0" />
+    <PackageReference Include="SimpleInjector" Version="4.8.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <_DesiredLicenseFileName>LICENSE</_DesiredLicenseFileName>
+    <_InternalLicenseFileName>LICENSE.txt</_InternalLicenseFileName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>$(_InternalLicenseFileName)</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\$(_InternalLicenseFileName)" Pack="true" PackagePath="$(_InternalLicenseFileName)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="CopyLicenseFileForPackagingPurposes" BeforeTargets="BeforeBuild" Condition="!Exists('..\..\$(_InternalLicenseFileName)')">
+    <Copy SourceFiles="..\..\$(_DesiredLicenseFileName)" DestinationFiles="..\..\$(_InternalLicenseFileName)" />
+  </Target>
+
+</Project>
