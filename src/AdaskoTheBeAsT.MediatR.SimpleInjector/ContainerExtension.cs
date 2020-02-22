@@ -99,6 +99,13 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
             var serviceConfig = new MediatRSimpleInjectorConfiguration();
             configuration?.Invoke(serviceConfig);
 
+            return SetupContainer(container, serviceConfig);
+        }
+
+        internal static Container SetupContainer(
+            this Container container,
+            MediatRSimpleInjectorConfiguration serviceConfig)
+        {
             var uniqueAssemblies = serviceConfig.AssembliesToScan.Distinct().ToArray();
             var allAssemblies = new List<Assembly> { typeof(IMediator).GetTypeInfo().Assembly };
             allAssemblies.AddRange(uniqueAssemblies);

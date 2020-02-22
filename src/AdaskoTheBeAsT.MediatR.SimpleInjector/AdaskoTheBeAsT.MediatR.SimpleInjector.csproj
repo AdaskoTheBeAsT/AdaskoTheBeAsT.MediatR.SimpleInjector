@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</RepositoryUrl>
     <Description>MediatR extensions for SimpleInjector</Description>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
   </PropertyGroup>
 
