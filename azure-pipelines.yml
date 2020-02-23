@@ -11,7 +11,7 @@ pool:
   
 variables:
   buildConfiguration: 'Release'
-  unitTestProjects: '**/[Tt]ests?/**/*.csproj'
+  unitTestProjects: '**/test/unit/**/*.csproj'
   
 steps:
 - task: DotNetCoreInstaller@0
