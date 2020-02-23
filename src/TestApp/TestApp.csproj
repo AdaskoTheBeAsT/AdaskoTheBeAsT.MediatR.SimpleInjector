@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdaskoTheBeAsT.MediatR.SimpleInjector\AdaskoTheBeAsT.MediatR.SimpleInjector.csproj" />
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="1.3.0" />
   </ItemGroup>
 
 </Project>
