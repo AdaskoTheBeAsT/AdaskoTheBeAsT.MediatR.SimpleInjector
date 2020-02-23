@@ -2,6 +2,12 @@
 
 MediatR extensions for SimpleInjector.
 
+## Badges
+[![Build Status](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_apis/build/status/AdaskoTheBeAsT.AdaskoTheBeAsT.MediatR.SimpleInjector?branchName=master)](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_build/latest?definitionId=7&branchName=master)
+![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/7?style=plastic)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector&metric=alert_status)](https://sonarcloud.io/dashboard?id=AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector)
+![Nuget](https://img.shields.io/nuget/dt/AdaskoTheBeAsT.MediatR.SimpleInjector)
+
 ## Usage in AspNetCore
 
 Scans assemblies and adds handlers, preprocessors, and postprocessors implementations to the SimpleInjector container. Additionaly it register decorator which passes HttpContext.RequestAborted cancellation token from asp.net core controllers to MediatR.  
