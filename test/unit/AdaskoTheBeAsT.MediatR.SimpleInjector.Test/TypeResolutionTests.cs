@@ -50,12 +50,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Should().BeAssignableTo<DuplicateHandler1>();
         }
 
-        [Fact(Skip="SimpleInjector allow to register collections of implementations. This test needs to be skipped")]
-        public void ShouldResolveIgnoreSecondDuplicateHandler()
-        {
-            _container.GetAllInstances<IRequestHandler<DuplicateTest, string>>().Should().HaveCount(1);
-        }
-
         public void Dispose()
         {
             _container.Dispose();

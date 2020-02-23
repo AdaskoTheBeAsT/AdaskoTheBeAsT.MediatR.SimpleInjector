@@ -129,34 +129,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 "Next post processor");
         }
 
-        [Fact(Skip="In output messages there are logged actions of generic and application exception action handlers")]
-        public async Task ShouldPickUpSpecificExceptionBehaviors()
-        {
-            var output = new Logger();
-            using var container = new Container();
-            container.RegisterInstance(output);
-            container.AddMediatR(
-                config =>
-                {
-                    config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
-                    config.UsingBuiltinPipelineProcessorBehaviors(
-                        true,
-                        true,
-                        true,
-                        true);
-                });
-
-            var mediator = container.GetInstance<IMediator>();
-
-#pragma warning disable S3626 // Jump statements should not be redundant
-            var response = await mediator.Send(new Ping
-            { Message = "Ping", ThrowAction = msg => throw new ApplicationException(msg.Message + " Thrown") });
-#pragma warning restore S3626 // Jump statements should not be redundant
-
-            response.Message.Should().Be("Ping Thrown Handled by Specific Type");
-            output.Messages.Should().NotContain("Logging ApplicationException exception");
-        }
-
         [Fact]
         public void ShouldPickUpBaseExceptionBehaviors()
         {
