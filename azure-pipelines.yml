@@ -14,11 +14,11 @@ variables:
   unitTestProjects: '**/test/unit/**/*.csproj'
   
 steps:
-- task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core sdk 3.1.102'
+- task: UseDotNet@2
+  displayName: 'Use .NET Core SDK from global.json'
   inputs:
     packageType: 'sdk'
-    version: '3.1.102'
+    useGlobalJson: true
  
 - task: DotNetCoreCLI@2
   displayName: Restore
