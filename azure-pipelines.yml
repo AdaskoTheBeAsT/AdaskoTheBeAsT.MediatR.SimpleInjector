@@ -11,7 +11,7 @@ pool:
   
 variables:
   buildConfiguration: 'Release'
-  testProjects: '**/[Tt]ests?/*.csproj'
+  unitTestProjects: '**/[Tt]ests?/**/*.csproj'
   
 steps:
 - task: DotNetCoreInstaller@0
@@ -44,7 +44,7 @@ steps:
   displayName: Test
   inputs:
     command: test
-    projects: '$(testProjects)'
+    projects: '$(unitTestProjects)'
     arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --logger:"trx;LogFileName=backend-results.trx"'
   
 - task: SonarCloudAnalyze@1
