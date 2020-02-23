@@ -6,9 +6,9 @@ using MediatR;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 {
+#pragma warning disable CA1812
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable SA1402 // File may only contain a single type
-#pragma warning disable CA1812
 #pragma warning disable SA1202 // Elements should be ordered by access
     public class Ping : IRequest<Pong>
     {
@@ -205,7 +205,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
     }
 #pragma warning restore SA1202 // Elements should be ordered by access
-#pragma warning restore CA1812
 #pragma warning restore SA1402 // File may only contain a single type
 #pragma warning restore SA1649 // File name should match first type name
+#pragma warning restore CA1812
 }

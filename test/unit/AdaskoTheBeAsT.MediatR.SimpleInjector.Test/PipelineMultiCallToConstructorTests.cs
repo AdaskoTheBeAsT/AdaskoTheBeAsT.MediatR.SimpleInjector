@@ -7,12 +7,11 @@ using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 {
-#pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable CA1812
     public class PipelineMultiCallToConstructorTests
     {
         [Fact]
-        public async Task Should_not_call_constructor_multiple_times_when_using_a_pipeline()
+        public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipeline()
         {
             ConstructorTestHandler.ResetCallCount();
             ConstructorTestHandler.ConstructorCallCount.Should().Be(0);
@@ -109,5 +108,4 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
     }
 #pragma warning restore CA1812
-#pragma warning restore CA1707 // Identifiers should not contain underscores
 }

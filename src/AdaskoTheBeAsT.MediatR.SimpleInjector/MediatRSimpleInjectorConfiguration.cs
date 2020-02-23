@@ -19,6 +19,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
             Lifestyle = Lifestyle.Singleton;
             AssembliesToScan = Enumerable.Empty<Assembly>();
             PipelineBehaviorTypes = Enumerable.Empty<Type>();
+            MediatorInstanceCreator = () => null;
         }
 
         /// <summary>
@@ -26,6 +27,13 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
         /// Default is <see cref="Mediator"/>.
         /// </summary>
         public Type MediatorImplementationType { get; private set; }
+
+        /// <summary>
+        /// Custom instance creator of <see cref="IMediator"/>.
+        /// Can be used for mocking Mediator.
+        /// If not null then it takes precedence over MediatorImplementationType.
+        /// </summary>
+        public Func<IMediator?> MediatorInstanceCreator { get; private set; }
 
         /// <summary>
         /// Lifestyle in which IMediator implementation will be registered.
@@ -87,6 +95,21 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
         }
 
         /// <summary>
+        /// Register custom IMediator instance creator
+        /// instead of default one <see cref="Mediator"/>.
+        /// </summary>
+        /// <param name="instanceCreator">Custom <see cref="IMediator"/> instance creator function.</param>
+        /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+        /// with custom <see cref="IMediator"/> instance creator function.</returns>
+        public MediatRSimpleInjectorConfiguration Using(Func<IMediator> instanceCreator)
+        {
+            MediatorInstanceCreator =
+                instanceCreator
+                ?? throw new ArgumentNullException(nameof(instanceCreator));
+            return this;
+        }
+
+        /// <summary>
         /// Set lifestyle of custom or default
         /// <see cref="IMediator"/> implementation to <see cref="Lifestyle"/>.Singleton.
         /// </summary>
@@ -119,6 +142,20 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
         public MediatRSimpleInjectorConfiguration AsTransient()
         {
             Lifestyle = Lifestyle.Transient;
+            return this;
+        }
+
+        /// <summary>
+        /// Setup assemblies which will be scanned for
+        /// auto registering types implementing MediatR interfaces.
+        /// </summary>
+        /// <param name="assembliesToScan">Assemblies which will be scanned for
+        /// auto registering types.</param>
+        /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+        /// with assemblies to scan configured.</returns>
+        public MediatRSimpleInjectorConfiguration WithAssembliesToScan(params Assembly[] assembliesToScan)
+        {
+            AssembliesToScan = assembliesToScan;
             return this;
         }
 
@@ -221,7 +258,14 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
         /// with <see cref="IPipelineBehavior{TRequest,TResponse}"/> implementation types configured.</returns>
         public MediatRSimpleInjectorConfiguration UsingPipelineProcessorBehaviors(IEnumerable<Type> pipelineBehaviorTypes)
         {
-            PipelineBehaviorTypes = pipelineBehaviorTypes;
+            var pipelineBehaviorTypeList = pipelineBehaviorTypes.ToList();
+            if (pipelineBehaviorTypeList.Any(t => !t.IsAssignableToGenericType(typeof(IPipelineBehavior<,>))))
+            {
+                throw new InvalidPipelineBehaviorTypeException(
+                    "Elements should implement interface IPipelineBehavior<,>");
+            }
+
+            PipelineBehaviorTypes = pipelineBehaviorTypeList;
             return this;
         }
 
@@ -233,6 +277,12 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
         /// with <see cref="IPipelineBehavior{TRequest,TResponse}"/> implementation types configured.</returns>
         public MediatRSimpleInjectorConfiguration UsingPipelineProcessorBehaviors(params Type[] pipelineBehaviorTypes)
         {
+            if (pipelineBehaviorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IPipelineBehavior<,>))))
+            {
+                throw new InvalidPipelineBehaviorTypeException(
+                    "Elements should implement interface IPipelineBehavior<,>");
+            }
+
             PipelineBehaviorTypes = pipelineBehaviorTypes;
             return this;
         }

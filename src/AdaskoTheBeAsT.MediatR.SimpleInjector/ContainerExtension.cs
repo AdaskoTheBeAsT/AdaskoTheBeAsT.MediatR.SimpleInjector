@@ -110,7 +110,22 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
             var allAssemblies = new List<Assembly> { typeof(IMediator).GetTypeInfo().Assembly };
             allAssemblies.AddRange(uniqueAssemblies);
 
-            container.Register(typeof(IMediator), serviceConfig.MediatorImplementationType, serviceConfig.Lifestyle);
+            var customMediatorInstance = serviceConfig.MediatorInstanceCreator();
+
+            if (customMediatorInstance is null)
+            {
+                container.Register(
+                    typeof(IMediator),
+                    serviceConfig.MediatorImplementationType,
+                    serviceConfig.Lifestyle);
+            }
+            else
+            {
+                container.Register(
+                    () => customMediatorInstance,
+                    serviceConfig.Lifestyle);
+            }
+
             container.Register(typeof(IRequestHandler<,>), allAssemblies);
             RegisterNotifications(container, uniqueAssemblies);
             RegisterBehaviors(container, serviceConfig, uniqueAssemblies);

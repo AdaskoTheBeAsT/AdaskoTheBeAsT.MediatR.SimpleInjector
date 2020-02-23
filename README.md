@@ -26,7 +26,7 @@ Scans assemblies and adds handlers, preprocessors, and postprocessors implementa
         {
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             var assemblies = new List<Assembly>();
-            var mainAssembly = typeof(MediatrConfigurer).Assembly;
+            var mainAssembly = typeof(MediatrConfigurer).GetTypeInfo().Assembly;
             var refAssemblies = mainAssembly.GetReferencedAssemblies();
             foreach (var assemblyName in refAssemblies
                 .Where(a => a.FullName.StartsWith(NamespacePrefix, StringComparison.OrdinalIgnoreCase)))

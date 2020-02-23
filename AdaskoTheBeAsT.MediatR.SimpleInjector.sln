@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings = AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings
 		AdaskoTheBeAsT.ruleset = AdaskoTheBeAsT.ruleset
 		Directory.Build.props = Directory.Build.props
 		global.json = global.json
 		LICENSE = LICENSE
-		AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings = AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings
 		README.md = README.md
 		SecurityCodeScan.config.yml = SecurityCodeScan.config.yml
 		Settings.StyleCop = Settings.StyleCop
@@ -26,6 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaskoTheBeAsT.MediatR.Simp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{EEEEB121-FEFE-4A36-8DAA-24AE51DED3E1}"
 	ProjectSection(SolutionItems) = preProject
+		test\AdditionalTestSettings.cs = test\AdditionalTestSettings.cs
 		test\Directory.Build.props = test\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -33,7 +34,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{24193BB4-1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaskoTheBeAsT.MediatR.SimpleInjector.Test", "test\unit\AdaskoTheBeAsT.MediatR.SimpleInjector.Test\AdaskoTheBeAsT.MediatR.SimpleInjector.Test.csproj", "{DB2686B7-8BB4-4BCE-96BF-586318E575C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "src\TestApp\TestApp.csproj", "{8AF3DCB0-CE02-4269-A11E-B1E721E73908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "src\TestApp\TestApp.csproj", "{8AF3DCB0-CE02-4269-A11E-B1E721E73908}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore", "src\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.csproj", "{E1E4B919-94F1-4A3E-BC98-2C9B22B494E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test", "test\unit\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test.csproj", "{753D1F85-1C48-4834-968A-6173E37831AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +58,14 @@ Global
 		{8AF3DCB0-CE02-4269-A11E-B1E721E73908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AF3DCB0-CE02-4269-A11E-B1E721E73908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AF3DCB0-CE02-4269-A11E-B1E721E73908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1E4B919-94F1-4A3E-BC98-2C9B22B494E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1E4B919-94F1-4A3E-BC98-2C9B22B494E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1E4B919-94F1-4A3E-BC98-2C9B22B494E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1E4B919-94F1-4A3E-BC98-2C9B22B494E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{753D1F85-1C48-4834-968A-6173E37831AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{753D1F85-1C48-4834-968A-6173E37831AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{753D1F85-1C48-4834-968A-6173E37831AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{753D1F85-1C48-4834-968A-6173E37831AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +76,8 @@ Global
 		{24193BB4-15F5-4E79-9A12-4E0E737544A8} = {6EF85FD3-60A1-4B0D-ADFA-8652BB664C1E}
 		{DB2686B7-8BB4-4BCE-96BF-586318E575C1} = {24193BB4-15F5-4E79-9A12-4E0E737544A8}
 		{8AF3DCB0-CE02-4269-A11E-B1E721E73908} = {907E9BB4-8AD8-4240-8AE0-3792D7DA533A}
+		{E1E4B919-94F1-4A3E-BC98-2C9B22B494E6} = {907E9BB4-8AD8-4240-8AE0-3792D7DA533A}
+		{753D1F85-1C48-4834-968A-6173E37831AB} = {24193BB4-15F5-4E79-9A12-4E0E737544A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50C8B4C4-C564-4949-AB80-0E6AAD037293}

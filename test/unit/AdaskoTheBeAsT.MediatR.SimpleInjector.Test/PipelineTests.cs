@@ -9,12 +9,11 @@ using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 {
-#pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable CA1812
     public class PipelineTests
     {
         [Fact]
-        public async Task Should_wrap_with_behavior()
+        public async Task ShouldWrapWithBehavior()
         {
             var output = new Logger();
             using var container = new Container();
@@ -54,7 +53,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task Should_wrap_generics_with_behavior()
+        public async Task ShouldWrapGenericsWithBehavior()
         {
             var output = new Logger();
             using var container = new Container();
@@ -96,7 +95,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task Should_pick_up_pre_and_post_processors()
+        public async Task ShouldPickUpPreAndPostProcessors()
         {
             var output = new Logger();
             using var container = new Container();
@@ -131,7 +130,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact(Skip="In output messages there are logged actions of generic and application exception action handlers")]
-        public async Task Should_pick_up_specific_exception_behaviors()
+        public async Task ShouldPickUpSpecificExceptionBehaviors()
         {
             var output = new Logger();
             using var container = new Container();
@@ -149,15 +148,17 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 
             var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable S3626 // Jump statements should not be redundant
             var response = await mediator.Send(new Ping
-                { Message = "Ping", ThrowAction = msg => throw new ApplicationException(msg.Message + " Thrown") });
+            { Message = "Ping", ThrowAction = msg => throw new ApplicationException(msg.Message + " Thrown") });
+#pragma warning restore S3626 // Jump statements should not be redundant
 
             response.Message.Should().Be("Ping Thrown Handled by Specific Type");
             output.Messages.Should().NotContain("Logging ApplicationException exception");
         }
 
         [Fact]
-        public void Should_pick_up_base_exception_behaviors()
+        public void ShouldPickUpBaseExceptionBehaviors()
         {
             var output = new Logger();
             using var container = new Container();
@@ -175,8 +176,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 
             var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable S3626 // Jump statements should not be redundant
             Func<Task> action = async () => await mediator.Send(new Ping
                 { Message = "Ping", ThrowAction = msg => throw new Exception(msg.Message + " Thrown") });
+#pragma warning restore S3626 // Jump statements should not be redundant
+
             action.Should().Throw<Exception>();
 
             output.Messages.Should().Contain("Ping Thrown Logged by Generic Type");
@@ -184,7 +188,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public void Should_pick_up_exception_actions()
+        public void ShouldPickUpExceptionActions()
         {
             var output = new Logger();
             using var container = new Container();
@@ -202,8 +206,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 
             var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable S3626 // Jump statements should not be redundant
             Func<Task> action = async () => await mediator.Send(new Ping
                 { Message = "Ping", ThrowAction = msg => throw new SystemException(msg.Message + " Thrown") });
+#pragma warning restore S3626 // Jump statements should not be redundant
 
             action.Should().Throw<SystemException>();
 
@@ -212,7 +218,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task Should_handle_constrained_generics()
+        public async Task ShouldHandleConstrainedGenerics()
         {
             var output = new Logger();
             using var container = new Container();
@@ -562,5 +568,4 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
     }
 #pragma warning restore CA1812
-#pragma warning restore CA1707 // Identifiers should not contain underscores
 }
