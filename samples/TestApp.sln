@@ -5,20 +5,20 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{EEEEB121-FEFE-4A36-8DAA-24AE51DED3E1}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\.editorconfig = ..\..\.editorconfig
-		..\..\.gitignore = ..\..\.gitignore
-		..\..\AdaskoTheBeAsT.ruleset = ..\..\AdaskoTheBeAsT.ruleset
-		..\..\azure-pipelines.yml = ..\..\azure-pipelines.yml
-		..\..\Directory.Build.props = ..\..\Directory.Build.props
-		..\..\global.json = ..\..\global.json
-		..\..\LICENSE = ..\..\LICENSE
-		..\..\README.md = ..\..\README.md
-		..\..\SecurityCodeScan.config.yml = ..\..\SecurityCodeScan.config.yml
-		..\..\Settings.StyleCop = ..\..\Settings.StyleCop
-		..\..\stylecop.json = ..\..\stylecop.json
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
+		..\AdaskoTheBeAsT.ruleset = ..\AdaskoTheBeAsT.ruleset
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\Directory.Build.props = ..\Directory.Build.props
+		..\global.json = ..\global.json
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+		..\SecurityCodeScan.config.yml = ..\SecurityCodeScan.config.yml
+		..\Settings.StyleCop = ..\Settings.StyleCop
+		..\stylecop.json = ..\stylecop.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp.csproj", "{8323C6F9-1D12-4390-809E-30981CFF6BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{8323C6F9-1D12-4390-809E-30981CFF6BD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
