@@ -4,22 +4,13 @@ using MediatR;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
 {
-    public class FakeMediator<TResp>
+    public class FakeMediator
         : IMediator
     {
-        public IRequest<TResp>? SendRequestTyped { get; private set; }
-
-        public object? SendRequestObject { get; private set; }
-
-        public INotification? PublishNotificationTyped { get; private set; }
-
-        public object? PublishNotificationObject { get; private set; }
-
         public Task<TResponse> Send<TResponse>(
             IRequest<TResponse> request,
             CancellationToken cancellationToken = default)
         {
-            SendRequestTyped = (IRequest<TResp>)request;
             return Task.FromResult((TResponse)new object());
         }
 
@@ -27,7 +18,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             object request,
             CancellationToken cancellationToken = default)
         {
-            SendRequestObject = request;
             return Task.FromResult(new object());
         }
 
@@ -35,7 +25,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             object notification,
             CancellationToken cancellationToken = default)
         {
-            PublishNotificationObject = notification;
             return Unit.Task;
         }
 
@@ -44,7 +33,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             CancellationToken cancellationToken = default)
             where TNotification : INotification
         {
-            PublishNotificationTyped = notification;
             return Unit.Task;
         }
     }

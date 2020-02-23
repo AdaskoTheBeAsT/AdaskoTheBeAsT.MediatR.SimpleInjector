@@ -1,10 +1,45 @@
-# AdaskoTheBeAsT.MediatR.SimpleInjector
+# AdaskoTheBeAsT.MediatR.SimpleInjector and AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
 
 MediatR extensions for SimpleInjector.
 
-## Usage
+## Usage in AspNetCore
 
-Scans assemblies and adds handlers, preprocessors, and postprocessors implementations to the SimpleInjector container. There are few options to use with `Container` instance:
+Scans assemblies and adds handlers, preprocessors, and postprocessors implementations to the SimpleInjector container. Additionaly it register decorator which passes HttpContext.RequestAborted cancellation token from asp.net core controllers to MediatR.  
+Install package ```AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore```.  
+There are few options to use with `Container` instance:
+
+1. Marker type from assembly which will be scanned
+
+    ```cs
+    container.AddMediatRAspNetCore(typeof(MyHandler), type2 /*, ...*/);
+    ```
+
+1. Assembly which will be scanned
+
+    ```cs
+    container.AddMediatRAspNetCore(assembly, assembly2 /*, ...*/);
+    ```
+
+1. Full configuration
+
+   ```cs
+    var testMediator = new Mock<IMediator>();
+    container.AddMediatR(
+        cfg =>
+        {
+            cfg.Using(() => testMediator.Object);
+            cfg.WithHandlerAssemblyMarkerTypes(typeof(MyMarkerType));
+            cfg.UsingBuiltinPipelineProcessorBehaviors(true);
+            cfg.UsingPipelineProcessorBehaviors(typeof(CustomPipelineBehavior<,>));
+        });
+   ``` 
+
+
+## Usage in other project types
+
+Scans assemblies and adds handlers, preprocessors, and postprocessors implementations to the SimpleInjector container.  
+Install package ```AdaskoTheBeAsT.MediatR.SimpleInjector```.  
+There are few options to use with `Container` instance:
 
 1. Marker type from assembly which will be scanned
 
@@ -47,6 +82,18 @@ This will register:
 - `INotificationHandler<>` concrete implementations as Transient
 
 ## Advanced usage
+
+### Setting up custom `IMediator` instance and marker type from assembly for unit testing (Moq sample)
+
+   ```cs
+    var testMediator = new Mock<IMediator>();
+    container.AddMediatR(
+        cfg =>
+        {
+            cfg.Using(() => testMediator.Object);
+            cfg.WithHandlerAssemblyMarkerTypes(typeof(MyMarkerType));
+        });
+   ```
 
 ### Setting up custom `IMediator` implementation and marker type from assembly
 
@@ -151,5 +198,6 @@ and all user defined implementation of processors and handlers:
 
 - Jimmy Boggard for MediatR
 - Steven van Deursen for SimpleInjector
+- Sebastian Kleinschmager for [idea of automatic passing RequestAborted to MediatR](https://github.com/jbogard/MediatR/issues/496)
 
 Code originates from MediatR.Extensions.Microsoft.DependencyInjection and was changed to work with SimpleInjector.
