@@ -24,6 +24,7 @@ steps:
   displayName: Restore
   inputs:
     command: restore
+    arguments: 'AdaskoTheBeAsT.MediatR.SimpleInjector.sln'
   
 - task: SonarCloudPrepare@1
   displayName: 'Prepare analysis on SonarCloud'
