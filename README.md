@@ -199,5 +199,6 @@ and all user defined implementation of processors and handlers:
 - Jimmy Boggard for MediatR
 - Steven van Deursen for SimpleInjector
 - Sebastian Kleinschmager for [idea of automatic passing RequestAborted to MediatR](https://github.com/jbogard/MediatR/issues/496)
+- Konrad Rudolph for [idea of IsAssignableToGenericType](https://gist.github.com/klmr/4174727)
 
 Code originates from MediatR.Extensions.Microsoft.DependencyInjection and was changed to work with SimpleInjector.
