@@ -33,6 +33,7 @@ steps:
     organization: 'adaskothebeast-github'
     projectKey: 'AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector'
     projectName: AdaskoTheBeAsT.MediatR.SimpleInjector
+    
   
 - task: DotNetCoreCLI@2
   displayName: Build
