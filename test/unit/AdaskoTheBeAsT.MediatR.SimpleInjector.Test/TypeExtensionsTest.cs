@@ -252,6 +252,8 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 #pragma warning disable CA1812
 #pragma warning disable S2326 // Unused type parameters should be removed
 #pragma warning disable SA1201 // Elements should appear in the correct order
+
+        // ReSharper disable once UnusedTypeParameter
         private class Base<T>
         {
         }

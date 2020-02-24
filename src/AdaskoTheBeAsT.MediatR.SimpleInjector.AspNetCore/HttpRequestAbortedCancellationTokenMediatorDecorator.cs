@@ -54,7 +54,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
 
         private CancellationToken GetRequestAbortedOrDefaultCancellationToken(CancellationToken cancellationToken)
         {
-            return _httpContextAccessor?.HttpContext?.RequestAborted
+            return _httpContextAccessor.HttpContext?.RequestAborted
                 ?? cancellationToken;
         }
     }
