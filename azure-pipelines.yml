@@ -46,7 +46,7 @@ steps:
   inputs:
     command: test
     projects: '$(unitTestProjects)'
-    arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --logger:"trx" --results-directory d:\a\1\TestResults'
+    arguments: '--configuration $(buildConfiguration) --results-directory d:/a/1/TestResults --collect:"Code Coverage" --logger:"trx"'
   
 - task: SonarCloudAnalyze@1
   displayName: Sonar Cloud analyze
