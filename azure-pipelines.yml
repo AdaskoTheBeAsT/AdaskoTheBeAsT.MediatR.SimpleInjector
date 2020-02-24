@@ -68,4 +68,3 @@ steps:
     testResultsFormat: 'VSTest'
     testResultsFiles: '*.trx'
     searchFolder: 'd:/a/1/TestResults'
-    mergeTestResults: true
