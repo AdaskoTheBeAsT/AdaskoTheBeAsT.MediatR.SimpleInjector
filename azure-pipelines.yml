@@ -48,6 +48,11 @@ steps:
     projects: '$(unitTestProjects)'
     publishTestResults: false
     arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --logger:"trx" --results-directory d:/a/1/TestResults'
+
+- task: ResharperCli@2
+  inputs:
+    solutionOrProjectPath: 'AdaskoTheBeAsT.MediatR.SimpleInjector.sln'
+    failBuildLevelSelector: 'Warning'
   
 - task: SonarCloudAnalyze@1
   displayName: Sonar Cloud analyze
