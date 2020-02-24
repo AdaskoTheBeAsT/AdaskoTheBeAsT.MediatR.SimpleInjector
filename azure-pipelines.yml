@@ -46,7 +46,8 @@ steps:
   inputs:
     command: test
     projects: '$(unitTestProjects)'
-    arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --logger:"trx" -- results-directory d:/a/1/TestResults'
+    publishTestResults: false
+    arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --logger:"trx" --results-directory d:/a/1/TestResults'
   
 - task: SonarCloudAnalyze@1
   displayName: Sonar Cloud analyze
@@ -55,4 +56,11 @@ steps:
   displayName: Sonar Cloud publish
   inputs:
     pollingTimeoutSec: '300'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '*.trx'
+    searchFolder: 'd:/a/1/TestResults'
 
