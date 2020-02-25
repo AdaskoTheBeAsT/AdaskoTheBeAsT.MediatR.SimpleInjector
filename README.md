@@ -72,7 +72,7 @@ There are few options to use with `Container` instance:
         {
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             var assemblies = new List<Assembly>();
-            var mainAssembly = typeof(MediatrConfigurer).GetTypeInfo().Assembly;
+            var mainAssembly = typeof(MediatRConfigurator).GetTypeInfo().Assembly;
             var refAssemblies = mainAssembly.GetReferencedAssemblies();
             foreach (var assemblyName in refAssemblies
                 .Where(a => a.FullName.StartsWith(NamespacePrefix, StringComparison.OrdinalIgnoreCase)))
