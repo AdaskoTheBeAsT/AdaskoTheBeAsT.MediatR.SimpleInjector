@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</RepositoryUrl>
     <Description>MediatR extensions for SimpleInjector for AspNetCore</Description>
-    <PackageVersion>1.4.1</PackageVersion>
+    <PackageVersion>1.4.2</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
