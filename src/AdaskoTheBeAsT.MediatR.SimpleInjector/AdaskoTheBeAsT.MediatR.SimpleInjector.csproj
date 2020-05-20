@@ -8,19 +8,26 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>github</RepositoryType>
-    <PackageProjectUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>MediatR extensions for SimpleInjector</Description>
-    <PackageVersion>1.4.2</PackageVersion>
+    <PackageVersion>1.4.3</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.1" />
-    <PackageReference Include="SimpleInjector" Version="4.9.2" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="SimpleInjector" Version="4.10.2" />
   </ItemGroup>
 
   <ItemGroup>
