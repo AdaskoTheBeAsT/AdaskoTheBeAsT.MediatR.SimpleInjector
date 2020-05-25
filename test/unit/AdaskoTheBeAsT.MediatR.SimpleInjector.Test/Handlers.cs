@@ -53,7 +53,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
     {
         public Task Handle(INotification notification, CancellationToken cancellationToken)
         {
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
     }
 

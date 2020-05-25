@@ -39,10 +39,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         {
             // Arrange
             _container.AddMediatRAspNetCore(
-                config =>
-                {
-                    config.WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest));
-                });
+                config => config.WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest)));
             _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
 
             _container.Verify();
@@ -240,7 +237,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
 
             // Act
             var mediator = _container.GetInstance<IMediator>();
-            mediator.Send(request);
+            mediator.Send(request, savedCancellationToken);
 
             // Assert
             using (new AssertionScope())
@@ -289,7 +286,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
 
             // Act
             var mediator = _container.GetInstance<IMediator>();
-            mediator.Send(request);
+            mediator.Send(request, savedCancellationToken);
 
             // Assert
             using (new AssertionScope())
@@ -312,7 +309,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         private TResult? GetInstanceFieldValue<T, TResult>(object instance, string fieldName)
             where TResult : class
         {
-            var bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
+            const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
             var type = typeof(T);
             var field = type.GetField(fieldName, bindFlags);
             var value = field?.GetValue(instance);

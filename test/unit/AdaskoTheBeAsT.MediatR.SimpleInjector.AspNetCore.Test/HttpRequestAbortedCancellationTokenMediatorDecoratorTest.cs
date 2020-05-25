@@ -59,7 +59,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             var request = new Mock<IRequest<object>>().Object;
 
             // Act
-            await _sut.Send(request);
+            await _sut.Send(request, savedCancellationToken);
 
             // Assert
             using (new AssertionScope())
@@ -152,7 +152,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             var request = new object();
 
             // Act
-            await _sut.Send(request);
+            await _sut.Send(request, savedCancellationToken);
 
             // Assert
             using (new AssertionScope())
@@ -245,7 +245,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             var request = new object();
 
             // Act
-            await _sut.Publish(request);
+            await _sut.Publish(request, savedCancellationToken);
 
             // Assert
             using (new AssertionScope())
@@ -338,7 +338,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             var request = new Mock<INotification>().Object;
 
             // Act
-            await _sut.Publish(request);
+            await _sut.Publish(request, savedCancellationToken);
 
             // Assert
             using (new AssertionScope())

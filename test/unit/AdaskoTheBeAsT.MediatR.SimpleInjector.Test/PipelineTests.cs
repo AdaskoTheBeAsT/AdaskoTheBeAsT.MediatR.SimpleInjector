@@ -343,7 +343,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(TRequest request, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("First pre processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -359,7 +359,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(Ping request, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("First concrete pre processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -375,7 +375,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(TRequest request, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("Next pre processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -391,7 +391,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(Ping request, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("Next concrete pre processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -407,7 +407,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("First post processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -423,7 +423,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(Ping request, Pong response, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("First concrete post processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -439,7 +439,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("Next post processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
@@ -455,7 +455,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public Task Process(Ping request, Pong response, CancellationToken cancellationToken)
             {
                 _output.Messages.Add("Next concrete post processor");
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
         }
 
