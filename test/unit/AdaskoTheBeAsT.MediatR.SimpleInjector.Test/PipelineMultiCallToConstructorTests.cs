@@ -13,12 +13,8 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         [Fact]
         public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipeline()
         {
-            ConstructorTestHandler.ResetCallCount();
-            ConstructorTestHandler.ConstructorCallCount.Should().Be(0);
-
             var output = new Logger();
-            using var container = new Container();
-
+            await using var container = new Container();
             container.RegisterInstance(output);
             container.AddMediatR(
                 config =>
@@ -46,7 +42,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 "First post processor",
                 "Next post processor",
                 "ConstructorTestBehavior after");
-            ConstructorTestHandler.ConstructorCallCount.Should().Be(1);
         }
 
         internal class ConstructorTestBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
@@ -77,27 +72,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 
         internal class ConstructorTestHandler : IRequestHandler<ConstructorTestRequest, ConstructorTestResponse>
         {
-            private static volatile object _lockObject = new object();
-            private static int _constructorCallCount;
             private readonly Logger _logger;
 
             public ConstructorTestHandler(Logger logger)
             {
                 _logger = logger;
-                lock (_lockObject)
-                {
-                    _constructorCallCount++;
-                }
-            }
-
-            public static int ConstructorCallCount => _constructorCallCount;
-
-            public static void ResetCallCount()
-            {
-                lock (_lockObject)
-                {
-                    _constructorCallCount = 0;
-                }
             }
 
             public Task<ConstructorTestResponse> Handle(ConstructorTestRequest request, CancellationToken cancellationToken)

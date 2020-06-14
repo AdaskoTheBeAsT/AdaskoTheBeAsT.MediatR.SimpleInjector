@@ -16,7 +16,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public async Task ShouldWrapWithBehavior()
         {
             var output = new Logger();
-            using var container = new Container();
+            await using var container = new Container();
             container.RegisterInstance(output);
             container.AddMediatR(
                 config =>
@@ -56,7 +56,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public async Task ShouldWrapGenericsWithBehavior()
         {
             var output = new Logger();
-            using var container = new Container();
+            await using var container = new Container();
             container.RegisterInstance(output);
             container.AddMediatR(
                 config =>
@@ -98,7 +98,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public async Task ShouldPickUpPreAndPostProcessors()
         {
             var output = new Logger();
-            using var container = new Container();
+            await using var container = new Container();
             container.RegisterInstance(output);
             container.AddMediatR(
                 config =>
@@ -193,7 +193,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public async Task ShouldHandleConstrainedGenerics()
         {
             var output = new Logger();
-            using var container = new Container();
+            await using var container = new Container();
             container.RegisterInstance(output);
             container.AddMediatR(
                 config =>
