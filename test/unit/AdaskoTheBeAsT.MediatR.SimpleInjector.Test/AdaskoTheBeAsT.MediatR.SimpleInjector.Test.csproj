@@ -1,17 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
     <ProjectGuid>6C446602-6FB9-45B7-99EE-A61EAB43AD47</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="..\..\AdditionalTestSettings.cs" Link="AdditionalTestSettings.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="8.0.1" />
-    <PackageReference Include="SimpleInjector" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
