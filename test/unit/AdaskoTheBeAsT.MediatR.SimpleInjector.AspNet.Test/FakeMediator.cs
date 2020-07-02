@@ -18,6 +18,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
             object request,
             CancellationToken cancellationToken = default)
         {
+            // ReSharper disable once RedundantTypeArgumentsOfMethod
             return Task.FromResult<object?>(new object());
         }
 
