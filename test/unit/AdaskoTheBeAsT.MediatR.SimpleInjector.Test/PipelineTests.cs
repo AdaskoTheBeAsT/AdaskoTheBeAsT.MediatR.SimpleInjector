@@ -272,7 +272,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             }
         }
 
-        internal class InnerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        internal class InnerBehavior<TRequest, TResponse>
+            : IPipelineBehavior<TRequest, TResponse>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 
@@ -291,7 +293,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             }
         }
 
-        internal class OuterBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        internal class OuterBehavior<TRequest, TResponse>
+            : IPipelineBehavior<TRequest, TResponse>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 
@@ -331,7 +335,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             }
         }
 
-        internal class FirstPreProcessor<TRequest> : IRequestPreProcessor<TRequest>
+        internal class FirstPreProcessor<TRequest>
+            : IRequestPreProcessor<TRequest>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 
@@ -363,7 +369,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             }
         }
 
-        internal class NextPreProcessor<TRequest> : IRequestPreProcessor<TRequest>
+        internal class NextPreProcessor<TRequest>
+            : IRequestPreProcessor<TRequest>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 
@@ -395,7 +403,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             }
         }
 
-        internal class FirstPostProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
+        internal class FirstPostProcessor<TRequest, TResponse>
+            : IRequestPostProcessor<TRequest, TResponse>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 
@@ -427,7 +437,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             }
         }
 
-        internal class NextPostProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
+        internal class NextPostProcessor<TRequest, TResponse>
+            : IRequestPostProcessor<TRequest, TResponse>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 

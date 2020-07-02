@@ -14,11 +14,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
             return Task.FromResult((TResponse)new object());
         }
 
-        public Task<object> Send(
+        public Task<object?> Send(
             object request,
             CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(new object());
+            return Task.FromResult<object?>(new object());
         }
 
         public Task Publish(

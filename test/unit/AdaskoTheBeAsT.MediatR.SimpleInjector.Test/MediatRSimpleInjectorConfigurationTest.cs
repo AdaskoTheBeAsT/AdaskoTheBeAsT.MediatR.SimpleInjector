@@ -315,7 +315,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 throw new NotImplementedException();
             }
 
-            public Task<object> Send(
+            public Task<object?> Send(
                 object request,
                 CancellationToken cancellationToken = default)
             {
@@ -340,6 +340,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 
         private class FakePipelineBehavior<TRequest, TResponse>
             : IPipelineBehavior<TRequest, TResponse>
+            where TRequest : notnull
         {
             public Task<TResponse> Handle(
                 TRequest request,

@@ -44,7 +44,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 "ConstructorTestBehavior after");
         }
 
-        internal class ConstructorTestBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        internal class ConstructorTestBehavior<TRequest, TResponse>
+            : IPipelineBehavior<TRequest, TResponse>
+            where TRequest : notnull
         {
             private readonly Logger _output;
 

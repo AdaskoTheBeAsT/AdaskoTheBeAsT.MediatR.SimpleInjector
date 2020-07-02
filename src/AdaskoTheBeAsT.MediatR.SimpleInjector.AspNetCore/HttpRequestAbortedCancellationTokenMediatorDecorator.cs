@@ -27,7 +27,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
             return _mediator.Send(request, cancellationTokenToUse);
         }
 
-        public Task<object> Send(
+        public Task<object?> Send(
             object request,
             CancellationToken cancellationToken = default)
         {

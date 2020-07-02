@@ -183,7 +183,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 
     internal class MyCustomMediator : IMediator
     {
-        public Task<object> Send(object request, CancellationToken cancellationToken = default)
+        public Task<object?> Send(object request, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
