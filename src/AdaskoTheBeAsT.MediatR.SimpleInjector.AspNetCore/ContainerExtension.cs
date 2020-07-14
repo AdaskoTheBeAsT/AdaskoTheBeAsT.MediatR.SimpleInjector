@@ -99,7 +99,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
             configuration?.Invoke(serviceConfig);
 
             var containerRef = container.SetupContainer(serviceConfig);
-            containerRef.RegisterDecorator<IMediator, HttpRequestAbortedCancellationTokenMediatorDecorator>(serviceConfig.Lifestyle);
+            containerRef.RegisterDecorator<IMediator, HttpRequestAbortedMediatorDecorator>(serviceConfig.Lifestyle);
             return containerRef;
         }
     }

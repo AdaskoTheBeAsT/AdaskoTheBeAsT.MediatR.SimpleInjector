@@ -1,42 +1,43 @@
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using MediatR;
 using Moq;
 using Xunit;
 
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 {
-    public class HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecoratorTest
+    public class CancellationTokenMediatorDecoratorBaseTest
     {
         private readonly Mock<IMediator> _mediatorMock;
         private readonly CancellationToken _cancellationToken;
-        private readonly Mock<HttpContextBase> _httpContextAccessorMock;
-        private readonly HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator _sut;
+        private readonly Mock<ICancellationTokenAccessor> _cancellationTokenAccessorMock;
+        private readonly SampleCancellationTokenMediatorDecorator _sut;
 
-        public HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecoratorTest()
+        public CancellationTokenMediatorDecoratorBaseTest()
         {
-            _httpContextAccessorMock = new Mock<HttpContextBase>();
+            _cancellationTokenAccessorMock = new Mock<ICancellationTokenAccessor>();
             _cancellationToken = new CancellationTokenSource().Token;
             _mediatorMock = new Mock<IMediator>();
-            _sut = new HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator(
+            _sut = new SampleCancellationTokenMediatorDecorator(
                 _mediatorMock.Object,
-                _httpContextAccessorMock.Object);
+                _cancellationTokenAccessorMock.Object);
         }
 
+#pragma warning disable CA1034 // Nested types should not be visible
+        public interface ICancellationTokenAccessor
+        {
+            CancellationToken? GetToken();
+        }
+#pragma warning restore CA1034 // Nested types should not be visible
+
         [Fact]
-        public async Task SendRequestShouldUseLinkedRequestAbortedFromHttpContext()
+        public async Task SendRequestShouldUseCancellationTokenFromAccessor()
         {
             // Arrange
-            var httpResponseMock = new Mock<HttpResponseBase>();
-            httpResponseMock
-                .SetupGet(h => h.ClientDisconnectedToken)
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
                 .Returns(_cancellationToken);
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(httpResponseMock.Object);
 
             IRequest<object>? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -69,19 +70,16 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                             It.IsAny<IRequest<object>>(),
                             It.IsAny<CancellationToken>()));
                 savedRequest.Should().Be(request);
-                savedCancellationToken.Should().NotBe(_cancellationToken);
+                savedCancellationToken.Should().Be(_cancellationToken);
             }
         }
 
         [Fact]
-        public async Task SendRequestShouldUseCancellationTokenWhenNonExistentHttpContext()
+        public async Task SendRequestShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
         {
             // Arrange
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(default(HttpResponseBase));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
+                .Returns((CancellationToken?)null);
 
             IRequest<object>? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -119,16 +117,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         }
 
         [Fact]
-        public async Task SendObjectShouldUseLinkedRequestAbortedFromHttpContext()
+        public async Task SendObjectShouldUseCancellationTokenFromAccessor()
         {
             // Arrange
-            var httpResponseMock = new Mock<HttpResponseBase>();
-            httpResponseMock
-                .SetupGet(h => h.ClientDisconnectedToken)
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
                 .Returns(_cancellationToken);
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(httpResponseMock.Object);
 
             object? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -161,19 +154,16 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()));
                 savedRequest.Should().Be(request);
-                savedCancellationToken.Should().NotBe(_cancellationToken);
+                savedCancellationToken.Should().Be(_cancellationToken);
             }
         }
 
         [Fact]
-        public async Task SendObjectShouldUseCancellationTokenWhenNonExistentHttpContext()
+        public async Task SendObjectShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
         {
             // Arrange
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(default(HttpResponseBase));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
+                .Returns((CancellationToken?)null);
 
             object? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -211,16 +201,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         }
 
         [Fact]
-        public async Task PublishObjectShouldUseLinkedRequestAbortedFromHttpContext()
+        public async Task PublishObjectShouldUseCancellationTokenFromAccessor()
         {
             // Arrange
-            var httpResponseMock = new Mock<HttpResponseBase>();
-            httpResponseMock
-                .SetupGet(h => h.ClientDisconnectedToken)
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
                 .Returns(_cancellationToken);
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(httpResponseMock.Object);
 
             object? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -253,19 +238,16 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()));
                 savedRequest.Should().Be(request);
-                savedCancellationToken.Should().NotBe(_cancellationToken);
+                savedCancellationToken.Should().Be(_cancellationToken);
             }
         }
 
         [Fact]
-        public async Task PublishObjectShouldUseCancellationTokenWhenNonExistentHttpContext()
+        public async Task PublishObjectShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
         {
             // Arrange
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(default(HttpResponseBase));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
+                .Returns((CancellationToken?)null);
 
             object? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -303,16 +285,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         }
 
         [Fact]
-        public async Task PublishNotificationShouldUseLinkedRequestAbortedFromHttpContext()
+        public async Task PublishNotificationShouldUseCancellationTokenFromAccessor()
         {
             // Arrange
-            var httpResponseMock = new Mock<HttpResponseBase>();
-            httpResponseMock
-                .SetupGet(h => h.ClientDisconnectedToken)
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
                 .Returns(_cancellationToken);
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(httpResponseMock.Object);
 
             INotification? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -345,19 +322,16 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                             It.IsAny<INotification>(),
                             It.IsAny<CancellationToken>()));
                 savedRequest.Should().Be(request);
-                savedCancellationToken.Should().NotBe(_cancellationToken);
+                savedCancellationToken.Should().Be(_cancellationToken);
             }
         }
 
         [Fact]
-        public async Task PublishNotificationShouldUseCancellationTokenWhenNonExistentHttpContext()
+        public async Task PublishNotificationShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
         {
             // Arrange
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _httpContextAccessorMock
-                .SetupGet(h => h.Response)
-                .Returns(default(HttpResponseBase));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
+                .Returns((CancellationToken?)null);
 
             INotification? savedRequest = null;
             CancellationToken savedCancellationToken = default;
@@ -391,6 +365,25 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                             It.IsAny<CancellationToken>()));
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
+            }
+        }
+
+        internal class SampleCancellationTokenMediatorDecorator
+            : CancellationTokenMediatorDecoratorBase
+        {
+            private readonly ICancellationTokenAccessor _cancellationTokenAccessor;
+
+            public SampleCancellationTokenMediatorDecorator(
+                IMediator mediator,
+                ICancellationTokenAccessor cancellationTokenAccessor)
+                : base(mediator)
+            {
+                _cancellationTokenAccessor = cancellationTokenAccessor;
+            }
+
+            public override CancellationToken GetCustomOrDefaultCancellationToken(CancellationToken cancellationToken)
+            {
+                return _cancellationTokenAccessor.GetToken() ?? cancellationToken;
             }
         }
     }

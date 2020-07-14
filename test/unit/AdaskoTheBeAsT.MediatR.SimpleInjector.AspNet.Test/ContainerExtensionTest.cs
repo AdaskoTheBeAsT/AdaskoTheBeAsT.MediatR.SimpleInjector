@@ -36,6 +36,39 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         }
 
         [Fact]
+        public void ShouldThrowExceptionWhenSingletonLifetimeUsed()
+        {
+            // Arrange
+            Action action = () => _container.AddMediatRAspNet(
+                config =>
+                    config.UsingHttpContextCreator(() => _httpContextAccessorMock.Object)
+                        .WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest))
+                        .AsSingleton());
+
+            // Act & Assert
+            action.Should().Throw<InvalidAspNetLifetimeException>();
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionWhenHttpContextCreationFunctionReturnsNull()
+        {
+            // Arrange
+            _container.AddMediatRAspNet(
+                config =>
+                {
+                    config.UsingHttpContextCreator(() => null!)
+                        .WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest))
+                        .AsScoped();
+                });
+
+            Action action = () => _container.Verify();
+
+            action.Should().Throw<InvalidOperationException>()
+                .WithInnerException<ActivationException>()
+                .WithInnerException<HttpContextCreatorReturnsNullException>();
+        }
+
+        [Fact]
         public void ShouldUseDecoratorAfterRegisteringAspNetMediator()
         {
             // Arrange
@@ -51,7 +84,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 var result = _container.GetInstance<IMediator>();
 
                 // Assert
-                result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
             }
         }
 
@@ -71,7 +104,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 var result = _container.GetInstance<IMediator>();
 
                 // Assert
-                result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
             }
         }
 
@@ -91,7 +124,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 var result = _container.GetInstance<IMediator>();
 
                 // Assert
-                result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
             }
         }
 
@@ -109,7 +142,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 var result = _container.GetInstance<IMediator>();
 
                 // Assert
-                result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
             }
         }
 
@@ -129,7 +162,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 var result = _container.GetInstance<IMediator>();
 
                 // Assert
-                result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
             }
         }
 
@@ -151,9 +184,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 // Assert
                 using (new AssertionScope())
                 {
-                    result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                    result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
                     var innerMediator =
-                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator,
+                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator,
                             IMediator>(
                             result,
                             "_mediator");
@@ -184,9 +217,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 // Assert
                 using (new AssertionScope())
                 {
-                    result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                    result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
                     var innerMediator =
-                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator,
+                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator,
                             IMediator>(
                             result,
                             "_mediator");
@@ -218,9 +251,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 // Assert
                 using (new AssertionScope())
                 {
-                    result.Should().BeOfType<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>();
+                    result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
                     var innerMediator =
-                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator,
+                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator,
                             IMediator>(
                             result,
                             "_mediator");
@@ -346,7 +379,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         {
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
             var type = typeof(T);
-            var field = type.GetField(fieldName, bindFlags);
+            var field = type.BaseType?.GetField(fieldName, bindFlags);
             var value = field?.GetValue(instance);
 
             return value as TResult;

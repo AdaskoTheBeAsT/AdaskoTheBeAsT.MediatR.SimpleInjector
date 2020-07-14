@@ -141,7 +141,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
             }
 
             var containerRef = container.SetupContainer(serviceConfig);
-            containerRef.RegisterDecorator<IMediator, HttpResponseClientDisconnectedTokenCancellationTokenMediatorDecorator>(
+            containerRef.RegisterDecorator<IMediator, HttpResponseClientDisconnectedTokenMediatorDecorator>(
                 serviceConfig.Lifestyle);
 
             containerRef.Register(
@@ -150,7 +150,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
                     var instance = serviceConfig.HttpContextCreator();
                     if (instance is null)
                     {
-                        throw new ArgumentException("HttpContext creator returned null");
+                        throw new HttpContextCreatorReturnsNullException("HttpContext creator returned null");
                     }
 
                     return instance;

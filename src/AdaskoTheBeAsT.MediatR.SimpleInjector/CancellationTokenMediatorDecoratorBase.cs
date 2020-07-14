@@ -1,29 +1,24 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector
 {
-    public class HttpRequestAbortedCancellationTokenMediatorDecorator
+    public abstract class CancellationTokenMediatorDecoratorBase
         : IMediator
     {
         private readonly IMediator _mediator;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HttpRequestAbortedCancellationTokenMediatorDecorator(
-            IMediator mediator,
-            IHttpContextAccessor httpContextAccessor)
+        protected CancellationTokenMediatorDecoratorBase(IMediator mediator)
         {
             _mediator = mediator;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public Task<TResponse> Send<TResponse>(
             IRequest<TResponse> request,
             CancellationToken cancellationToken = default)
         {
-            var cancellationTokenToUse = GetRequestAbortedOrDefaultCancellationToken(cancellationToken);
+            var cancellationTokenToUse = GetCustomOrDefaultCancellationToken(cancellationToken);
             return _mediator.Send(request, cancellationTokenToUse);
         }
 
@@ -31,7 +26,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
             object request,
             CancellationToken cancellationToken = default)
         {
-            var cancellationTokenToUse = GetRequestAbortedOrDefaultCancellationToken(cancellationToken);
+            var cancellationTokenToUse = GetCustomOrDefaultCancellationToken(cancellationToken);
             return _mediator.Send(request, cancellationTokenToUse);
         }
 
@@ -39,7 +34,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
             object notification,
             CancellationToken cancellationToken = default)
         {
-            var cancellationTokenToUse = GetRequestAbortedOrDefaultCancellationToken(cancellationToken);
+            var cancellationTokenToUse = GetCustomOrDefaultCancellationToken(cancellationToken);
             return _mediator.Publish(notification, cancellationTokenToUse);
         }
 
@@ -48,14 +43,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore
             CancellationToken cancellationToken = default)
             where TNotification : INotification
         {
-            var cancellationTokenToUse = GetRequestAbortedOrDefaultCancellationToken(cancellationToken);
+            var cancellationTokenToUse = GetCustomOrDefaultCancellationToken(cancellationToken);
             return _mediator.Publish(notification, cancellationTokenToUse);
         }
 
-        private CancellationToken GetRequestAbortedOrDefaultCancellationToken(CancellationToken cancellationToken)
-        {
-            return _httpContextAccessor.HttpContext?.RequestAborted
-                ?? cancellationToken;
-        }
+        public abstract CancellationToken GetCustomOrDefaultCancellationToken(CancellationToken cancellationToken);
     }
 }
