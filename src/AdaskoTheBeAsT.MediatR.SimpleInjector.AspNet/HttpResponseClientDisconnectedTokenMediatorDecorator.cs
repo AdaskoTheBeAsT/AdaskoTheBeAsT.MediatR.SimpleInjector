@@ -1,13 +1,16 @@
+using System;
 using System.Threading;
 using System.Web;
 using MediatR;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
 {
-    public class HttpResponseClientDisconnectedTokenMediatorDecorator
-        : CancellationTokenMediatorDecoratorBase
+    public sealed class HttpResponseClientDisconnectedTokenMediatorDecorator
+        : CancellationTokenMediatorDecoratorBase,
+            IDisposable
     {
         private readonly HttpContextBase _httpContextAccessor;
+        private CancellationTokenSource? _cancellationTokenSource;
 
         public HttpResponseClientDisconnectedTokenMediatorDecorator(
             IMediator mediator,
@@ -26,9 +29,15 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
             }
 
             var disconnectedToken = response.ClientDisconnectedToken;
-            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, disconnectedToken);
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, disconnectedToken);
 
-            return linkedTokenSource.Token;
+            return _cancellationTokenSource.Token;
+        }
+
+        public void Dispose()
+        {
+            _cancellationTokenSource?.Dispose();
         }
     }
 }

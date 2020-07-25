@@ -23,10 +23,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 {
                     config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
                     config.UsingBuiltinPipelineProcessorBehaviors(
-                            true,
-                            true,
-                            true,
-                            true);
+                            requestPreProcessorBehaviorEnabled: true,
+                            requestPostProcessorBehaviorEnabled: true,
+                            requestExceptionProcessorBehaviorEnabled: true,
+                            requestExceptionActionProcessorBehaviorEnabled: true);
                     config.UsingPipelineProcessorBehaviors(typeof(OuterBehavior), typeof(InnerBehavior));
                 });
 
@@ -63,10 +63,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 {
                     config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
                     config.UsingBuiltinPipelineProcessorBehaviors(
-                        true,
-                        true,
-                        true,
-                        true);
+                        requestPreProcessorBehaviorEnabled: true,
+                        requestPostProcessorBehaviorEnabled: true,
+                        requestExceptionProcessorBehaviorEnabled: true,
+                        requestExceptionActionProcessorBehaviorEnabled: true);
                     config.UsingPipelineProcessorBehaviors(
                         typeof(OuterBehavior<,>),
                         typeof(InnerBehavior<,>));
@@ -105,10 +105,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 {
                     config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
                     config.UsingBuiltinPipelineProcessorBehaviors(
-                            true,
-                            true,
-                            true,
-                            true);
+                        requestPreProcessorBehaviorEnabled: true,
+                        requestPostProcessorBehaviorEnabled: true,
+                        requestExceptionProcessorBehaviorEnabled: true,
+                        requestExceptionActionProcessorBehaviorEnabled: true);
                 });
 
             var mediator = container.GetInstance<IMediator>();
@@ -140,17 +140,22 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 {
                     config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
                     config.UsingBuiltinPipelineProcessorBehaviors(
-                        true,
-                        true,
-                        true,
-                        true);
+                        requestPreProcessorBehaviorEnabled: true,
+                        requestPostProcessorBehaviorEnabled: true,
+                        requestExceptionProcessorBehaviorEnabled: true,
+                        requestExceptionActionProcessorBehaviorEnabled: true);
                 });
 
             var mediator = container.GetInstance<IMediator>();
 
 #pragma warning disable S3626 // Jump statements should not be redundant
-            Func<Task> action = async () => await mediator.Send(new Ping
-                { Message = "Ping", ThrowAction = msg => throw new Exception(msg.Message + " Thrown") });
+            Func<Task> action = async () => await mediator.Send(
+                    new Ping
+                    {
+                        Message = "Ping",
+                        ThrowAction = msg => throw new Exception(msg.Message + " Thrown"),
+                    })
+                .ConfigureAwait(false);
 #pragma warning restore S3626 // Jump statements should not be redundant
 
             action.Should().Throw<Exception>();
@@ -170,17 +175,22 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 {
                     config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
                     config.UsingBuiltinPipelineProcessorBehaviors(
-                        true,
-                        true,
-                        true,
-                        true);
+                        requestPreProcessorBehaviorEnabled: true,
+                        requestPostProcessorBehaviorEnabled: true,
+                        requestExceptionProcessorBehaviorEnabled: true,
+                        requestExceptionActionProcessorBehaviorEnabled: true);
                 });
 
             var mediator = container.GetInstance<IMediator>();
 
 #pragma warning disable S3626 // Jump statements should not be redundant
-            Func<Task> action = async () => await mediator.Send(new Ping
-                { Message = "Ping", ThrowAction = msg => throw new SystemException(msg.Message + " Thrown") });
+            Func<Task> action = async () => await mediator.Send(
+                    new Ping
+                    {
+                        Message = "Ping",
+                        ThrowAction = msg => throw new SystemException(msg.Message + " Thrown"),
+                    })
+                .ConfigureAwait(false);
 #pragma warning restore S3626 // Jump statements should not be redundant
 
             action.Should().Throw<SystemException>();
@@ -246,7 +256,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<Pong> Handle(Ping request, CancellationToken cancellationToken, RequestHandlerDelegate<Pong> next)
             {
                 _output.Messages.Add("Outer before");
-                var response = await next();
+                var response = await next().ConfigureAwait(false);
                 _output.Messages.Add("Outer after");
 
                 return response;
@@ -265,7 +275,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<Pong> Handle(Ping request, CancellationToken cancellationToken, RequestHandlerDelegate<Pong> next)
             {
                 _output.Messages.Add("Inner before");
-                var response = await next();
+                var response = await next().ConfigureAwait(false);
                 _output.Messages.Add("Inner after");
 
                 return response;
@@ -286,7 +296,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("Inner generic before");
-                var response = await next();
+                var response = await next().ConfigureAwait(false);
                 _output.Messages.Add("Inner generic after");
 
                 return response;
@@ -307,7 +317,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("Outer generic before");
-                var response = await next();
+                var response = await next().ConfigureAwait(false);
                 _output.Messages.Add("Outer generic after");
 
                 return response;
@@ -328,7 +338,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("Constrained before");
-                var response = await next();
+                var response = await next().ConfigureAwait(false);
                 _output.Messages.Add("Constrained after");
 
                 return response;

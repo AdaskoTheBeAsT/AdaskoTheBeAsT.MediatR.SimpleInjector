@@ -21,10 +21,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 {
                     config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
                     config.UsingBuiltinPipelineProcessorBehaviors(
-                            true,
-                            true,
-                            true,
-                            true);
+                            requestPreProcessorBehaviorEnabled: true,
+                            requestPostProcessorBehaviorEnabled: true,
+                            requestExceptionProcessorBehaviorEnabled: true,
+                            requestExceptionActionProcessorBehaviorEnabled: true);
                     config.UsingPipelineProcessorBehaviors(typeof(ConstructorTestBehavior<,>));
                 });
 
@@ -44,7 +44,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 "ConstructorTestBehavior after");
         }
 
-        internal class ConstructorTestBehavior<TRequest, TResponse>
+        internal sealed class ConstructorTestBehavior<TRequest, TResponse>
             : IPipelineBehavior<TRequest, TResponse>
             where TRequest : notnull
         {
@@ -55,24 +55,24 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("ConstructorTestBehavior before");
-                var response = await next();
+                var response = await next().ConfigureAwait(false);
                 _output.Messages.Add("ConstructorTestBehavior after");
 
                 return response;
             }
         }
 
-        internal class ConstructorTestRequest : IRequest<ConstructorTestResponse>
+        internal sealed class ConstructorTestRequest : IRequest<ConstructorTestResponse>
         {
             public string? Message { get; set; }
         }
 
-        internal class ConstructorTestResponse
+        internal sealed class ConstructorTestResponse
         {
             public string? Message { get; set; }
         }
 
-        internal class ConstructorTestHandler : IRequestHandler<ConstructorTestRequest, ConstructorTestResponse>
+        internal sealed class ConstructorTestHandler : IRequestHandler<ConstructorTestRequest, ConstructorTestResponse>
         {
             private readonly Logger _logger;
 

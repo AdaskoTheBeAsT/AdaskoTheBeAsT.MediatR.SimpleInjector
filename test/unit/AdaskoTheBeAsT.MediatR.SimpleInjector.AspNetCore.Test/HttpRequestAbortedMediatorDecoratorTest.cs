@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -8,8 +9,10 @@ using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
 {
-    public class HttpRequestAbortedMediatorDecoratorTest
+    public sealed class HttpRequestAbortedMediatorDecoratorTest
+        : IDisposable
     {
+        private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationToken _cancellationToken;
         private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
         private readonly HttpRequestAbortedMediatorDecorator _sut;
@@ -17,7 +20,8 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         public HttpRequestAbortedMediatorDecoratorTest()
         {
             _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            _cancellationToken = new CancellationTokenSource().Token;
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = _cancellationTokenSource.Token;
             var mediatorMock = new Mock<IMediator>();
             _sut = new HttpRequestAbortedMediatorDecorator(
                 mediatorMock.Object,
@@ -66,6 +70,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             {
                 result.Should().Be(httpCancellationToken);
             }
+        }
+
+        public void Dispose()
+        {
+            _cancellationTokenSource.Dispose();
         }
     }
 }

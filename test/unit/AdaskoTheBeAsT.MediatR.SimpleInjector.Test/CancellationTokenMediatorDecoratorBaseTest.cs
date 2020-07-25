@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -8,17 +9,20 @@ using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 {
-    public class CancellationTokenMediatorDecoratorBaseTest
+    public sealed class CancellationTokenMediatorDecoratorBaseTest
+        : IDisposable
     {
-        private readonly Mock<IMediator> _mediatorMock;
+        private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationToken _cancellationToken;
+        private readonly Mock<IMediator> _mediatorMock;
         private readonly Mock<ICancellationTokenAccessor> _cancellationTokenAccessorMock;
         private readonly SampleCancellationTokenMediatorDecorator _sut;
 
         public CancellationTokenMediatorDecoratorBaseTest()
         {
             _cancellationTokenAccessorMock = new Mock<ICancellationTokenAccessor>();
-            _cancellationToken = new CancellationTokenSource().Token;
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = _cancellationTokenSource.Token;
             _mediatorMock = new Mock<IMediator>();
             _sut = new SampleCancellationTokenMediatorDecorator(
                 _mediatorMock.Object,
@@ -62,6 +66,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Send(request, savedCancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -72,6 +77,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -104,6 +110,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Send(request, _cancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -114,6 +121,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -146,6 +154,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Send(request, savedCancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -156,6 +165,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -188,6 +198,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Send(request, _cancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -198,6 +209,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -230,6 +242,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Publish(request, savedCancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -240,6 +253,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -272,6 +286,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Publish(request, _cancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -282,6 +297,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -314,6 +330,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Publish(request, savedCancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -324,6 +341,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -356,6 +374,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             await _sut.Publish(request, _cancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 _mediatorMock.Verify(
@@ -366,9 +385,15 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
-        internal class SampleCancellationTokenMediatorDecorator
+        public void Dispose()
+        {
+            _cancellationTokenSource.Dispose();
+        }
+
+        internal sealed class SampleCancellationTokenMediatorDecorator
             : CancellationTokenMediatorDecoratorBase
         {
             private readonly ICancellationTokenAccessor _cancellationTokenAccessor;

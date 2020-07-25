@@ -89,7 +89,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         {
             // Arrange
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Action action = () => _sut.Using(null);
+            Action action = () => _sut.Using(instanceCreator: null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
             // Act & Assert
@@ -305,28 +305,28 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
 #pragma warning disable CA1812
-        private class FakeMediator
+        private sealed class FakeMediator
             : IMediator
         {
             public Task<TResponse> Send<TResponse>(
                 IRequest<TResponse> request,
                 CancellationToken cancellationToken = default)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public Task<object?> Send(
                 object request,
                 CancellationToken cancellationToken = default)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public Task Publish(
                 object notification,
                 CancellationToken cancellationToken = default)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public Task Publish<TNotification>(
@@ -334,11 +334,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 CancellationToken cancellationToken = default)
                 where TNotification : INotification
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
         }
 
-        private class FakePipelineBehavior<TRequest, TResponse>
+        private sealed class FakePipelineBehavior<TRequest, TResponse>
             : IPipelineBehavior<TRequest, TResponse>
             where TRequest : notnull
         {
@@ -347,7 +347,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 CancellationToken cancellationToken,
                 RequestHandlerDelegate<TResponse> next)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
         }
 #pragma warning restore CA1812

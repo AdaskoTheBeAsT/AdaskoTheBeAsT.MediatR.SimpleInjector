@@ -10,6 +10,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1202 // Elements should be ordered by access
+#pragma warning disable MA0048 // File name must match type name
     public class Ping : IRequest<Pong>
     {
         public string? Message { get; set; }
@@ -17,7 +18,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public Action<Ping>? ThrowAction { get; set; }
     }
 
-    public class DerivedPing : Ping
+    public sealed class DerivedPing : Ping
     {
     }
 
@@ -26,26 +27,26 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public string? Message { get; set; }
     }
 
-    public class Zing : IRequest<Zong>
+    public sealed class Zing : IRequest<Zong>
     {
         public string? Message { get; set; }
     }
 
-    public class Zong
+    public sealed class Zong
     {
         public string? Message { get; set; }
     }
 
-    public class Ding : IRequest
+    public sealed class Ding : IRequest
     {
         public string? Message { get; set; }
     }
 
-    public class Pinged : INotification
+    public sealed class Pinged : INotification
     {
     }
 
-    internal class InternalPing : IRequest
+    internal sealed class InternalPing : IRequest
     {
     }
 
@@ -176,34 +177,35 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         */
 #pragma warning restore S125 // Sections of code should not be commented out
 
-    internal class InternalPingHandler : IRequestHandler<InternalPing>
+    internal sealed class InternalPingHandler : IRequestHandler<InternalPing>
     {
         public Task<Unit> Handle(InternalPing request, CancellationToken cancellationToken) => Unit.Task;
     }
 
-    internal class MyCustomMediator : IMediator
+    internal sealed class MyCustomMediator : IMediator
     {
         public Task<object?> Send(object request, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task Publish(object notification, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
             where TNotification : INotification
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
+#pragma warning restore MA0048 // File name must match type name
 #pragma warning restore SA1202 // Elements should be ordered by access
 #pragma warning restore SA1402 // File may only contain a single type
 #pragma warning restore SA1649 // File name should match first type name

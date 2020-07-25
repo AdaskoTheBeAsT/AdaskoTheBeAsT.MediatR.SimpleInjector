@@ -15,6 +15,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
     public sealed class ContainerExtensionTest
         : IDisposable
     {
+        private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationToken _cancellationToken;
         private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
         private readonly Container _container;
@@ -22,7 +23,8 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         public ContainerExtensionTest()
         {
             _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            _cancellationToken = new CancellationTokenSource().Token;
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = _cancellationTokenSource.Token;
             _httpContextAccessorMock
                 .SetupGet(h => h.HttpContext)
                 .Returns(
@@ -240,6 +242,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             mediator.Send(request, savedCancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 mediatorMock.Verify(
@@ -247,9 +250,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                         m.Send(
                             It.IsAny<IRequest<object>>(),
                             It.IsAny<CancellationToken>()));
+
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         [Fact]
@@ -289,6 +294,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             mediator.Send(request, savedCancellationToken);
 
             // Assert
+#pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
                 mediatorMock.Verify(
@@ -299,10 +305,12 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }
+#pragma warning restore IDISP013 // Await in using.
         }
 
         public void Dispose()
         {
+            _cancellationTokenSource.Dispose();
             _container.Dispose();
         }
 
