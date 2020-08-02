@@ -256,7 +256,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<Pong> Handle(Ping request, CancellationToken cancellationToken, RequestHandlerDelegate<Pong> next)
             {
                 _output.Messages.Add("Outer before");
-                var response = await next().ConfigureAwait(false);
+                var response = await next!().ConfigureAwait(false);
                 _output.Messages.Add("Outer after");
 
                 return response;
@@ -275,7 +275,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<Pong> Handle(Ping request, CancellationToken cancellationToken, RequestHandlerDelegate<Pong> next)
             {
                 _output.Messages.Add("Inner before");
-                var response = await next().ConfigureAwait(false);
+                var response = await next!().ConfigureAwait(false);
                 _output.Messages.Add("Inner after");
 
                 return response;
@@ -296,7 +296,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("Inner generic before");
-                var response = await next().ConfigureAwait(false);
+                var response = await next!().ConfigureAwait(false);
                 _output.Messages.Add("Inner generic after");
 
                 return response;
@@ -317,7 +317,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("Outer generic before");
-                var response = await next().ConfigureAwait(false);
+                var response = await next!().ConfigureAwait(false);
                 _output.Messages.Add("Outer generic after");
 
                 return response;
@@ -338,7 +338,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("Constrained before");
-                var response = await next().ConfigureAwait(false);
+                var response = await next!().ConfigureAwait(false);
                 _output.Messages.Add("Constrained after");
 
                 return response;

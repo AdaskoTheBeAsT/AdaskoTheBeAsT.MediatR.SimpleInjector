@@ -44,7 +44,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns(_cancellationToken);
 
             IRequest<object>? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -88,7 +88,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns((CancellationToken?)null);
 
             IRequest<object>? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -132,7 +132,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns(_cancellationToken);
 
             object? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -176,7 +176,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns((CancellationToken?)null);
 
             object? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -220,7 +220,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns(_cancellationToken);
 
             object? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -264,7 +264,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns((CancellationToken?)null);
 
             object? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -308,7 +308,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns(_cancellationToken);
 
             INotification? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>
@@ -352,7 +352,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .Returns((CancellationToken?)null);
 
             INotification? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             _mediatorMock
                 .Setup(
                     m =>

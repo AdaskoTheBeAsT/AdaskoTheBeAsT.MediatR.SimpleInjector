@@ -31,7 +31,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         [Fact]
         public async Task ShouldReturnDerivedPingPong()
         {
-            Pong pong = await _mediator.Send(new DerivedPing { Message = "Ping" });
+            var pong = await _mediator.Send(new DerivedPing { Message = "Ping" });
             pong.Message.Should().Be("DerivedPing Pong");
         }
 

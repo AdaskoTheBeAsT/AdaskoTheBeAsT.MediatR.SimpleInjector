@@ -211,7 +211,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             // Arrange
             var mediatorMock = new Mock<IMediator>();
             IRequest<object>? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             mediatorMock.Setup(
                     m =>
                         m.Send(
@@ -263,7 +263,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             // Arrange
             var mediatorMock = new Mock<IMediator>();
             object? savedRequest = null;
-            CancellationToken savedCancellationToken = default;
+            var savedCancellationToken = default(CancellationToken);
             mediatorMock.Setup(
                     m =>
                         m.Send(

@@ -55,7 +55,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
             {
                 _output.Messages.Add("ConstructorTestBehavior before");
-                var response = await next().ConfigureAwait(false);
+                var response = await next!().ConfigureAwait(false);
                 _output.Messages.Add("ConstructorTestBehavior after");
 
                 return response;
