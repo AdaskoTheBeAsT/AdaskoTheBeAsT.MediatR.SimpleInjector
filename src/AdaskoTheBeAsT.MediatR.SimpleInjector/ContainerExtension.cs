@@ -96,6 +96,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
             this Container container,
             Action<MediatRSimpleInjectorConfiguration>? configuration)
         {
+            if (container is null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
             var serviceConfig = new MediatRSimpleInjectorConfiguration();
             configuration?.Invoke(serviceConfig);
 
