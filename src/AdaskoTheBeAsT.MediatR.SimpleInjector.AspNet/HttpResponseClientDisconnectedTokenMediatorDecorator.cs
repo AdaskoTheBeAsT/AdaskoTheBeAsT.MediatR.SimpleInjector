@@ -23,6 +23,8 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
         public override CancellationToken GetCustomOrDefaultCancellationToken(CancellationToken cancellationToken)
         {
             var response = _httpContextAccessor.Response;
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (response == null)
             {
                 return cancellationToken;
