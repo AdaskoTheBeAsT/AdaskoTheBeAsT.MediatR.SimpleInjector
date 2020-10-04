@@ -41,7 +41,7 @@ steps:
   displayName: 'Prepare analysis on SonarCloud'
   inputs:
     scannerMode: 'MSBuild'    
-    SonarCloud: 'AdaskoTheBeAsT.MediatR.SimpleInjector.SonarCloud'
+    SonarCloud: 'Sonar.AdaskoTheBeAsT.MediatR.SimpleInjector'
     organization: 'adaskothebeast-github'
     projectKey: 'AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector'
     projectName: AdaskoTheBeAsT.MediatR.SimpleInjector
