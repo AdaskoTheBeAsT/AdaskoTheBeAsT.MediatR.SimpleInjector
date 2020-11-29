@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5.0</TargetFrameworks>
     <ProjectGuid>A5FD8204-683F-49D4-9722-2B2C27D13407</ProjectGuid>
   </PropertyGroup>
 
@@ -10,7 +10,7 @@
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>MediatR extensions for SimpleInjector for AspNetCore</Description>
-    <PackageVersion>4.0.0</PackageVersion>
+    <PackageVersion>4.0.1</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -24,7 +24,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1' OR '$(TargetFramework)'=='net5'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1' OR '$(TargetFramework)'=='net5.0'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="4.0.0" />
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="4.0.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using MediatR;
@@ -206,7 +207,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         }
 
         [Fact]
-        public void DecoratorShouldPassTypedRequestToInnerMediator()
+        public async Task DecoratorShouldPassTypedRequestToInnerMediator()
         {
             // Arrange
             var mediatorMock = new Mock<IMediator>();
@@ -239,17 +240,19 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
 
             // Act
             var mediator = _container.GetInstance<IMediator>();
-            mediator.Send(request, savedCancellationToken);
+            await mediator.Send(request, savedCancellationToken);
 
             // Assert
 #pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
+#pragma warning disable MA0100
                 mediatorMock.Verify(
                     m =>
                         m.Send(
                             It.IsAny<IRequest<object>>(),
                             It.IsAny<CancellationToken>()));
+#pragma warning restore MA0100
 
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
@@ -258,7 +261,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         }
 
         [Fact]
-        public void DecoratorShouldPassObjectToInnerMediator()
+        public async Task DecoratorShouldPassObjectToInnerMediator()
         {
             // Arrange
             var mediatorMock = new Mock<IMediator>();
@@ -291,17 +294,20 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
 
             // Act
             var mediator = _container.GetInstance<IMediator>();
-            mediator.Send(request, savedCancellationToken);
+            await mediator.Send(request, savedCancellationToken);
 
             // Assert
 #pragma warning disable IDISP013 // Await in using.
             using (new AssertionScope())
             {
+#pragma warning disable MA0100
                 mediatorMock.Verify(
                     m =>
                         m.Send(
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()));
+#pragma warning restore MA0100
+
                 savedRequest.Should().Be(request);
                 savedCancellationToken.Should().Be(_cancellationToken);
             }

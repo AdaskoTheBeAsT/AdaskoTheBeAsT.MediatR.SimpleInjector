@@ -10,7 +10,7 @@
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>MediatR extensions for SimpleInjector for AspNet</Description>
-    <PackageVersion>4.0.0</PackageVersion>
+    <PackageVersion>4.0.1</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="4.0.0" />
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="4.0.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
