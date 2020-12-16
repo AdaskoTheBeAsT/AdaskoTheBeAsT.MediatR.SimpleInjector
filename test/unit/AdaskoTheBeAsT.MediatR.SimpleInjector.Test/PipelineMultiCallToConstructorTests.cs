@@ -14,7 +14,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipeline()
         {
             var output = new Logger();
+#if NET461 || NETCOREAPP2_1
+            using var container = new Container();
+#else
             await using var container = new Container();
+#endif
             container.RegisterInstance(output);
             container.AddMediatR(
                 config =>
