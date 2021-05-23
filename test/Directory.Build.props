@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="Moq.Analyzers" Version="0.0.8" />
-    <PackageReference Include="NunitXml.TestLogger" Version="3.0.97" />
+    <PackageReference Include="NunitXml.TestLogger" Version="3.0.107" />
     <PackageReference Include="SemanticComparison" Version="4.1.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
