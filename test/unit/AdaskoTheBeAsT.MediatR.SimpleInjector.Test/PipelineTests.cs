@@ -13,7 +13,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
     public class PipelineTests
     {
         [Fact]
-        public async Task ShouldWrapWithBehavior()
+        public async Task ShouldWrapWithBehaviorAsync()
         {
             var output = new Logger();
 #if NET461 || NETCOREAPP2_1
@@ -57,7 +57,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task ShouldWrapGenericsWithBehavior()
+        public async Task ShouldWrapGenericsWithBehaviorAsync()
         {
             var output = new Logger();
 #if NET461 || NETCOREAPP2_1
@@ -103,7 +103,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task ShouldPickUpPreAndPostProcessors()
+        public async Task ShouldPickUpPreAndPostProcessorsAsync()
         {
             var output = new Logger();
 #if NET461 || NETCOREAPP2_1
@@ -212,7 +212,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task ShouldHandleConstrainedGenerics()
+        public async Task ShouldHandleConstrainedGenericsAsync()
         {
             var output = new Logger();
 #if NET461 || NETCOREAPP2_1

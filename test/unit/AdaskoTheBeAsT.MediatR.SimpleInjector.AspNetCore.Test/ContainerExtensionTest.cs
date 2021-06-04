@@ -207,7 +207,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         }
 
         [Fact]
-        public async Task DecoratorShouldPassTypedRequestToInnerMediator()
+        public async Task DecoratorShouldPassTypedRequestToInnerMediatorAsync()
         {
             // Arrange
             var mediatorMock = new Mock<IMediator>();
@@ -261,7 +261,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         }
 
         [Fact]
-        public async Task DecoratorShouldPassObjectToInnerMediator()
+        public async Task DecoratorShouldPassObjectToInnerMediatorAsync()
         {
             // Arrange
             var mediatorMock = new Mock<IMediator>();

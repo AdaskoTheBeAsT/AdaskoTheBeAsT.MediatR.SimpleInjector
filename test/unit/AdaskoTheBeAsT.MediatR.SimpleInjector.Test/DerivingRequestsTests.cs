@@ -22,14 +22,14 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task ShouldReturnPingPong()
+        public async Task ShouldReturnPingPongAsync()
         {
             var pong = await _mediator.Send(new Ping { Message = "Ping" });
             pong.Message.Should().Be("Ping Pong");
         }
 
         [Fact]
-        public async Task ShouldReturnDerivedPingPong()
+        public async Task ShouldReturnDerivedPingPongAsync()
         {
             var pong = await _mediator.Send(new DerivedPing { Message = "Ping" });
             pong.Message.Should().Be("DerivedPing Pong");

@@ -37,7 +37,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
 #pragma warning restore CA1034 // Nested types should not be visible
 
         [Fact]
-        public async Task SendRequestShouldUseCancellationTokenFromAccessor()
+        public async Task SendRequestShouldUseCancellationTokenFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -84,7 +84,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task SendRequestShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
+        public async Task SendRequestShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -131,7 +131,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task SendObjectShouldUseCancellationTokenFromAccessor()
+        public async Task SendObjectShouldUseCancellationTokenFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -178,7 +178,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task SendObjectShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
+        public async Task SendObjectShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -225,7 +225,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task PublishObjectShouldUseCancellationTokenFromAccessor()
+        public async Task PublishObjectShouldUseCancellationTokenFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -272,7 +272,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task PublishObjectShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
+        public async Task PublishObjectShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -319,7 +319,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task PublishNotificationShouldUseCancellationTokenFromAccessor()
+        public async Task PublishNotificationShouldUseCancellationTokenFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
@@ -366,7 +366,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public async Task PublishNotificationShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessor()
+        public async Task PublishNotificationShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessorAsync()
         {
             // Arrange
             _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())

@@ -11,7 +11,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
     public class PipelineMultiCallToConstructorTests
     {
         [Fact]
-        public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipeline()
+        public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipelineAsync()
         {
             var output = new Logger();
 #if NET461 || NETCOREAPP2_1
