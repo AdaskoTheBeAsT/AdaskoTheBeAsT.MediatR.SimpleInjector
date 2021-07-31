@@ -218,10 +218,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                         m.Send(
                             It.IsAny<IRequest<object>>(),
                             It.IsAny<CancellationToken>()))
-                .Callback<IRequest<object>, CancellationToken>(
-                    (
-                        req,
-                        token) =>
+                .Callback<IRequest<object>, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;
                         savedCancellationToken = token;
@@ -272,10 +269,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                         m.Send(
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()))
-                .Callback<object, CancellationToken>(
-                    (
-                        req,
-                        token) =>
+                .Callback<object, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;
                         savedCancellationToken = token;
