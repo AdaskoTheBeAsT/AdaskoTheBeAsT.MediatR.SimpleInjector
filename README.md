@@ -3,6 +3,7 @@
 MediatR extensions for SimpleInjector.
 
 ## Badges
+[![CodeFactor](https://www.codefactor.io/repository/github/adaskothebeast/adaskothebeast.mediatr.simpleinjector/badge)](https://www.codefactor.io/repository/github/adaskothebeast/adaskothebeast.mediatr.simpleinjector)
 [![Build Status](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_apis/build/status/AdaskoTheBeAsT.AdaskoTheBeAsT.MediatR.SimpleInjector?branchName=master)](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_build/latest?definitionId=7&branchName=master)
 ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/17)
 ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/17?style=plastic)
