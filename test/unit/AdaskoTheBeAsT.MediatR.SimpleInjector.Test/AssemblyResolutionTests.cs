@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 using FluentAssertions;
 using MediatR;
 using SimpleInjector;

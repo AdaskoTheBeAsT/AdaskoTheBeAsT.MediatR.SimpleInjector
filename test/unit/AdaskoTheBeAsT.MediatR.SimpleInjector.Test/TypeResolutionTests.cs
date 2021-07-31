@@ -1,4 +1,5 @@
 using System;
+using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 using FluentAssertions;
 using MediatR;
 using SimpleInjector;
