@@ -47,7 +47,7 @@ steps:
 - task: SonarCloudPrepare@1
   displayName: 'Prepare analysis on SonarCloud'
   inputs:
-    scannerMode: 'MSBuild'    
+    scannerMode: 'MSBuild'
     SonarCloud: 'Sonar.AdaskoTheBeAsT.MediatR.SimpleInjector'
     organization: 'adaskothebeast-github'
     projectKey: 'AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector'
@@ -69,7 +69,7 @@ steps:
     targetFolder: '$(Build.SourcesDirectory)/nuget'
     CleanTargetFolder: true
     flattenFolders: true
-  
+
 - task: DeleteFiles@1
   displayName: 'Clear test results'
   inputs:
@@ -89,7 +89,7 @@ steps:
     solutionOrProjectPath: 'AdaskoTheBeAsT.MediatR.SimpleInjector.sln'
     failBuildLevelSelector: 'Warning'
     resultsOutputFilePath: '$(Build.SourcesDirectory)/CodeQualityResults.xml'
-  
+
 - task: SonarCloudAnalyze@1
   displayName: Sonar Cloud analyze
 

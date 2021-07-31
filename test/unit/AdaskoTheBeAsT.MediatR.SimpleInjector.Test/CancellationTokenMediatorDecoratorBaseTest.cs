@@ -239,10 +239,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                         m.Publish(
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()))
-                .Callback<object, CancellationToken>(
-                    (
-                        req,
-                        token) =>
+                .Callback<object, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;
                         savedCancellationToken = token;
@@ -286,10 +283,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                         m.Publish(
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()))
-                .Callback<object, CancellationToken>(
-                    (
-                        req,
-                        token) =>
+                .Callback<object, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;
                         savedCancellationToken = token;
@@ -333,10 +327,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                         m.Publish(
                             It.IsAny<INotification>(),
                             It.IsAny<CancellationToken>()))
-                .Callback<INotification, CancellationToken>(
-                    (
-                        req,
-                        token) =>
+                .Callback<INotification, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;
                         savedCancellationToken = token;
