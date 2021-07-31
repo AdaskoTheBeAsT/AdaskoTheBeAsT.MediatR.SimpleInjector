@@ -16,7 +16,7 @@ namespace TestApp
         {
             using var writer = new WrappingWriter(Console.Out);
             var mediator = BuildMediator(writer);
-            return Runner.Run(mediator, writer, "SimpleInjector");
+            return Runner.RunAsync(mediator, writer, "SimpleInjector");
         }
 
         private static IMediator BuildMediator(WrappingWriter writer)

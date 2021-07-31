@@ -1,16 +1,13 @@
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 
 namespace TestApp
 {
-#pragma warning disable SA1402 // File may only contain a single type
     public static class Runner
     {
-        public static Task Run(IMediator mediator, WrappingWriter writer, string projectName)
+        public static Task RunAsync(IMediator mediator, WrappingWriter writer, string projectName)
         {
             if (mediator is null)
             {
@@ -22,54 +19,55 @@ namespace TestApp
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            return RunInternal(mediator, writer, projectName);
+            return RunInternalAsync(mediator, writer, projectName);
         }
 
-        internal static async Task RunInternal(
+#pragma warning disable MA0051 // Method is too long
+        internal static async Task RunInternalAsync(
             IMediator mediator,
             WrappingWriter writer,
             string projectName)
         {
-            await writer.WriteLineAsync("===============");
-            await writer.WriteLineAsync(projectName);
-            await writer.WriteLineAsync("===============");
+            await writer.WriteLineAsync("===============").ConfigureAwait(false);
+            await writer.WriteLineAsync(projectName).ConfigureAwait(false);
+            await writer.WriteLineAsync("===============").ConfigureAwait(false);
 
-            await writer.WriteLineAsync("Sending Ping...");
-            var pong = await mediator.Send(new Ping { Message = "Ping" });
-            await writer.WriteLineAsync("Received: " + pong.Message);
+            await writer.WriteLineAsync("Sending Ping...").ConfigureAwait(false);
+            var pong = await mediator.Send(new Ping { Message = nameof(Ping) }).ConfigureAwait(false);
+            await writer.WriteLineAsync("Received: " + pong.Message).ConfigureAwait(false);
 
-            await writer.WriteLineAsync("Publishing Pinged...");
-            await mediator.Publish(new Pinged());
+            await writer.WriteLineAsync("Publishing Pinged...").ConfigureAwait(false);
+            await mediator.Publish(new Pinged()).ConfigureAwait(false);
 
-            await writer.WriteLineAsync("Publishing Ponged...");
+            await writer.WriteLineAsync("Publishing Ponged...").ConfigureAwait(false);
             var failedPong = false;
             try
             {
-                await mediator.Publish(new Ponged());
+                await mediator.Publish(new Ponged()).ConfigureAwait(false);
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception e)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
                 failedPong = true;
-                await writer.WriteLineAsync(e.ToString());
+                await writer.WriteLineAsync(e.ToString()).ConfigureAwait(false);
             }
 
-            bool failedJing = false;
-            await writer.WriteLineAsync("Sending Jing...");
+            var failedJing = false;
+            await writer.WriteLineAsync("Sending Jing...").ConfigureAwait(false);
             try
             {
-                await mediator.Send(new Jing { Message = "Jing" });
+                await mediator.Send(new Jing { Message = nameof(Jing) }).ConfigureAwait(false);
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception e)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
                 failedJing = true;
-                await writer.WriteLineAsync(e.ToString());
+                await writer.WriteLineAsync(e.ToString()).ConfigureAwait(false);
             }
 
-            await writer.WriteLineAsync("---------------");
+            await writer.WriteLineAsync("---------------").ConfigureAwait(false);
             var contents = writer.Contents;
             var order = new[]
             {
@@ -102,70 +100,29 @@ namespace TestApp
                 CovariantNotificationHandler = contents.Contains("Got notified", StringComparison.OrdinalIgnoreCase),
             };
 
-            await writer.WriteLineAsync($"Request Handler...................{(results.RequestHandlers ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Void Request Handler..............{(results.VoidRequestsHandlers ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Pipeline Behavior.................{(results.PipelineBehaviors ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Pre-Processor.....................{(results.RequestPreProcessors ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Post-Processor....................{(results.RequestPostProcessors ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Constrained Post-Processor........{(results.ConstrainedGenericBehaviors ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Ordered Behaviors.................{(results.OrderedPipelineBehaviors ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Notification Handler..............{(results.NotificationHandler ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Notification Handlers.............{(results.MultipleNotificationHandlers ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Constrained Notification Handler..{(results.ConstrainedGenericNotificationHandler ? "Y" : "N")}");
-            await writer.WriteLineAsync($"Covariant Notification Handler....{(results.CovariantNotificationHandler ? "Y" : "N")}");
+            await writer.WriteLineAsync($"Request Handler...................{(results.RequestHandlers ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Void Request Handler..............{(results.VoidRequestsHandlers ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Pipeline Behavior.................{(results.PipelineBehaviors ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Pre-Processor.....................{(results.RequestPreProcessors ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Post-Processor....................{(results.RequestPostProcessors ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Constrained Post-Processor........{(results.ConstrainedGenericBehaviors ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Ordered Behaviors.................{(results.OrderedPipelineBehaviors ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Notification Handler..............{(results.NotificationHandler ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Notification Handlers.............{(results.MultipleNotificationHandlers ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Constrained Notification Handler..{(results.ConstrainedGenericNotificationHandler ? "Y" : "N")}")
+                .ConfigureAwait(false);
+            await writer.WriteLineAsync($"Covariant Notification Handler....{(results.CovariantNotificationHandler ? "Y" : "N")}")
+                .ConfigureAwait(false);
         }
+#pragma warning restore MA0051 // Method is too long
     }
-
-    public class RunResults
-    {
-        public bool RequestHandlers { get; set; }
-
-        public bool VoidRequestsHandlers { get; set; }
-
-        public bool PipelineBehaviors { get; set; }
-
-        public bool RequestPreProcessors { get; set; }
-
-        public bool RequestPostProcessors { get; set; }
-
-        public bool OrderedPipelineBehaviors { get; set; }
-
-        public bool ConstrainedGenericBehaviors { get; set; }
-
-        public bool NotificationHandler { get; set; }
-
-        public bool MultipleNotificationHandlers { get; set; }
-
-        public bool CovariantNotificationHandler { get; set; }
-
-        public bool ConstrainedGenericNotificationHandler { get; set; }
-    }
-
-    public class WrappingWriter : TextWriter
-    {
-        private readonly TextWriter _innerWriter;
-        private readonly StringBuilder _stringWriter = new StringBuilder();
-
-        public WrappingWriter(TextWriter innerWriter)
-        {
-            _innerWriter = innerWriter;
-        }
-
-        public override Encoding Encoding => _innerWriter.Encoding;
-
-        public string Contents => _stringWriter.ToString();
-
-        public override void Write(char value)
-        {
-            _stringWriter.Append(value);
-            _innerWriter.Write(value);
-        }
-
-        public override Task WriteLineAsync(string? value)
-        {
-            _stringWriter.AppendLine(value);
-            return _innerWriter.WriteLineAsync(value);
-        }
-    }
-#pragma warning restore SA1402 // File may only contain a single type
 }
