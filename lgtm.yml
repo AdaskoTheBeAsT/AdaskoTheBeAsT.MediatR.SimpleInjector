@@ -1,5 +1,7 @@
 extraction:
   csharp:
     index:
-      dotnet:
-        version: 5.0.302
+      solution: AdaskoTheBeAsT.MediatR.SimpleInjector.sln
+      msbuild:
+        configuration: release   
+        platform: x64
