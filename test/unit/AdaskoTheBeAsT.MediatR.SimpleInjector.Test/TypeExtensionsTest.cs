@@ -7,7 +7,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
     /// <summary>
     /// Based on https://gist.github.com/klmr/4174727.
     /// </summary>
-    public sealed class TypeExtensionsTest
+    public sealed partial class TypeExtensionsTest
     {
         [Fact]
         public void ShouldGenericClassBeAssignableToGenericBaseClass()
@@ -248,43 +248,5 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
             // Assert
             result.Should().BeFalse();
         }
-
-#pragma warning disable CA1812
-#pragma warning disable S2326 // Unused type parameters should be removed
-#pragma warning disable SA1201 // Elements should appear in the correct order
-
-        // ReSharper disable once UnusedTypeParameter
-        private class Base<T>
-        {
-        }
-
-        // ReSharper disable once UnusedTypeParameter
-        private interface IBase<T>
-        {
-        }
-
-        private interface IDerived<T>
-            : IBase<T>
-        {
-        }
-
-        private class Derived<T>
-            : Base<T>,
-                IBase<T>
-        {
-        }
-
-        private class Derived2<T>
-            : Derived<T>
-        {
-        }
-
-        private class DerivedI<T>
-            : IDerived<T>
-        {
-        }
-#pragma warning restore SA1201 // Elements should appear in the correct order
-#pragma warning restore S2326 // Unused type parameters should be removed
-#pragma warning restore CA1812
     }
 }
