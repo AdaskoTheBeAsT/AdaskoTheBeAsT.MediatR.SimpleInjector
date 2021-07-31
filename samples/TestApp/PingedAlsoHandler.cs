@@ -5,18 +5,18 @@ using MediatR;
 
 namespace TestApp
 {
-    public class PingedHandler : INotificationHandler<Pinged>
+    public class PingedAlsoHandler : INotificationHandler<Pinged>
     {
         private readonly TextWriter _writer;
 
-        public PingedHandler(TextWriter writer)
+        public PingedAlsoHandler(TextWriter writer)
         {
             _writer = writer;
         }
 
         public Task Handle(Pinged notification, CancellationToken cancellationToken)
         {
-            return _writer.WriteLineAsync("Got pinged async.");
+            return _writer.WriteLineAsync("Got pinged also async.");
         }
     }
 }
