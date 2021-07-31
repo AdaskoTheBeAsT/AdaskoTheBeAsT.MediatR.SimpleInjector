@@ -40,7 +40,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
             this Container container,
             params Assembly[] assemblies)
         {
-            return AddMediatR(container, config => config.WithAssembliesToScan(assemblies));
+            return AddMediatR(
+                container,
+                config => config.WithAssembliesToScan(assemblies));
         }
 
         /// <summary>
@@ -53,7 +55,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector
             this Container container,
             IEnumerable<Assembly> assemblies)
         {
-            return AddMediatR(container, config => config.WithAssembliesToScan(assemblies));
+            return AddMediatR(
+                container,
+                config => config.WithAssembliesToScan(assemblies));
         }
 
         /// <summary>
