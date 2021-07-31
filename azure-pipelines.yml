@@ -74,7 +74,7 @@ steps:
   displayName: 'Clear test results'
   inputs:
     SourceFolder: '$(testResultsDirectory)'
-    Contents: '**/*'    
+    Contents: '**/*'
 
 - task: DotNetCoreCLI@2
   displayName: Test
@@ -102,7 +102,7 @@ steps:
   displayName: 'Clear coverage files'
   inputs:
     SourceFolder: '$(testResultsDirectory)'
-    Contents: '**/*.coverage'  
+    Contents: '**/*.coverage'
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
@@ -128,7 +128,7 @@ steps:
     sourceFolder: '$(Build.SourcesDirectory)/nuget'
     contents: '**/*'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
-    CleanTargetFolder: true  
+    CleanTargetFolder: true
 
 - task: PublishBuildArtifacts@1
   inputs:
