@@ -42,7 +42,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
             Func<HttpContextBase>? httpContextFunc,
             params Assembly[] assemblies)
         {
-            return AddMediatRAspNet(container, config =>
+            return AddMediatRAspNet(
+                container,
+                config =>
             {
                 config.WithAssembliesToScan(assemblies);
                 if (httpContextFunc != null)
@@ -64,7 +66,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
             Func<HttpContextBase>? httpContextFunc,
             IEnumerable<Assembly> assemblies)
         {
-            return AddMediatRAspNet(container, config =>
+            return AddMediatRAspNet(
+                container,
+                config =>
             {
                 config.WithAssembliesToScan(assemblies);
                 if (httpContextFunc != null)
