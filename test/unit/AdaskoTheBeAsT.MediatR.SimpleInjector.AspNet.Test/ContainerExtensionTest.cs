@@ -189,9 +189,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 {
                     result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
                     var innerMediator =
-                        GetInstanceFieldValue<
-                            HttpResponseClientDisconnectedTokenMediatorDecorator,
-                            IMediator>(
+                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator, IMediator>(
                             result,
                             "_mediator");
                     innerMediator.Should().BeOfType<Mediator>();
@@ -223,9 +221,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 {
                     result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
                     var innerMediator =
-                        GetInstanceFieldValue<
-                            HttpResponseClientDisconnectedTokenMediatorDecorator,
-                            IMediator>(
+                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator, IMediator>(
                             result,
                             "_mediator");
                     innerMediator.Should().BeOfType<FakeMediator>();
@@ -258,8 +254,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 {
                     result.Should().BeOfType<HttpResponseClientDisconnectedTokenMediatorDecorator>();
                     var innerMediator =
-                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator,
-                            IMediator>(
+                        GetInstanceFieldValue<HttpResponseClientDisconnectedTokenMediatorDecorator, IMediator>(
                             result,
                             "_mediator");
                     innerMediator.Should().NotBeNull();
