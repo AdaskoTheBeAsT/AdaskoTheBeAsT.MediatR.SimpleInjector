@@ -74,7 +74,7 @@
     <PackageReference Include="Roslynator.Formatting.Analyzers" Version="1.1.0" >
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.2.1" >
+    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.1.0" >
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.26.0.34506" >
