@@ -143,7 +143,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
         }
 
         [Fact]
-        public void ShouldPickUpBaseExceptionBehaviors()
+        public async Task ShouldPickUpBaseExceptionBehaviorsAsync()
         {
             var output = new Logger();
             using var container = new Container();
@@ -171,14 +171,14 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .ConfigureAwait(false);
 #pragma warning restore S3626 // Jump statements should not be redundant
 
-            action.Should().Throw<Exception>();
+            await action.Should().ThrowAsync<Exception>().ConfigureAwait(false);
 
             output.Messages.Should().Contain("Ping Thrown Logged by Generic Type");
             output.Messages.Should().Contain("Logging generic exception");
         }
 
         [Fact]
-        public void ShouldPickUpExceptionActions()
+        public async Task ShouldPickUpExceptionActionsAsync()
         {
             var output = new Logger();
             using var container = new Container();
@@ -206,7 +206,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
                 .ConfigureAwait(false);
 #pragma warning restore S3626 // Jump statements should not be redundant
 
-            action.Should().Throw<SystemException>();
+            await action.Should().ThrowAsync<SystemException>().ConfigureAwait(false);
 
             output.Messages.Should().Contain("Logging exception 1");
             output.Messages.Should().Contain("Logging exception 2");
