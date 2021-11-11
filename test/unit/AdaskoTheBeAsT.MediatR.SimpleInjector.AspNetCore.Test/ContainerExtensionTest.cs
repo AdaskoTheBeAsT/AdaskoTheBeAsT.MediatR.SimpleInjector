@@ -43,7 +43,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             // Arrange
             _container.AddMediatRAspNetCore(
                 config => config.WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest)));
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -59,7 +59,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         {
             // Arrange
             _container.AddMediatRAspNetCore(typeof(ContainerExtensionTest).GetTypeInfo().Assembly);
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -75,7 +75,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         {
             // Arrange
             _container.AddMediatRAspNetCore(new List<Assembly> { typeof(ContainerExtensionTest).GetTypeInfo().Assembly });
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -91,7 +91,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         {
             // Arrange
             _container.AddMediatRAspNetCore(typeof(ContainerExtensionTest));
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -107,7 +107,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
         {
             // Arrange
             _container.AddMediatRAspNetCore(new List<Type> { typeof(ContainerExtensionTest) });
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -125,7 +125,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
             _container.AddMediatRAspNetCore(
                 config =>
                     config.WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest)));
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -154,7 +154,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                     config.WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest));
                     config.Using<FakeMediator>();
                 });
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -184,7 +184,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                     config.WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest));
                     config.Using(() => mediatorMock);
                 });
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -229,7 +229,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                     config.WithHandlerAssemblyMarkerTypes(typeof(FakeMediator));
                     config.Using(() => mediatorMock.Object);
                 });
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
@@ -280,7 +280,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.Test
                     config.WithHandlerAssemblyMarkerTypes(typeof(FakeMediator));
                     config.Using(() => mediatorMock.Object);
                 });
-            _container.RegisterSingleton(() => _httpContextAccessorMock.Object);
+            _container.RegisterInstance(_httpContextAccessorMock.Object);
 
             _container.Verify();
 
