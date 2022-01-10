@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Async" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\src\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore.csproj" />
   </ItemGroup>
 

@@ -6,24 +6,24 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector;
 
 [ExcludeFromCodeCoverage]
 [Serializable]
-public class InvalidPipelineBehaviorTypeException
+public class InvalidStreamPipelineBehaviorTypeException
     : Exception
 {
-    public InvalidPipelineBehaviorTypeException()
+    public InvalidStreamPipelineBehaviorTypeException()
     {
     }
 
-    public InvalidPipelineBehaviorTypeException(string message)
+    public InvalidStreamPipelineBehaviorTypeException(string message)
         : base(message)
     {
     }
 
-    public InvalidPipelineBehaviorTypeException(string message, Exception innerException)
+    public InvalidStreamPipelineBehaviorTypeException(string message, Exception innerException)
         : base(message, innerException)
     {
     }
 
-    protected InvalidPipelineBehaviorTypeException(
+    protected InvalidStreamPipelineBehaviorTypeException(
         SerializationInfo info,
         StreamingContext context)
         : base(info, context)

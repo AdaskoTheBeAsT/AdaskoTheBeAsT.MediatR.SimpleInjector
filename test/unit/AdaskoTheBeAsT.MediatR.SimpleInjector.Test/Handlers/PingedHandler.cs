@@ -2,13 +2,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
+
+public class PingedHandler : INotificationHandler<Pinged>
 {
-    public class PingedHandler : INotificationHandler<Pinged>
+    public Task Handle(Pinged notification, CancellationToken cancellationToken)
     {
-        public Task Handle(Pinged notification, CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

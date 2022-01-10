@@ -3,6 +3,7 @@
 MediatR extensions for SimpleInjector.
 
 ## Badges
+
 [![CodeFactor](https://www.codefactor.io/repository/github/adaskothebeast/adaskothebeast.mediatr.simpleinjector/badge)](https://www.codefactor.io/repository/github/adaskothebeast/adaskothebeast.mediatr.simpleinjector)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/alerts/)
 [![Build Status](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_apis/build/status/AdaskoTheBeAsT.AdaskoTheBeAsT.MediatR.SimpleInjector?branchName=master)](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_build/latest?definitionId=7&branchName=master)
@@ -35,7 +36,7 @@ There are few options to use with `Container` instance:
 
 1. Full configuration
 
-   ```cs
+    ```cs
     var testMediator = new Mock<IMediator>();
     container.AddMediatR(
         cfg =>
@@ -44,9 +45,9 @@ There are few options to use with `Container` instance:
             cfg.WithHandlerAssemblyMarkerTypes(typeof(MyMarkerType));
             cfg.UsingBuiltinPipelineProcessorBehaviors(true);
             cfg.UsingPipelineProcessorBehaviors(typeof(CustomPipelineBehavior<,>));
+            cfg.UsingStreamPipelineBehaviors(typeof(CustomStreamPipelineBehavior<,>));
         });
-   ``` 
-
+    ```
 
 ## Usage in other project types
 
@@ -86,13 +87,14 @@ There are few options to use with `Container` instance:
             container.AddMediatR(assemblies);
         }
     }
-   ```
+    ```
 
 This will register:
 
 - `IMediator` as Singleton
 - `IRequestHandler<>` concrete implementations as Transient
 - `INotificationHandler<>` concrete implementations as Transient
+- `IStreamRequestHandler<>` concrete implementations as Transient
 
 ## Advanced usage
 
@@ -191,6 +193,21 @@ and all user defined implementation of processors and handlers:
         });
    ```
 
+### Setting assemblies to scan and additonaly custom stream request handlers behaviors
+
+This will register following stream behaviors:
+
+- `CustomStreamPipelineBehavior<,>`
+
+   ```cs
+    container.AddMediatR(
+        cfg =>
+        {
+            cfg.WithAssembliesToScan(assemblies);
+            cfg.UsingStreamPipelineBehaviors(typeof(CustomStreamPipelineBehavior<,>));
+        });
+   ```
+
 ### Setting assemblies to scan and additonaly enabling choosen builtin behaviors and user defined processors/handlers also with custom Pipeline Process Behaviours
 
    ```cs
@@ -207,7 +224,7 @@ and all user defined implementation of processors and handlers:
         });
    ```
 
-# Thanks to:
+## Thanks to
 
 - Jimmy Boggard for MediatR
 - Steven van Deursen for SimpleInjector

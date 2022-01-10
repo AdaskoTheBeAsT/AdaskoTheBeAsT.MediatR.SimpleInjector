@@ -1,10 +1,9 @@
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
+
+public sealed partial class TypeExtensionsTest
 {
-    public sealed partial class TypeExtensionsTest
+    private interface IDerived<T>
+        : IBase<T>
     {
-        private interface IDerived<T>
-            : IBase<T>
-        {
-        }
     }
 }

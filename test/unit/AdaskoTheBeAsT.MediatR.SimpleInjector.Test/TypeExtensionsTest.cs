@@ -2,251 +2,250 @@ using System;
 using FluentAssertions;
 using Xunit;
 
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
+
+/// <summary>
+/// Based on https://gist.github.com/klmr/4174727.
+/// </summary>
+public sealed partial class TypeExtensionsTest
 {
-    /// <summary>
-    /// Based on https://gist.github.com/klmr/4174727.
-    /// </summary>
-    public sealed partial class TypeExtensionsTest
+    [Fact]
+    public void ShouldGenericClassBeAssignableToGenericBaseClass()
     {
-        [Fact]
-        public void ShouldGenericClassBeAssignableToGenericBaseClass()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(Base<>));
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(Base<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldConcreteClassBeAssignableToGenericBaseClass()
-        {
-            // Act
-            var result = typeof(Derived<object>).IsAssignableToGenericType(typeof(Base<>));
+    [Fact]
+    public void ShouldConcreteClassBeAssignableToGenericBaseClass()
+    {
+        // Act
+        var result = typeof(Derived<object>).IsAssignableToGenericType(typeof(Base<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldGenericClassBeAssignableToGenericInterface()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(IBase<>));
+    [Fact]
+    public void ShouldGenericClassBeAssignableToGenericInterface()
+    {
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(IBase<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldConcreteClassBeAssignableToGenericInterface()
-        {
-            // Act
-            var result = typeof(Derived<object>).IsAssignableToGenericType(typeof(IBase<>));
+    [Fact]
+    public void ShouldConcreteClassBeAssignableToGenericInterface()
+    {
+        // Act
+        var result = typeof(Derived<object>).IsAssignableToGenericType(typeof(IBase<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldGenericClassBeAssignableToGenericSelf()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(Derived<>));
+    [Fact]
+    public void ShouldGenericClassBeAssignableToGenericSelf()
+    {
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(Derived<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldConcreteClassBeAssignableToGenericSelf()
-        {
-            // Act
-            var result = typeof(Derived<object>).IsAssignableToGenericType(typeof(Derived<>));
+    [Fact]
+    public void ShouldConcreteClassBeAssignableToGenericSelf()
+    {
+        // Act
+        var result = typeof(Derived<object>).IsAssignableToGenericType(typeof(Derived<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldGenericClassBeAssignableToGenericTransitiveClass()
-        {
-            // Act
-            var result = typeof(Derived2<>).IsAssignableToGenericType(typeof(Base<>));
+    [Fact]
+    public void ShouldGenericClassBeAssignableToGenericTransitiveClass()
+    {
+        // Act
+        var result = typeof(Derived2<>).IsAssignableToGenericType(typeof(Base<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldConcreteClassBeAssignableToGenericTransitiveClass()
-        {
-            // Act
-            var result = typeof(Derived2<object>).IsAssignableToGenericType(typeof(Base<>));
+    [Fact]
+    public void ShouldConcreteClassBeAssignableToGenericTransitiveClass()
+    {
+        // Act
+        var result = typeof(Derived2<object>).IsAssignableToGenericType(typeof(Base<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldGenericInterfaceBeAssignableToGenericTransitiveInterface()
-        {
-            // Act
-            var result = typeof(DerivedI<>).IsAssignableToGenericType(typeof(IBase<>));
+    [Fact]
+    public void ShouldGenericInterfaceBeAssignableToGenericTransitiveInterface()
+    {
+        // Act
+        var result = typeof(DerivedI<>).IsAssignableToGenericType(typeof(IBase<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldConcreteInterfaceBeAssignableToGenericTransitiveInterface()
-        {
-            // Act
-            var result = typeof(DerivedI<object>).IsAssignableToGenericType(typeof(IBase<>));
+    [Fact]
+    public void ShouldConcreteInterfaceBeAssignableToGenericTransitiveInterface()
+    {
+        // Act
+        var result = typeof(DerivedI<object>).IsAssignableToGenericType(typeof(IBase<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldGenericClassBeAssignableToGenericTransitiveInterface()
-        {
-            // Act
-            var result = typeof(Derived2<>).IsAssignableToGenericType(typeof(IBase<>));
+    [Fact]
+    public void ShouldGenericClassBeAssignableToGenericTransitiveInterface()
+    {
+        // Act
+        var result = typeof(Derived2<>).IsAssignableToGenericType(typeof(IBase<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldConcreteClassBeAssignableToGenericTransitiveInterface()
-        {
-            // Act
-            var result = typeof(Derived2<object>).IsAssignableToGenericType(typeof(IBase<>));
+    [Fact]
+    public void ShouldConcreteClassBeAssignableToGenericTransitiveInterface()
+    {
+        // Act
+        var result = typeof(Derived2<object>).IsAssignableToGenericType(typeof(IBase<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldNullableTypeBeAssignableToNullable()
-        {
-            // Act
-            var result = typeof(int?).IsAssignableToGenericType(typeof(Nullable<>));
+    [Fact]
+    public void ShouldNullableTypeBeAssignableToNullable()
+    {
+        // Act
+        var result = typeof(int?).IsAssignableToGenericType(typeof(Nullable<>));
 
-            // Assert
-            result.Should().BeTrue();
-        }
+        // Assert
+        result.Should().BeTrue();
+    }
 
-        [Fact]
-        public void ShouldNotGenericClassBeAssignableToObject()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(object));
+    [Fact]
+    public void ShouldNotGenericClassBeAssignableToObject()
+    {
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(object));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotConcreteClassBeAssignableToObject()
-        {
-            // Act
-            var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(object));
+    [Fact]
+    public void ShouldNotConcreteClassBeAssignableToObject()
+    {
+        // Act
+        var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(object));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotGenericClassBeAssignableToNonBaseGenericClass()
-        {
-            // Act
-            var result = typeof(Derived2<>).IsAssignableToGenericType(typeof(DerivedI<>));
+    [Fact]
+    public void ShouldNotGenericClassBeAssignableToNonBaseGenericClass()
+    {
+        // Act
+        var result = typeof(Derived2<>).IsAssignableToGenericType(typeof(DerivedI<>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotConcreteClassBeAssignableToNonBaseGenericClass()
-        {
-            // Act
-            var result = typeof(Derived2<int>).IsAssignableToGenericType(typeof(DerivedI<>));
+    [Fact]
+    public void ShouldNotConcreteClassBeAssignableToNonBaseGenericClass()
+    {
+        // Act
+        var result = typeof(Derived2<int>).IsAssignableToGenericType(typeof(DerivedI<>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotGenericClassBeAssignableToNonBaseGenericInterface()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(IDerived<>));
+    [Fact]
+    public void ShouldNotGenericClassBeAssignableToNonBaseGenericInterface()
+    {
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(IDerived<>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotConcreteClassBeAssignableToNonBaseGenericInterface()
-        {
-            // Act
-            var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(IDerived<>));
+    [Fact]
+    public void ShouldNotConcreteClassBeAssignableToNonBaseGenericInterface()
+    {
+        // Act
+        var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(IDerived<>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotGenericClassBeAssignableToConcreteClass()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(Base<object>));
+    [Fact]
+    public void ShouldNotGenericClassBeAssignableToConcreteClass()
+    {
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(Base<object>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotConcreteClassBeAssignableToConcreteClass()
-        {
-            // Act
-            var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(Base<object>));
+    [Fact]
+    public void ShouldNotConcreteClassBeAssignableToConcreteClass()
+    {
+        // Act
+        var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(Base<object>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotGenericClassBeAssignableToConcreteInterface()
-        {
-            // Act
-            var result = typeof(Derived<>).IsAssignableToGenericType(typeof(IBase<object>));
+    [Fact]
+    public void ShouldNotGenericClassBeAssignableToConcreteInterface()
+    {
+        // Act
+        var result = typeof(Derived<>).IsAssignableToGenericType(typeof(IBase<object>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotConcreteClassBeAssignableToConcreteInterface()
-        {
-            // Act
-            var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(IBase<object>));
+    [Fact]
+    public void ShouldNotConcreteClassBeAssignableToConcreteInterface()
+    {
+        // Act
+        var result = typeof(Derived<int>).IsAssignableToGenericType(typeof(IBase<object>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
+    }
 
-        [Fact]
-        public void ShouldNotConcreteNonNullableToNullable()
-        {
-            // Act
-            var result = typeof(int).IsAssignableToGenericType(typeof(Nullable<>));
+    [Fact]
+    public void ShouldNotConcreteNonNullableToNullable()
+    {
+        // Act
+        var result = typeof(int).IsAssignableToGenericType(typeof(Nullable<>));
 
-            // Assert
-            result.Should().BeFalse();
-        }
+        // Assert
+        result.Should().BeFalse();
     }
 }

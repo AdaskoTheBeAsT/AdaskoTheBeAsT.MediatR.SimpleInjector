@@ -1,7 +1,6 @@
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
+
+public sealed class Zong
 {
-    public sealed class Zong
-    {
-        public string? Message { get; set; }
-    }
+    public string? Message { get; set; }
 }

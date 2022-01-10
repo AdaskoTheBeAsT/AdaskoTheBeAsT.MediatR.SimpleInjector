@@ -1,12 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <ProjectGuid>6C446602-6FB9-45B7-99EE-A61EAB43AD47</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="..\..\AdditionalTestSettings.cs" Link="AdditionalTestSettings.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Async" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,8 @@
 using MediatR;
 
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
+
+public sealed class Ding : IRequest
 {
-    public sealed class Ding : IRequest
-    {
-        public string? Message { get; set; }
-    }
+    public string? Message { get; set; }
 }

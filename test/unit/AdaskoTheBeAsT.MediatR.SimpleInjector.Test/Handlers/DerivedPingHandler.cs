@@ -3,26 +3,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers
+namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
+
+public class DerivedPingHandler : IRequestHandler<DerivedPing, Pong>
 {
-    public class DerivedPingHandler : IRequestHandler<DerivedPing, Pong>
+    private readonly Logger _logger;
+
+    public DerivedPingHandler(Logger logger)
     {
-        private readonly Logger _logger;
+        _logger = logger;
+    }
 
-        public DerivedPingHandler(Logger logger)
+    public Task<Pong> Handle(DerivedPing request, CancellationToken cancellationToken)
+    {
+        if (request is null)
         {
-            _logger = logger;
+            throw new ArgumentNullException(nameof(request));
         }
 
-        public Task<Pong> Handle(DerivedPing request, CancellationToken cancellationToken)
-        {
-            if (request is null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            _logger.Messages.Add("Handler");
-            return Task.FromResult(new Pong { Message = $"Derived{request.Message} Pong" });
-        }
+        _logger.Messages.Add("Handler");
+        return Task.FromResult(new Pong { Message = $"Derived{request.Message} Pong" });
     }
 }
