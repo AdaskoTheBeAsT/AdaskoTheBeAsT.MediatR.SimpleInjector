@@ -45,7 +45,8 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
             .Returns(_cancellationToken);
 
         object? savedRequest = null;
-        var response = new[] { new object() }.ToAsyncEnumerable();
+        var responseItem = new object();
+        var response = new[] { responseItem }.ToAsyncEnumerable();
         var savedCancellationToken = default(CancellationToken);
         _mediatorMock
             .Setup(
@@ -63,11 +64,10 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
         var request = new Mock<object>().Object;
 
         // Act
+        object? result = null;
         await foreach (var o in _sut.CreateStream(request, savedCancellationToken))
         {
-#pragma warning disable S1751 // Loops with at most one iteration should be refactored
-            break;
-#pragma warning restore S1751 // Loops with at most one iteration should be refactored
+            result = o;
         }
 
         // Assert
@@ -84,6 +84,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
 
             savedRequest.Should().Be(request);
             savedCancellationToken.Should().Be(_cancellationToken);
+            result.Should().Be(responseItem);
         }
 #pragma warning restore IDISP013 // Await in using.
     }
@@ -96,7 +97,8 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
             .Returns((CancellationToken?)null);
 
         object? savedRequest = null;
-        var response = new[] { new object() }.ToAsyncEnumerable();
+        var responseItem = new object();
+        var response = new[] { responseItem }.ToAsyncEnumerable();
         var savedCancellationToken = default(CancellationToken);
         _mediatorMock
             .Setup(
@@ -114,11 +116,10 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
         var request = new Mock<object>().Object;
 
         // Act
+        object? result = null;
         await foreach (var o in _sut.CreateStream(request, _cancellationToken))
         {
-#pragma warning disable S1751 // Loops with at most one iteration should be refactored
-            break;
-#pragma warning restore S1751 // Loops with at most one iteration should be refactored
+            result = o;
         }
 
         // Assert
@@ -135,6 +136,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
 
             savedRequest.Should().Be(request);
             savedCancellationToken.Should().Be(_cancellationToken);
+            result.Should().Be(responseItem);
         }
 #pragma warning restore IDISP013 // Await in using.
     }
@@ -147,7 +149,8 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
             .Returns(_cancellationToken);
 
         IStreamRequest<object>? savedRequest = null;
-        var response = new[] { new object() }.ToAsyncEnumerable();
+        var responseItem = new object();
+        var response = new[] { responseItem }.ToAsyncEnumerable();
         var savedCancellationToken = default(CancellationToken);
         _mediatorMock
             .Setup(
@@ -165,11 +168,10 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
         var request = new Mock<IStreamRequest<object>>().Object;
 
         // Act
+        object? result = null;
         await foreach (var o in _sut.CreateStream(request, savedCancellationToken))
         {
-#pragma warning disable S1751 // Loops with at most one iteration should be refactored
-            break;
-#pragma warning restore S1751 // Loops with at most one iteration should be refactored
+            result = o;
         }
 
         // Assert
@@ -186,6 +188,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
 
             savedRequest.Should().Be(request);
             savedCancellationToken.Should().Be(_cancellationToken);
+            result.Should().Be(responseItem);
         }
 #pragma warning restore IDISP013 // Await in using.
     }
@@ -198,7 +201,8 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
             .Returns((CancellationToken?)null);
 
         IStreamRequest<object>? savedRequest = null;
-        var response = new[] { new object() }.ToAsyncEnumerable();
+        var responseItem = new object();
+        var response = new[] { responseItem }.ToAsyncEnumerable();
         var savedCancellationToken = default(CancellationToken);
         _mediatorMock
             .Setup(
@@ -216,11 +220,10 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
         var request = new Mock<IStreamRequest<object>>().Object;
 
         // Act
+        object? result = null;
         await foreach (var o in _sut.CreateStream(request, _cancellationToken))
         {
-#pragma warning disable S1751 // Loops with at most one iteration should be refactored
-            break;
-#pragma warning restore S1751 // Loops with at most one iteration should be refactored
+            result = o;
         }
 
         // Assert
@@ -237,6 +240,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
 
             savedRequest.Should().Be(request);
             savedCancellationToken.Should().Be(_cancellationToken);
+            result.Should().Be(responseItem);
         }
 #pragma warning restore IDISP013 // Await in using.
     }
