@@ -10,7 +10,7 @@
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>Allows easy configuration of MediatR and its registration in SimpleInjector.</Description>
-    <PackageVersion>5.0.1</PackageVersion>
+    <PackageVersion>5.1.0</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -22,7 +22,7 @@
     <Copyright>Adam "AdaskoTheBeAsT" Pluciński</Copyright>
     <PackageTags>MediatR;SimpleInjector</PackageTags>
     <PackageReleaseNotes>
-      - upgraded SimpleInjector to v5.3.3
+      - upgraded SimpleInjector to v5.4.0
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -34,7 +34,7 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-    <PackageReference Include="SimpleInjector" Version="5.3.3" />
+    <PackageReference Include="SimpleInjector" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
