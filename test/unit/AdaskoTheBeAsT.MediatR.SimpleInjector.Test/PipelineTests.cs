@@ -245,7 +245,7 @@ public class PipelineTests
             "Outer generic after");
     }
 
-    internal class OuterBehavior : IPipelineBehavior<Ping, Pong>
+    internal sealed class OuterBehavior : IPipelineBehavior<Ping, Pong>
     {
         private readonly Logger _output;
 
@@ -266,7 +266,7 @@ public class PipelineTests
         }
     }
 
-    internal class InnerBehavior : IPipelineBehavior<Ping, Pong>
+    internal sealed class InnerBehavior : IPipelineBehavior<Ping, Pong>
     {
         private readonly Logger _output;
 
@@ -287,7 +287,7 @@ public class PipelineTests
         }
     }
 
-    internal class InnerBehavior<TRequest, TResponse>
+    internal sealed class InnerBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
@@ -310,7 +310,7 @@ public class PipelineTests
         }
     }
 
-    internal class OuterBehavior<TRequest, TResponse>
+    internal sealed class OuterBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
@@ -333,7 +333,7 @@ public class PipelineTests
         }
     }
 
-    internal class ConstrainedBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    internal sealed class ConstrainedBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : Ping, IRequest<TResponse>
         where TResponse : Pong
     {
@@ -356,7 +356,7 @@ public class PipelineTests
         }
     }
 
-    internal class FirstPreProcessor<TRequest>
+    internal sealed class FirstPreProcessor<TRequest>
         : IRequestPreProcessor<TRequest>
         where TRequest : notnull
     {
@@ -374,7 +374,7 @@ public class PipelineTests
         }
     }
 
-    internal class FirstConcretePreProcessor : IRequestPreProcessor<Ping>
+    internal sealed class FirstConcretePreProcessor : IRequestPreProcessor<Ping>
     {
         private readonly Logger _output;
 
@@ -390,7 +390,7 @@ public class PipelineTests
         }
     }
 
-    internal class NextPreProcessor<TRequest>
+    internal sealed class NextPreProcessor<TRequest>
         : IRequestPreProcessor<TRequest>
         where TRequest : notnull
     {
@@ -408,7 +408,7 @@ public class PipelineTests
         }
     }
 
-    internal class NextConcretePreProcessor : IRequestPreProcessor<Ping>
+    internal sealed class NextConcretePreProcessor : IRequestPreProcessor<Ping>
     {
         private readonly Logger _output;
 
@@ -424,7 +424,7 @@ public class PipelineTests
         }
     }
 
-    internal class FirstPostProcessor<TRequest, TResponse>
+    internal sealed class FirstPostProcessor<TRequest, TResponse>
         : IRequestPostProcessor<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
@@ -442,7 +442,7 @@ public class PipelineTests
         }
     }
 
-    internal class FirstConcretePostProcessor : IRequestPostProcessor<Ping, Pong>
+    internal sealed class FirstConcretePostProcessor : IRequestPostProcessor<Ping, Pong>
     {
         private readonly Logger _output;
 
@@ -458,7 +458,7 @@ public class PipelineTests
         }
     }
 
-    internal class NextPostProcessor<TRequest, TResponse>
+    internal sealed class NextPostProcessor<TRequest, TResponse>
         : IRequestPostProcessor<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
@@ -476,7 +476,7 @@ public class PipelineTests
         }
     }
 
-    internal class NextConcretePostProcessor : IRequestPostProcessor<Ping, Pong>
+    internal sealed class NextConcretePostProcessor : IRequestPostProcessor<Ping, Pong>
     {
         private readonly Logger _output;
 
@@ -492,7 +492,7 @@ public class PipelineTests
         }
     }
 
-    internal class PingPongGenericExceptionAction : IRequestExceptionAction<Ping>
+    internal sealed class PingPongGenericExceptionAction : IRequestExceptionAction<Ping>
     {
         private readonly Logger _output;
 
@@ -506,7 +506,7 @@ public class PipelineTests
         }
     }
 
-    internal class PingPongApplicationExceptionAction : IRequestExceptionAction<Ping, ApplicationException>
+    internal sealed class PingPongApplicationExceptionAction : IRequestExceptionAction<Ping, ApplicationException>
     {
         private readonly Logger _output;
 
@@ -520,7 +520,7 @@ public class PipelineTests
         }
     }
 
-    internal class PingPongExceptionActionForType1 : IRequestExceptionAction<Ping, SystemException>
+    internal sealed class PingPongExceptionActionForType1 : IRequestExceptionAction<Ping, SystemException>
     {
         private readonly Logger _output;
 
@@ -534,7 +534,7 @@ public class PipelineTests
         }
     }
 
-    internal class PingPongExceptionActionForType2 : IRequestExceptionAction<Ping, SystemException>
+    internal sealed class PingPongExceptionActionForType2 : IRequestExceptionAction<Ping, SystemException>
     {
         private readonly Logger _output;
 
@@ -548,7 +548,7 @@ public class PipelineTests
         }
     }
 
-    internal class PingPongExceptionHandlerForType : IRequestExceptionHandler<Ping, Pong, ApplicationException>
+    internal sealed class PingPongExceptionHandlerForType : IRequestExceptionHandler<Ping, Pong, ApplicationException>
     {
         public Task Handle(Ping request, ApplicationException exception, RequestExceptionHandlerState<Pong> state, CancellationToken cancellationToken)
         {
@@ -558,7 +558,7 @@ public class PipelineTests
         }
     }
 
-    internal class PingPongGenericExceptionHandler : IRequestExceptionHandler<Ping, Pong>
+    internal sealed class PingPongGenericExceptionHandler : IRequestExceptionHandler<Ping, Pong>
     {
         private readonly Logger _output;
 

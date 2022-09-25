@@ -11,12 +11,16 @@ public class ContainerExtensionTests
     public void ShouldThrowExceptionWhenNullContainerPassed()
     {
         // Arrange
-        var container = default(Container);
+        const Container? container = null;
 #pragma warning disable CS8604 // Possible null reference argument.
-        Action action = () => ContainerExtension.AddMediatR(container, _ => { });
+#pragma warning disable CC0026 // Call Extension Method As Extension
+
+        // ReSharper disable once InvokeAsExtensionMethod
+        Action action = () => ContainerExtension.AddMediatR(container!, _ => { });
+#pragma warning restore CC0026 // Call Extension Method As Extension
 #pragma warning restore CS8604 // Possible null reference argument.
 
-        // Act & Assert
+        // Act and Assert
         action.Should().Throw<ArgumentNullException>();
     }
 }

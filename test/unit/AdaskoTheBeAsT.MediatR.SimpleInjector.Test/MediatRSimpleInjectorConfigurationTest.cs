@@ -92,7 +92,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         Action action = () => _sut.Using(instanceCreator: null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
-        // Act & Assert
+        // Act and Assert
         action.Should().Throw<ArgumentNullException>();
     }
 
@@ -258,7 +258,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Arrange
         Action action = () => _sut.UsingPipelineProcessorBehaviors(typeof(object));
 
-        // Act & Assert
+        // Act and Assert
         action.Should().Throw<InvalidPipelineBehaviorTypeException>();
     }
 
@@ -285,7 +285,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Arrange
         Action action = () => _sut.UsingPipelineProcessorBehaviors(new List<Type> { typeof(object) });
 
-        // Act & Assert
+        // Act and Assert
         action.Should().Throw<InvalidPipelineBehaviorTypeException>();
     }
 
@@ -312,7 +312,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Arrange
         Action action = () => _sut.UsingStreamPipelineBehaviors(typeof(object));
 
-        // Act & Assert
+        // Act and Assert
         action.Should().Throw<InvalidStreamPipelineBehaviorTypeException>();
     }
 
@@ -339,7 +339,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Arrange
         Action action = () => _sut.UsingStreamPipelineBehaviors(new List<Type> { typeof(object) });
 
-        // Act & Assert
+        // Act and Assert
         action.Should().Throw<InvalidStreamPipelineBehaviorTypeException>();
     }
 

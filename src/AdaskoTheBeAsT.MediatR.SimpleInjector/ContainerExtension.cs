@@ -8,6 +8,7 @@ using SimpleInjector;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector;
 
+#pragma warning disable RCS1247 // Fix documentation comment tag.
 /// <summary>
 /// Extensions to scan for MediatR handlers and registers them in SimpleInjector.
 /// - Scans for any handler interface implementations and registers them as <see cref="Lifestyle.Transient"/>
@@ -27,9 +28,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector;
 /// <see cref="RequestExceptionActionProcessorBehavior{TRequest,TResponse}"/>
 /// <see cref="RequestExceptionProcessorBehavior{TRequest,TResponse}"/>.
 /// To register behaviors, use method with the open generic or closed generic types.
-/// <code>container.Register&lt;Type, Type&gt;();</code>
+/// <code>container.Register&lt;Type, Type&gt;();</code>.
 /// </summary>
 public static class ContainerExtension
+#pragma warning restore RCS1247 // Fix documentation comment tag.
 {
     /// <summary>
     /// Registers handlers and mediator types from the specified assemblies.
