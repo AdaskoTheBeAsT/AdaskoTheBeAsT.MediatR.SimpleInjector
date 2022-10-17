@@ -414,8 +414,8 @@ public sealed class MediatRSimpleInjectorConfigurationTest
     {
         public Task<TResponse> Handle(
             TRequest request,
-            CancellationToken cancellationToken,
-            RequestHandlerDelegate<TResponse> next)
+            RequestHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken)
         {
             throw new NotSupportedException();
         }
@@ -427,8 +427,8 @@ public sealed class MediatRSimpleInjectorConfigurationTest
     {
         public IAsyncEnumerable<TResponse> Handle(
             TRequest request,
-            CancellationToken cancellationToken,
-            StreamHandlerDelegate<TResponse> next)
+            StreamHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken)
         {
             throw new NotSupportedException();
         }

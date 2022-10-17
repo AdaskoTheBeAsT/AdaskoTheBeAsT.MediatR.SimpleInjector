@@ -245,7 +245,8 @@ public class PipelineTests
             "Outer generic after");
     }
 
-    internal sealed class OuterBehavior : IPipelineBehavior<Ping, Pong>
+    internal sealed class OuterBehavior
+        : IPipelineBehavior<Ping, Pong>
     {
         private readonly Logger _output;
 
@@ -254,7 +255,10 @@ public class PipelineTests
             _output = output;
         }
 
-        public async Task<Pong> Handle(Ping request, CancellationToken cancellationToken, RequestHandlerDelegate<Pong> next)
+        public async Task<Pong> Handle(
+            Ping request,
+            RequestHandlerDelegate<Pong> next,
+            CancellationToken cancellationToken)
         {
             _output.Messages.Add("Outer before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
@@ -266,7 +270,8 @@ public class PipelineTests
         }
     }
 
-    internal sealed class InnerBehavior : IPipelineBehavior<Ping, Pong>
+    internal sealed class InnerBehavior
+        : IPipelineBehavior<Ping, Pong>
     {
         private readonly Logger _output;
 
@@ -275,7 +280,10 @@ public class PipelineTests
             _output = output;
         }
 
-        public async Task<Pong> Handle(Ping request, CancellationToken cancellationToken, RequestHandlerDelegate<Pong> next)
+        public async Task<Pong> Handle(
+            Ping request,
+            RequestHandlerDelegate<Pong> next,
+            CancellationToken cancellationToken)
         {
             _output.Messages.Add("Inner before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
@@ -298,7 +306,10 @@ public class PipelineTests
             _output = output;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(
+            TRequest request,
+            RequestHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken)
         {
             _output.Messages.Add("Inner generic before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
@@ -321,7 +332,10 @@ public class PipelineTests
             _output = output;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(
+            TRequest request,
+            RequestHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken)
         {
             _output.Messages.Add("Outer generic before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
@@ -333,7 +347,8 @@ public class PipelineTests
         }
     }
 
-    internal sealed class ConstrainedBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    internal sealed class ConstrainedBehavior<TRequest, TResponse>
+        : IPipelineBehavior<TRequest, TResponse>
         where TRequest : Ping, IRequest<TResponse>
         where TResponse : Pong
     {
@@ -344,7 +359,10 @@ public class PipelineTests
             _output = output;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(
+            TRequest request,
+            RequestHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken)
         {
             _output.Messages.Add("Constrained before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
