@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MediatR;
+using MediatR.NotificationPublishers;
 using MediatR.Pipeline;
 using SimpleInjector;
 
@@ -21,6 +22,7 @@ public class MediatRSimpleInjectorConfiguration
         PipelineBehaviorTypes = Enumerable.Empty<Type>();
         StreamPipelineBehaviorTypes = Enumerable.Empty<Type>();
         MediatorInstanceCreator = () => null;
+        NotificationPublisherType = typeof(ForeachAwaitPublisher);
     }
 
     /// <summary>
@@ -92,6 +94,12 @@ public class MediatRSimpleInjectorConfiguration
     /// Custom implementations of <see cref="IStreamPipelineBehavior{TRequest,TResponse}"/>.
     /// </summary>
     public IEnumerable<Type> StreamPipelineBehaviorTypes { get; private set; }
+
+    /// <summary>
+    /// Custom implementation of <see cref="INotificationPublisher"/>.
+    /// Default is <see cref="ForeachAwaitPublisher "/>.
+    /// </summary>
+    public Type NotificationPublisherType { get; private set; }
 
     /// <summary>
     /// Register custom implementation of <see cref="IMediator"/> type
@@ -335,6 +343,40 @@ public class MediatRSimpleInjectorConfiguration
         }
 
         StreamPipelineBehaviorTypes = pipelineBehaviorTypes;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup builtin <see cref="ForeachAwaitPublisher"/> notification publisher.
+    /// </summary>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="INotificationPublisher"/> implementation type configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithNotificationPublisherForeachAwait()
+    {
+        NotificationPublisherType = typeof(ForeachAwaitPublisher);
+        return this;
+    }
+
+    /// <summary>
+    /// Setup builtin <see cref="ForeachAwaitPublisher"/> notification publisher.
+    /// </summary>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="INotificationPublisher"/> implementation type configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithNotificationPublisherTaskWhenAll()
+    {
+        NotificationPublisherType = typeof(TaskWhenAllPublisher);
+        return this;
+    }
+
+    /// <summary>
+    /// Setup custom <see cref="INotificationPublisher"/>.
+    /// </summary>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="INotificationPublisher"/> implementation type configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithNotificationPublisherCustom<T>()
+        where T : INotificationPublisher
+    {
+        NotificationPublisherType = typeof(T);
         return this;
     }
 }

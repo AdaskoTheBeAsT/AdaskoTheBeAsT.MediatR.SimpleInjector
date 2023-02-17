@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <ProjectGuid>520F99E1-0C2D-4D06-AFAF-EC4AE2CB96C4</ProjectGuid>
+    <TargetFrameworks>net462;net47;net471;net472;net48;net481</TargetFrameworks>
+    <ProjectGuid>92A84247-5189-4EBD-9D85-15392D85E4B1</ProjectGuid>
   </PropertyGroup>
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <Description>Allows easy configuration of MediatR and its registration in SimpleInjector.</Description>
+    <Description>Allows easy configuration of MediatR and its registration in SimpleInjector in connection to ASP NET Full Framework (4.6.1 until 4.8).</Description>
     <PackageVersion>8.0.0</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -33,14 +33,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-    <PackageReference Include="SimpleInjector" Version="5.4.1" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="8.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web" />
   </ItemGroup>
 
 </Project>

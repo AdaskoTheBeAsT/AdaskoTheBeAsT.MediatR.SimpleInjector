@@ -6,5 +6,5 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 
 internal sealed class InternalPingHandler : IRequestHandler<InternalPing>
 {
-    public Task<Unit> Handle(InternalPing request, CancellationToken cancellationToken) => Unit.Task;
+    public Task Handle(InternalPing request, CancellationToken cancellationToken) => Task.CompletedTask;
 }

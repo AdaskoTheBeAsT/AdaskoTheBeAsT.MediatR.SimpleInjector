@@ -17,6 +17,14 @@ public class FakeMediator
         return Task.FromResult((TResponse)new object());
     }
 
+    public Task Send<TRequest>(
+        TRequest request,
+        CancellationToken cancellationToken = default)
+        where TRequest : IRequest
+    {
+        return Task.CompletedTask;
+    }
+
     public Task<object?> Send(
         object request,
         CancellationToken cancellationToken = default)

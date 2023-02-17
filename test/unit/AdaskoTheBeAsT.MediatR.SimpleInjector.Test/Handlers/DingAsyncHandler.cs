@@ -6,5 +6,5 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 
 public class DingAsyncHandler : IRequestHandler<Ding>
 {
-    public Task<Unit> Handle(Ding request, CancellationToken cancellationToken) => Unit.Task;
+    public Task Handle(Ding request, CancellationToken cancellationToken) => Task.CompletedTask;
 }

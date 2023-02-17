@@ -56,6 +56,15 @@ public abstract class CancellationTokenMediatorDecoratorBase
         return _mediator.Send(request, cancellationTokenToUse);
     }
 
+    public Task Send<TRequest>(
+        TRequest request,
+        CancellationToken cancellationToken = default)
+        where TRequest : IRequest
+    {
+        var cancellationTokenToUse = GetCustomOrDefaultCancellationToken(cancellationToken);
+        return _mediator.Send(request, cancellationTokenToUse);
+    }
+
     public Task<object?> Send(
         object request,
         CancellationToken cancellationToken = default)

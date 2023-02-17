@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using MediatR;
@@ -324,6 +325,94 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                 m =>
                     m.Send(
                         It.IsAny<IRequest<object>>(),
+                        It.IsAny<CancellationToken>()));
+#pragma warning restore MA0100
+
+            savedRequest.Should().Be(request);
+            savedCancellationToken.Should().Be(_cancellationToken);
+        }
+#pragma warning restore IDISP013 // Await in using.
+    }
+
+    [Fact]
+    public async Task SendRequestSimpleShouldUseCancellationTokenFromAccessorAsync()
+    {
+        // Arrange
+        _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
+            .Returns(_cancellationToken);
+
+        Ding? savedRequest = null;
+        var savedCancellationToken = default(CancellationToken);
+        _mediatorMock
+            .Setup(
+                m =>
+                    m.Send(
+                        It.IsAny<Ding>(),
+                        It.IsAny<CancellationToken>()))
+            .Callback<Ding, CancellationToken>((req, token) =>
+            {
+                savedRequest = req;
+                savedCancellationToken = token;
+            });
+
+        var request = new Ding();
+
+        // Act
+        await _sut.Send(request, savedCancellationToken);
+
+        // Assert
+#pragma warning disable IDISP013 // Await in using.
+        using (new AssertionScope())
+        {
+#pragma warning disable MA0100
+            _mediatorMock.Verify(
+                m =>
+                    m.Send(
+                        It.IsAny<Ding>(),
+                        It.IsAny<CancellationToken>()));
+#pragma warning restore MA0100
+
+            savedRequest.Should().Be(request);
+            savedCancellationToken.Should().Be(_cancellationToken);
+        }
+#pragma warning restore IDISP013 // Await in using.
+    }
+
+    [Fact]
+    public async Task SendRequestSimpleShouldUseDefaultCancellationTokenWhenNullReturnedFromAccessorAsync()
+    {
+        // Arrange
+        _cancellationTokenAccessorMock.Setup(accessor => accessor.GetToken())
+            .Returns((CancellationToken?)null);
+
+        Ding? savedRequest = null;
+        var savedCancellationToken = default(CancellationToken);
+        _mediatorMock
+            .Setup(
+                m =>
+                    m.Send(
+                        It.IsAny<Ding>(),
+                        It.IsAny<CancellationToken>()))
+            .Callback<Ding, CancellationToken>((req, token) =>
+            {
+                savedRequest = req;
+                savedCancellationToken = token;
+            });
+
+        var request = new Ding();
+
+        // Act
+        await _sut.Send(request, _cancellationToken);
+
+        // Assert
+#pragma warning disable IDISP013 // Await in using.
+        using (new AssertionScope())
+        {
+#pragma warning disable MA0100
+            _mediatorMock.Verify(
+                m =>
+                    m.Send(
+                        It.IsAny<Ding>(),
                         It.IsAny<CancellationToken>()));
 #pragma warning restore MA0100
 

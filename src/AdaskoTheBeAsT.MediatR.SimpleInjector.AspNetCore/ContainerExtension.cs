@@ -17,7 +17,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore;
 ///   <see cref="IRequestExceptionHandler{TRequest,TResponse,TException}"/>
 ///   <see cref="IRequestExceptionAction{TRequest,TException}"/>
 ///   implementations and registers them as <see cref="Lifestyle.Transient"/> instances
-/// Registers <see cref="ServiceFactory"/> and <see cref="IMediator"/> as <see cref="Lifestyle.Singleton"/> instances
+/// Registers <see cref="IMediator"/> as <see cref="Lifestyle.Singleton"/> instances
 /// After calling AddMediatR you can use the container to resolve an <see cref="IMediator"/> instance.
 /// This scans for any <see cref="IPipelineBehavior{TRequest,TResponse}"/>
 /// instances and also if flags for builtin processor behavior are enabled scans for

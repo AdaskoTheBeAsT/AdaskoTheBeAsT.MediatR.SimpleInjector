@@ -6,7 +6,8 @@ using MediatR;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 
-internal sealed class MyCustomMediator : IMediator
+internal sealed class MyCustomMediator
+    : IMediator
 {
     public IAsyncEnumerable<TResponse> CreateStream<TResponse>(
         IStreamRequest<TResponse> request,
@@ -18,6 +19,14 @@ internal sealed class MyCustomMediator : IMediator
     public IAsyncEnumerable<object?> CreateStream(
         object request,
         CancellationToken cancellationToken = default)
+    {
+        throw new NotSupportedException();
+    }
+
+    public Task Send<TRequest>(
+        TRequest request,
+        CancellationToken cancellationToken = default)
+        where TRequest : IRequest
     {
         throw new NotSupportedException();
     }

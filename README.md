@@ -224,6 +224,39 @@ This will register following stream behaviors:
         });
    ```
 
+### Setting assemblies to scan and set WithNotificationPublisherForeachAwait NotificationPublisher
+
+   ```cs
+    container.AddMediatR(
+        cfg =>
+        {
+            cfg.WithAssembliesToScan(assemblies);
+            cfg.WithNotificationPublisherForeachAwait();
+        });
+   ``
+
+### Setting assemblies to scan and set TaskWhenAllPublisher NotificationPublisher
+
+   ```cs
+    container.AddMediatR(
+        cfg =>
+        {
+            cfg.WithAssembliesToScan(assemblies);
+            cfg.WithNotificationPublisherTaskWhenAll();
+        });
+   ```
+
+### Setting assemblies to scan and set custom NotificationPublisher
+
+   ```cs
+    container.AddMediatR(
+        cfg =>
+        {
+            cfg.WithAssembliesToScan(assemblies);
+            cfg.WithNotificationPublisherCustom<CustomNotificationPublisher>();
+        });
+   ```
+
 ## Thanks to
 
 - Jimmy Boggard for MediatR

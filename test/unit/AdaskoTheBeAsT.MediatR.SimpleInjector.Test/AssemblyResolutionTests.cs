@@ -39,7 +39,7 @@ public sealed class AssemblyResolutionTests
     public void ShouldResolveInternalHandlerWhenParamsPassed()
     {
         _container.AddMediatR(typeof(Ping).GetTypeInfo().Assembly);
-        _container.GetInstance<IRequestHandler<InternalPing, Unit>>().Should().NotBeNull();
+        _container.GetInstance<IRequestHandler<InternalPing>>().Should().NotBeNull();
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public sealed class AssemblyResolutionTests
     public void ShouldResolveInternalHandlerWhenIEnumerablePassed()
     {
         _container.AddMediatR(new List<Assembly> { typeof(Ping).GetTypeInfo().Assembly });
-        _container.GetInstance<IRequestHandler<InternalPing, Unit>>().Should().NotBeNull();
+        _container.GetInstance<IRequestHandler<InternalPing>>().Should().NotBeNull();
     }
 
     [Fact]

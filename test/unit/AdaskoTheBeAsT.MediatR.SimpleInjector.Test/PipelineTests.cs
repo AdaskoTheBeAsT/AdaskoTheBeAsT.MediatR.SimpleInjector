@@ -17,7 +17,11 @@ public class PipelineTests
     public async Task ShouldWrapWithBehaviorAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -57,7 +61,11 @@ public class PipelineTests
     public async Task ShouldWrapGenericsWithBehaviorAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -99,7 +107,11 @@ public class PipelineTests
     public async Task ShouldPickUpPreAndPostProcessorsAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -134,7 +146,11 @@ public class PipelineTests
     public async Task ShouldPickUpBaseExceptionBehaviorsAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -169,7 +185,11 @@ public class PipelineTests
     public async Task ShouldPickUpExceptionActionsAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -204,7 +224,11 @@ public class PipelineTests
     public async Task ShouldHandleConstrainedGenericsAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -297,7 +321,7 @@ public class PipelineTests
 
     internal sealed class InnerBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         private readonly Logger _output;
 
@@ -323,7 +347,7 @@ public class PipelineTests
 
     internal sealed class OuterBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         private readonly Logger _output;
 
@@ -444,7 +468,7 @@ public class PipelineTests
 
     internal sealed class FirstPostProcessor<TRequest, TResponse>
         : IRequestPostProcessor<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         private readonly Logger _output;
 
@@ -478,7 +502,7 @@ public class PipelineTests
 
     internal sealed class NextPostProcessor<TRequest, TResponse>
         : IRequestPostProcessor<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         private readonly Logger _output;
 

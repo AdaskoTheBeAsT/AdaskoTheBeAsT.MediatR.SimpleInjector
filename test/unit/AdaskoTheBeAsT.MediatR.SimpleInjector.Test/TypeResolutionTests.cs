@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
 using FluentAssertions;
 using MediatR;
@@ -34,7 +35,7 @@ public sealed class TypeResolutionTests
     [Fact]
     public void ShouldResolveVoidRequestHandler()
     {
-        _container.GetInstance<IRequestHandler<Ding, Unit>>().Should().NotBeNull();
+        _container.GetInstance<IRequestHandler<Ding>>().Should().NotBeNull();
     }
 
     [Fact]

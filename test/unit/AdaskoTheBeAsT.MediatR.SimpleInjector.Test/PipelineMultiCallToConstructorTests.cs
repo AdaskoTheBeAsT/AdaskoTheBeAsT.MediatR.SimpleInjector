@@ -16,7 +16,11 @@ public class PipelineMultiCallToConstructorTests
     public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipelineAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -50,7 +54,11 @@ public class PipelineMultiCallToConstructorTests
     public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAStreamPipelineAsync()
     {
         var output = new Logger();
+#if NET6_0_OR_GREATER
         await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
         container.RegisterInstance(output);
         container.AddMediatR(
             config =>
@@ -127,7 +135,7 @@ public class PipelineMultiCallToConstructorTests
 
     internal sealed class ConstructorTestBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         private readonly Logger _output;
 

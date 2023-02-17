@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using MediatR;
+using MediatR.NotificationPublishers;
 using Moq;
 using SimpleInjector;
 using Xunit;
@@ -41,6 +42,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
             config.RequestExceptionActionProcessorBehaviorEnabled.Should().BeFalse();
             config.AssembliesToScan.Should().BeEmpty();
             config.PipelineBehaviorTypes.Should().BeEmpty();
+            config.NotificationPublisherType.Should().Be(typeof(ForeachAwaitPublisher));
         }
     }
 
@@ -360,6 +362,37 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         }
     }
 
+    [Fact]
+    public void WithNotificationPublisherForeachAwaitShouldSetProperNotificationPublisher()
+    {
+        // Act
+        var result = _sut.WithNotificationPublisherForeachAwait();
+
+        // Assert
+        result.NotificationPublisherType.Should().Be(typeof(ForeachAwaitPublisher));
+    }
+
+    [Fact]
+    public void WithNotificationPublisherTaskWhenAllShouldSetProperNotificationPublisher()
+    {
+        // Act
+        var result = _sut.WithNotificationPublisherTaskWhenAll();
+
+        // Assert
+        result.NotificationPublisherType.Should().Be(typeof(TaskWhenAllPublisher));
+    }
+
+    [Fact]
+    public void WithNotificationPublisherCustomShouldSetProperNotificationPublisher()
+    {
+        // Act
+        var result =
+            _sut.WithNotificationPublisherCustom<FakeNotificationPublisher>();
+
+        // Assert
+        result.NotificationPublisherType.Should().Be(typeof(FakeNotificationPublisher));
+    }
+
 #pragma warning disable CA1812
     private sealed class FakeMediator
         : IMediator
@@ -367,6 +400,14 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         public Task<TResponse> Send<TResponse>(
             IRequest<TResponse> request,
             CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task Send<TRequest>(
+            TRequest request,
+            CancellationToken cancellationToken = default)
+            where TRequest : IRequest
         {
             throw new NotSupportedException();
         }
@@ -410,7 +451,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
 
     private sealed class FakePipelineBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         public Task<TResponse> Handle(
             TRequest request,
@@ -428,6 +469,18 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         public IAsyncEnumerable<TResponse> Handle(
             TRequest request,
             StreamHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
+    private sealed class FakeNotificationPublisher
+        : INotificationPublisher
+    {
+        public Task Publish(
+            IEnumerable<NotificationHandlerExecutor> handlerExecutors,
+            INotification notification,
             CancellationToken cancellationToken)
         {
             throw new NotSupportedException();
