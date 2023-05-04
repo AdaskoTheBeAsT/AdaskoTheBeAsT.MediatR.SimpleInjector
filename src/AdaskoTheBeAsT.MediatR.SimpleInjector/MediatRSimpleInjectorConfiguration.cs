@@ -18,11 +18,15 @@ public class MediatRSimpleInjectorConfiguration
     {
         MediatorImplementationType = typeof(Mediator);
         Lifestyle = Lifestyle.Singleton;
-        AssembliesToScan = Enumerable.Empty<Assembly>();
-        PipelineBehaviorTypes = Enumerable.Empty<Type>();
-        StreamPipelineBehaviorTypes = Enumerable.Empty<Type>();
+        AssembliesToScan = Array.Empty<Assembly>();
+        PipelineBehaviorTypes = Array.Empty<Type>();
+        StreamPipelineBehaviorTypes = Array.Empty<Type>();
         MediatorInstanceCreator = () => null;
         NotificationPublisherType = typeof(ForeachAwaitPublisher);
+        RequestPreProcessorTypes = Array.Empty<Type>();
+        RequestPostProcessorTypes = Array.Empty<Type>();
+        RequestExceptionHandlerTypes = Array.Empty<Type>();
+        RequestExceptionActionTypes = Array.Empty<Type>();
     }
 
     /// <summary>
@@ -83,23 +87,43 @@ public class MediatRSimpleInjectorConfiguration
     /// Assemblies which will be scanned for
     /// auto registering types implementing MediatR interfaces.
     /// </summary>
-    public IEnumerable<Assembly> AssembliesToScan { get; private set; }
+    public ICollection<Assembly> AssembliesToScan { get; private set; }
 
     /// <summary>
     /// Custom implementations of <see cref="IPipelineBehavior{TRequest,TResponse}"/>.
     /// </summary>
-    public IEnumerable<Type> PipelineBehaviorTypes { get; private set; }
+    public ICollection<Type> PipelineBehaviorTypes { get; private set; }
 
     /// <summary>
     /// Custom implementations of <see cref="IStreamPipelineBehavior{TRequest,TResponse}"/>.
     /// </summary>
-    public IEnumerable<Type> StreamPipelineBehaviorTypes { get; private set; }
+    public ICollection<Type> StreamPipelineBehaviorTypes { get; private set; }
 
     /// <summary>
     /// Custom implementation of <see cref="INotificationPublisher"/>.
     /// Default is <see cref="ForeachAwaitPublisher "/>.
     /// </summary>
     public Type NotificationPublisherType { get; private set; }
+
+    /// <summary>
+    /// Custom implementations of <see cref="IRequestPreProcessor{TRequest}"/>.
+    /// </summary>
+    public ICollection<Type> RequestPreProcessorTypes { get; private set; }
+
+    /// <summary>
+    /// Custom implementations of <see cref="IRequestPostProcessor{TRequest, TResponse}"/>.
+    /// </summary>
+    public ICollection<Type> RequestPostProcessorTypes { get; private set; }
+
+    /// <summary>
+    /// Custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse}"/>.
+    /// </summary>
+    public ICollection<Type> RequestExceptionHandlerTypes { get; private set; }
+
+    /// <summary>
+    /// Custom implementations of <see cref="IRequestExceptionAction{TRequest, TException}"/>.
+    /// </summary>
+    public ICollection<Type> RequestExceptionActionTypes { get; private set; }
 
     /// <summary>
     /// Register custom implementation of <see cref="IMediator"/> type
@@ -190,7 +214,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with assemblies to scan configured.</returns>
     public MediatRSimpleInjectorConfiguration WithAssembliesToScan(IEnumerable<Assembly> assembliesToScan)
     {
-        AssembliesToScan = assembliesToScan;
+        AssembliesToScan = assembliesToScan.ToList();
         return this;
     }
 
@@ -205,7 +229,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with assemblies to scan configured.</returns>
     public MediatRSimpleInjectorConfiguration WithHandlerAssemblyMarkerTypes(params Type[] handlerAssemblyMarkerTypes)
     {
-        AssembliesToScan = handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly);
+        AssembliesToScan = handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly).ToList();
         return this;
     }
 
@@ -220,7 +244,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with assemblies to scan configured.</returns>
     public MediatRSimpleInjectorConfiguration WithHandlerAssemblyMarkerTypes(IEnumerable<Type> handlerAssemblyMarkerTypes)
     {
-        AssembliesToScan = handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly);
+        AssembliesToScan = handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly).ToList();
         return this;
     }
 
@@ -281,7 +305,7 @@ public class MediatRSimpleInjectorConfiguration
     public MediatRSimpleInjectorConfiguration UsingPipelineProcessorBehaviors(IEnumerable<Type> pipelineBehaviorTypes)
     {
         var pipelineBehaviorTypeList = pipelineBehaviorTypes.ToList();
-        if (pipelineBehaviorTypeList.Any(t => !t.IsAssignableToGenericType(typeof(IPipelineBehavior<,>))))
+        if (pipelineBehaviorTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IPipelineBehavior<,>))))
         {
             throw new InvalidPipelineBehaviorTypeException(
                 "Elements should implement interface IPipelineBehavior<,>");
@@ -318,7 +342,7 @@ public class MediatRSimpleInjectorConfiguration
     public MediatRSimpleInjectorConfiguration UsingStreamPipelineBehaviors(IEnumerable<Type> pipelineBehaviorTypes)
     {
         var pipelineBehaviorTypeList = pipelineBehaviorTypes.ToList();
-        if (pipelineBehaviorTypeList.Any(t => !t.IsAssignableToGenericType(typeof(IStreamPipelineBehavior<,>))))
+        if (pipelineBehaviorTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IStreamPipelineBehavior<,>))))
         {
             throw new InvalidStreamPipelineBehaviorTypeException(
                 "Elements should implement interface IStreamPipelineBehavior<,>");
@@ -377,6 +401,154 @@ public class MediatRSimpleInjectorConfiguration
         where T : INotificationPublisher
     {
         NotificationPublisherType = typeof(T);
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestPreProcessor{TRequest}"/>.
+    /// </summary>
+    /// <param name="requestPreProcessorTypes"><see cref="IRequestPreProcessor{TRequest}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestPreProcessor{TRequest}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestPreProcessorTypes(IEnumerable<Type> requestPreProcessorTypes)
+    {
+        var requestPreProcessorTypeList = requestPreProcessorTypes.ToList();
+        if (requestPreProcessorTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IRequestPreProcessor<>))))
+        {
+            throw new InvalidRequestPreProcessorTypeException(
+                "Elements should implement interface IRequestPreProcessor<>");
+        }
+
+        RequestPreProcessorTypes = requestPreProcessorTypeList;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestPreProcessor{TRequest}"/>.
+    /// </summary>
+    /// <param name="requestPreProcessorTypes"><see cref="IRequestPreProcessor{TRequest}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestPreProcessor{TRequest}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestPreProcessorTypes(params Type[] requestPreProcessorTypes)
+    {
+        if (requestPreProcessorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestPreProcessor<>))))
+        {
+            throw new InvalidRequestPreProcessorTypeException(
+                "Elements should implement interface IRequestPreProcessor<>");
+        }
+
+        RequestPreProcessorTypes = requestPreProcessorTypes;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestPostProcessor{TRequest, TResponse}"/>.
+    /// </summary>
+    /// <param name="requestPostProcessorTypes"><see cref="IRequestPostProcessor{TRequest, TResponse}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestPostProcessor{TRequest, TResponse}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestPostProcessorTypes(IEnumerable<Type> requestPostProcessorTypes)
+    {
+        var requestPostProcessorTypeList = requestPostProcessorTypes.ToList();
+        if (requestPostProcessorTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IRequestPostProcessor<,>))))
+        {
+            throw new InvalidRequestPostProcessorTypeException(
+                "Elements should implement interface IRequestPostProcessor<,>");
+        }
+
+        RequestPostProcessorTypes = requestPostProcessorTypeList;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestPostProcessor{TRequest, TResponse}"/>.
+    /// </summary>
+    /// <param name="requestPostProcessorTypes"><see cref="IRequestPostProcessor{TRequest, TResponse}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestPostProcessor{TRequest, TResponse}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestPostProcessorTypes(params Type[] requestPostProcessorTypes)
+    {
+        if (requestPostProcessorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestPostProcessor<,>))))
+        {
+            throw new InvalidRequestPostProcessorTypeException(
+                "Elements should implement interface IRequestPostProcessor<,>");
+        }
+
+        RequestPostProcessorTypes = requestPostProcessorTypes;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse}"/>.
+    /// </summary>
+    /// <param name="requestExceptionHandlerTypes"><see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestExceptionHandlerTypes(IEnumerable<Type> requestExceptionHandlerTypes)
+    {
+        var requestExceptionHandlerTypeList = requestExceptionHandlerTypes.ToList();
+        if (requestExceptionHandlerTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,>))))
+        {
+            throw new InvalidRequestExceptionHandlerTypeException(
+                "Elements should implement interface IRequestExceptionHandler<,>");
+        }
+
+        RequestExceptionHandlerTypes = requestExceptionHandlerTypeList;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse}"/>.
+    /// </summary>
+    /// <param name="requestExceptionHandlerTypes"><see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestExceptionHandlerTypes(params Type[] requestExceptionHandlerTypes)
+    {
+        if (requestExceptionHandlerTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,>))))
+        {
+            throw new InvalidRequestExceptionHandlerTypeException(
+                "Elements should implement interface IRequestExceptionHandler<,>");
+        }
+
+        RequestExceptionHandlerTypes = requestExceptionHandlerTypes;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestExceptionAction{TRequest, TException}"/>.
+    /// </summary>
+    /// <param name="requestExceptionActionTypes"><see cref="IRequestExceptionAction{TRequest, TException}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestExceptionAction{TRequest, TException}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestExceptionActionTypes(IEnumerable<Type> requestExceptionActionTypes)
+    {
+        var requestExceptionActionTypeList = requestExceptionActionTypes.ToList();
+        if (requestExceptionActionTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionAction<,>))))
+        {
+            throw new InvalidRequestExceptionActionTypeException(
+                "Elements should implement interface IRequestExceptionAction<,>");
+        }
+
+        RequestExceptionActionTypes = requestExceptionActionTypeList;
+        return this;
+    }
+
+    /// <summary>
+    /// Setup additional custom implementations of <see cref="IRequestExceptionAction{TRequest, TException}"/>.
+    /// </summary>
+    /// <param name="requestExceptionActionTypes"><see cref="IRequestExceptionAction{TRequest, TException}"/> implementation types.</param>
+    /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
+    /// with <see cref="IRequestExceptionAction{TRequest, TException}"/> implementation types configured.</returns>
+    public MediatRSimpleInjectorConfiguration WithRequestExceptionActionTypes(params Type[] requestExceptionActionTypes)
+    {
+        if (requestExceptionActionTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionAction<,>))))
+        {
+            throw new InvalidRequestExceptionActionTypeException(
+                "Elements should implement interface IRequestExceptionAction<,>");
+        }
+
+        RequestExceptionActionTypes = requestExceptionActionTypes;
         return this;
     }
 }

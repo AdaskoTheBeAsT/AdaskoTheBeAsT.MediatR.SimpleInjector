@@ -18,7 +18,7 @@ MediatR extensions for SimpleInjector.
 
 ## Usage in AspNetCore
 
-Scans assemblies and adds handlers, preprocessors, and postprocessors implementations to the SimpleInjector container. Additionaly it register decorator which passes HttpContext.RequestAborted cancellation token from asp.net core controllers to MediatR.  
+Scans assemblies and adds handlers, preprocessors, and postprocessors implementations to the SimpleInjector container. Additionally it register decorator which passes HttpContext.RequestAborted cancellation token from asp.net core controllers to MediatR.  
 Install package ```AdaskoTheBeAsT.MediatR.SimpleInjector.AspNetCore```.  
 There are few options to use with `Container` instance:
 
@@ -143,7 +143,7 @@ This will register:
         });
    ```
 
-### Setting assemblies to scan and additonaly enabling all builtin behaviors and user defined processors/handlers
+### Setting assemblies to scan and additionally enabling all builtin behaviors and user defined processors/handlers
 
 This will register following behaviors:
 
@@ -168,7 +168,7 @@ and all user defined implementation of processors and handlers:
         });
    ```
 
-### Setting assemblies to scan and additonaly enabling choosen builtin behaviors and user defined processors/handlers
+### Setting assemblies to scan and additionally enabling chosen builtin behaviors and user defined processors/handlers
 
 This will register following behaviors:
 
@@ -193,7 +193,7 @@ and all user defined implementation of processors and handlers:
         });
    ```
 
-### Setting assemblies to scan and additonaly custom stream request handlers behaviors
+### Setting assemblies to scan and additionally custom stream request handlers behaviors
 
 This will register following stream behaviors:
 
@@ -208,7 +208,7 @@ This will register following stream behaviors:
         });
    ```
 
-### Setting assemblies to scan and additonaly enabling choosen builtin behaviors and user defined processors/handlers also with custom Pipeline Process Behaviours
+### Setting assemblies to scan and additionally enabling chosen builtin behaviors and user defined processors/handlers also with custom Pipeline Process Behaviors
 
    ```cs
     container.AddMediatR(
@@ -221,8 +221,14 @@ This will register following stream behaviors:
                 requestExceptionProcessorBehaviorEnabled: true,
                 requestExceptionActionProcessorBehaviorEnabled: false);
             cfg.UsingPipelineProcessorBehaviors(typeof(CustomPipelineBehavior<,>));
+            cfg.WithRequestPreProcessorTypes(typeof(FirstRequestPreProcessor<>), typeof(SecondRequestPreProcessor<>));
+            cfg.WithRequestPostProcessorTypes(typeof(FirstRequestPostProcessor<,>), typeof(SecondRequestPostProcessor<,>));
+            cfg.WithRequestExceptionProcessorTypes(typeof(FirstRequestExceptionProcessor<,,>), typeof(SecondRequestExceptionProcessor<,,>));
+            cfg.WithRequestExceptionActionProcessorTypes(typeof(FirstRequestExceptionActionProcessor<,>), typeof(SecondRequestExceptionActionProcessor<,>));
         });
    ```
+
+### Setting assemblies to scan and additionally enabling chosen builtin behaviors and processors with specific order
 
 ### Setting assemblies to scan and set WithNotificationPublisherForeachAwait NotificationPublisher
 

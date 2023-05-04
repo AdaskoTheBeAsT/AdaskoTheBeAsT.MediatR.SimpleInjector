@@ -171,7 +171,8 @@ public static class ContainerExtension
         RegisterIncludingGenericTypeDefinitions(
             container,
             uniqueAssemblies,
-            typeof(INotificationHandler<>));
+            typeof(INotificationHandler<>),
+            Array.Empty<Type>());
     }
 
     internal static void RegisterBehaviors(
@@ -187,7 +188,8 @@ public static class ContainerExtension
             processorBehaviors,
             typeof(RequestPreProcessorBehavior<,>),
             typeof(IRequestPreProcessor<>),
-            serviceConfig.RequestPreProcessorBehaviorEnabled);
+            serviceConfig.RequestPreProcessorBehaviorEnabled,
+            serviceConfig.RequestPreProcessorTypes);
 
         RegisterBehaviorsAndProcessors(
             container,
@@ -195,7 +197,8 @@ public static class ContainerExtension
             processorBehaviors,
             typeof(RequestPostProcessorBehavior<,>),
             typeof(IRequestPostProcessor<,>),
-            serviceConfig.RequestPostProcessorBehaviorEnabled);
+            serviceConfig.RequestPostProcessorBehaviorEnabled,
+            serviceConfig.RequestPostProcessorTypes);
 
         RegisterBehaviorsAndProcessors(
             container,
@@ -203,7 +206,8 @@ public static class ContainerExtension
             processorBehaviors,
             typeof(RequestExceptionProcessorBehavior<,>),
             typeof(IRequestExceptionHandler<,,>),
-            serviceConfig.RequestExceptionProcessorBehaviorEnabled);
+            serviceConfig.RequestExceptionProcessorBehaviorEnabled,
+            serviceConfig.RequestExceptionHandlerTypes);
 
         RegisterBehaviorsAndProcessors(
             container,
@@ -211,7 +215,8 @@ public static class ContainerExtension
             processorBehaviors,
             typeof(RequestExceptionActionProcessorBehavior<,>),
             typeof(IRequestExceptionAction<,>),
-            serviceConfig.RequestExceptionActionProcessorBehaviorEnabled);
+            serviceConfig.RequestExceptionActionProcessorBehaviorEnabled,
+            serviceConfig.RequestExceptionActionTypes);
 
         processorBehaviors.AddRange(serviceConfig.PipelineBehaviorTypes);
 
@@ -226,7 +231,8 @@ public static class ContainerExtension
         List<Type> behaviorTypes,
         Type behaviourType,
         Type processorType,
-        bool behaviourEnabled)
+        bool behaviourEnabled,
+        ICollection<Type> implementingTypes)
     {
         if (behaviourEnabled)
         {
@@ -234,7 +240,8 @@ public static class ContainerExtension
             RegisterIncludingGenericTypeDefinitions(
                 container,
                 uniqueAssemblies,
-                processorType);
+                processorType,
+                implementingTypes);
         }
         else
         {
@@ -245,10 +252,17 @@ public static class ContainerExtension
     internal static void RegisterIncludingGenericTypeDefinitions(
         Container container,
         Assembly[] uniqueAssemblies,
-        Type type)
+        Type type,
+        ICollection<Type> implementingTypes)
     {
+        if (implementingTypes.Count > 0)
+        {
+            container.Collection.Register(type, implementingTypes);
+            return;
+        }
+
         // we have to do this because by default, generic type definitions (such as the Constrained Notification Handler) won't be registered
-        var implementingTypes = container.GetTypesToRegister(
+        var implementingTypes2 = container.GetTypesToRegister(
             type,
             uniqueAssemblies,
             new TypesToRegisterOptions
@@ -257,6 +271,6 @@ public static class ContainerExtension
                 IncludeComposites = false,
             });
 
-        container.Collection.Register(type, implementingTypes);
+        container.Collection.Register(type, implementingTypes2);
     }
 }

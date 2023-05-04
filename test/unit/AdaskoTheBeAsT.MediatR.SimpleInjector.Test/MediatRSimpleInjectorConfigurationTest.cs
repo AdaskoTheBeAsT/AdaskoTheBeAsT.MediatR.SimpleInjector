@@ -8,6 +8,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using MediatR;
 using MediatR.NotificationPublishers;
+using MediatR.Pipeline;
 using Moq;
 using SimpleInjector;
 using Xunit;
@@ -43,6 +44,10 @@ public sealed class MediatRSimpleInjectorConfigurationTest
             config.AssembliesToScan.Should().BeEmpty();
             config.PipelineBehaviorTypes.Should().BeEmpty();
             config.NotificationPublisherType.Should().Be(typeof(ForeachAwaitPublisher));
+            config.RequestPreProcessorTypes.Should().BeEmpty();
+            config.RequestPostProcessorTypes.Should().BeEmpty();
+            config.RequestExceptionHandlerTypes.Should().BeEmpty();
+            config.RequestExceptionActionTypes.Should().BeEmpty();
         }
     }
 
@@ -142,8 +147,10 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         var assemblyToScan = typeof(MediatRSimpleInjectorConfigurationTest).GetTypeInfo().Assembly;
 
         // Act
+#pragma warning disable S3878
         var result = _sut.WithAssembliesToScan(
             new[] { assemblyToScan });
+#pragma warning restore S3878
 
         // Assert
         using (new AssertionScope())
@@ -179,8 +186,10 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         var handlerAssemblyMarkerType = typeof(MediatRSimpleInjectorConfigurationTest);
 
         // Act
+#pragma warning disable S3878
         var result = _sut.WithHandlerAssemblyMarkerTypes(
             new[] { handlerAssemblyMarkerType });
+#pragma warning restore S3878
 
         // Assert
         // Assert
@@ -208,7 +217,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
     [InlineData(true, true, false, true)]
     [InlineData(true, true, true, false)]
     [InlineData(true, true, true, true)]
-    public void UsingBuiltinPipelineProcessorBehaviorsShouldSetFlagsIndividualy(
+    public void UsingBuiltinPipelineProcessorBehaviorsShouldSetFlagsIndividually(
         bool requestPreProcessorBehaviorEnabled,
         bool requestPostProcessorBehaviorEnabled,
         bool requestExceptionProcessorBehaviorEnabled,
@@ -393,6 +402,222 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         result.NotificationPublisherType.Should().Be(typeof(FakeNotificationPublisher));
     }
 
+    [Fact]
+    public void WithRequestPreProcessorTypesShouldThrowExceptionWhenInvalidTypePassedInParams()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestPreProcessorTypes(typeof(object));
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestPreProcessorTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestPreProcessorTypesShouldSetProcessorCorrectlyWhenPassedParams()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestPreProcessor<>);
+
+        // Act
+        var result = _sut.WithRequestPreProcessorTypes(pipelineType);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestPreProcessorTypes.Should().NotBeEmpty();
+            result.RequestPreProcessorTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestPreProcessorTypesShouldThrowExceptionWhenInvalidTypePassedEnumerable()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestPreProcessorTypes(new List<Type> { typeof(object) });
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestPreProcessorTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestPreProcessorTypesShouldSetProcessorCorrectlyWhenPassedEnumerable()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestPreProcessor<>);
+
+        // Act
+        var result = _sut.WithRequestPreProcessorTypes(new List<Type> { pipelineType });
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestPreProcessorTypes.Should().NotBeEmpty();
+            result.RequestPreProcessorTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestPostProcessorTypesShouldThrowExceptionWhenInvalidTypePassedInParams()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestPostProcessorTypes(typeof(object));
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestPostProcessorTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestPostProcessorTypesShouldSetProcessorCorrectlyWhenPassedParams()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestPostProcessor<,>);
+
+        // Act
+        var result = _sut.WithRequestPostProcessorTypes(pipelineType);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestPostProcessorTypes.Should().NotBeEmpty();
+            result.RequestPostProcessorTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestPostProcessorTypesShouldThrowExceptionWhenInvalidTypePassedEnumerable()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestPostProcessorTypes(new List<Type> { typeof(object) });
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestPostProcessorTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestPostProcessorTypesShouldSetProcessorCorrectlyWhenPassedEnumerable()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestPostProcessor<,>);
+
+        // Act
+        var result = _sut.WithRequestPostProcessorTypes(new List<Type> { pipelineType });
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestPostProcessorTypes.Should().NotBeEmpty();
+            result.RequestPostProcessorTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestExceptionHandlerTypesShouldThrowExceptionWhenInvalidTypePassedInParams()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestExceptionHandlerTypes(typeof(object));
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestExceptionHandlerTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestExceptionHandlerTypesShouldSetProcessorCorrectlyWhenPassedParams()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestExceptionHandler<,>);
+
+        // Act
+        var result = _sut.WithRequestExceptionHandlerTypes(pipelineType);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestExceptionHandlerTypes.Should().NotBeEmpty();
+            result.RequestExceptionHandlerTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestExceptionHandlerTypesShouldThrowExceptionWhenInvalidTypePassedEnumerable()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestExceptionHandlerTypes(new List<Type> { typeof(object) });
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestExceptionHandlerTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestExceptionHandlerTypesShouldSetProcessorCorrectlyWhenPassedEnumerable()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestExceptionHandler<,>);
+
+        // Act
+        var result = _sut.WithRequestExceptionHandlerTypes(new List<Type> { pipelineType });
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestExceptionHandlerTypes.Should().NotBeEmpty();
+            result.RequestExceptionHandlerTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestExceptionActionTypesShouldThrowExceptionWhenInvalidTypePassedInParams()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestExceptionActionTypes(typeof(object));
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestExceptionActionTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestExceptionActionTypesShouldSetProcessorCorrectlyWhenPassedParams()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestExceptionAction<,>);
+
+        // Act
+        var result = _sut.WithRequestExceptionActionTypes(pipelineType);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestExceptionActionTypes.Should().NotBeEmpty();
+            result.RequestExceptionActionTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithRequestExceptionActionTypesShouldThrowExceptionWhenInvalidTypePassedEnumerable()
+    {
+        // Arrange
+        Action action = () => _sut.WithRequestExceptionActionTypes(new List<Type> { typeof(object) });
+
+        // Act and Assert
+        action.Should().Throw<InvalidRequestExceptionActionTypeException>();
+    }
+
+    [Fact]
+    public void WithRequestExceptionActionTypesShouldSetProcessorCorrectlyWhenPassedEnumerable()
+    {
+        // Arrange
+        var pipelineType = typeof(FakeRequestExceptionAction<,>);
+
+        // Act
+        var result = _sut.WithRequestExceptionActionTypes(new List<Type> { pipelineType });
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.RequestExceptionActionTypes.Should().NotBeEmpty();
+            result.RequestExceptionActionTypes.First().Should().Be(pipelineType);
+        }
+    }
+
 #pragma warning disable CA1812
     private sealed class FakeMediator
         : IMediator
@@ -484,6 +709,59 @@ public sealed class MediatRSimpleInjectorConfigurationTest
             CancellationToken cancellationToken)
         {
             throw new NotSupportedException();
+        }
+    }
+
+    private sealed class FakeRequestPreProcessor<TRequest>
+        : IRequestPreProcessor<TRequest>
+        where TRequest : notnull
+    {
+        public Task Process(
+            TRequest request,
+            CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class FakeRequestPostProcessor<TRequest, TResponse>
+        : IRequestPostProcessor<TRequest, TResponse>
+        where TRequest : notnull
+    {
+        public Task Process(
+            TRequest request,
+            TResponse response,
+            CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class FakeRequestExceptionHandler<TRequest, TResponse>
+        : IRequestExceptionHandler<TRequest, TResponse>
+        where TRequest : notnull
+    {
+        public Task Handle(
+            TRequest request,
+            Exception exception,
+            RequestExceptionHandlerState<TResponse> state,
+            CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class FakeRequestExceptionAction<TRequest, TException>
+        : IRequestExceptionAction<TRequest, TException>
+        where TRequest : notnull
+        where TException : Exception
+    {
+        public Task Execute(
+            TRequest request,
+            TException exception,
+            CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 #pragma warning restore CA1812

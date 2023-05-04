@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
@@ -140,6 +141,110 @@ public class PipelineTests
             "Next concrete post processor",
             "First post processor",
             "Next post processor");
+    }
+
+    [Fact]
+    public async Task ShouldPickUpPreAndPostProcessorsWithCustomProcessorOrderInParamsAsync()
+    {
+        var output = new Logger();
+#if NET6_0_OR_GREATER
+        await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
+        container.RegisterInstance(output);
+        container.AddMediatR(
+            config =>
+            {
+                config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
+                config.UsingBuiltinPipelineProcessorBehaviors(
+                    requestPreProcessorBehaviorEnabled: true,
+                    requestPostProcessorBehaviorEnabled: true,
+                    requestExceptionProcessorBehaviorEnabled: true,
+                    requestExceptionActionProcessorBehaviorEnabled: true);
+                config.WithRequestPreProcessorTypes(
+                    typeof(NextPreProcessor<>),
+                    typeof(FirstPreProcessor<>),
+                    typeof(NextConcretePreProcessor),
+                    typeof(FirstConcretePreProcessor));
+                config.WithRequestPostProcessorTypes(
+                    typeof(NextPostProcessor<,>),
+                    typeof(FirstPostProcessor<,>),
+                    typeof(NextConcretePostProcessor),
+                    typeof(FirstConcretePostProcessor));
+            });
+
+        var mediator = container.GetInstance<IMediator>();
+
+        var response = await mediator.Send(new Ping { Message = "Ping" });
+
+        response.Message.Should().Be("Ping Pong");
+
+        output.Messages.Should().BeEquivalentTo(
+            "Next pre processor",
+            "First pre processor",
+            "Next concrete pre processor",
+            "First concrete pre processor",
+            "Handler",
+            "Next post processor",
+            "First post processor",
+            "Next concrete post processor",
+            "First concrete post processor");
+    }
+
+    [Fact]
+    public async Task ShouldPickUpPreAndPostProcessorsWithCustomProcessorOrderInEnumerableAsync()
+    {
+        var output = new Logger();
+#if NET6_0_OR_GREATER
+        await using var container = new Container();
+#else
+        using var container = new Container();
+#endif
+        container.RegisterInstance(output);
+        container.AddMediatR(
+            config =>
+            {
+                config.WithHandlerAssemblyMarkerTypes(typeof(Ping));
+                config.UsingBuiltinPipelineProcessorBehaviors(
+                    requestPreProcessorBehaviorEnabled: true,
+                    requestPostProcessorBehaviorEnabled: true,
+                    requestExceptionProcessorBehaviorEnabled: true,
+                    requestExceptionActionProcessorBehaviorEnabled: true);
+                config.WithRequestPreProcessorTypes(
+                    new List<Type>
+                    {
+                        typeof(NextPreProcessor<>),
+                        typeof(FirstPreProcessor<>),
+                        typeof(NextConcretePreProcessor),
+                        typeof(FirstConcretePreProcessor),
+                    });
+                config.WithRequestPostProcessorTypes(
+                    new List<Type>
+                    {
+                        typeof(NextPostProcessor<,>),
+                        typeof(FirstPostProcessor<,>),
+                        typeof(NextConcretePostProcessor),
+                        typeof(FirstConcretePostProcessor),
+                    });
+            });
+
+        var mediator = container.GetInstance<IMediator>();
+
+        var response = await mediator.Send(new Ping { Message = "Ping" });
+
+        response.Message.Should().Be("Ping Pong");
+
+        output.Messages.Should().BeEquivalentTo(
+            "Next pre processor",
+            "First pre processor",
+            "Next concrete pre processor",
+            "First concrete pre processor",
+            "Handler",
+            "Next post processor",
+            "First post processor",
+            "Next concrete post processor",
+            "First concrete post processor");
     }
 
     [Fact]
@@ -398,6 +503,7 @@ public class PipelineTests
         }
     }
 
+#pragma warning disable S1144
     internal sealed class FirstPreProcessor<TRequest>
         : IRequestPreProcessor<TRequest>
         where TRequest : notnull
@@ -415,7 +521,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class FirstConcretePreProcessor : IRequestPreProcessor<Ping>
     {
         private readonly Logger _output;
@@ -431,7 +539,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class NextPreProcessor<TRequest>
         : IRequestPreProcessor<TRequest>
         where TRequest : notnull
@@ -449,7 +559,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class NextConcretePreProcessor : IRequestPreProcessor<Ping>
     {
         private readonly Logger _output;
@@ -465,7 +577,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class FirstPostProcessor<TRequest, TResponse>
         : IRequestPostProcessor<TRequest, TResponse>
         where TRequest : notnull
@@ -483,7 +597,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class FirstConcretePostProcessor : IRequestPostProcessor<Ping, Pong>
     {
         private readonly Logger _output;
@@ -499,7 +615,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class NextPostProcessor<TRequest, TResponse>
         : IRequestPostProcessor<TRequest, TResponse>
         where TRequest : notnull
@@ -517,7 +635,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class NextConcretePostProcessor : IRequestPostProcessor<Ping, Pong>
     {
         private readonly Logger _output;
@@ -533,7 +653,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class PingPongGenericExceptionAction : IRequestExceptionAction<Ping>
     {
         private readonly Logger _output;
@@ -547,7 +669,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class PingPongApplicationExceptionAction : IRequestExceptionAction<Ping, ApplicationException>
     {
         private readonly Logger _output;
@@ -561,7 +685,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class PingPongExceptionActionForType1 : IRequestExceptionAction<Ping, SystemException>
     {
         private readonly Logger _output;
@@ -575,7 +701,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class PingPongExceptionActionForType2 : IRequestExceptionAction<Ping, SystemException>
     {
         private readonly Logger _output;
@@ -589,7 +717,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class PingPongExceptionHandlerForType : IRequestExceptionHandler<Ping, Pong, ApplicationException>
     {
         public Task Handle(Ping request, ApplicationException exception, RequestExceptionHandlerState<Pong> state, CancellationToken cancellationToken)
@@ -599,7 +729,9 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 
+#pragma warning disable S1144
     internal sealed class PingPongGenericExceptionHandler : IRequestExceptionHandler<Ping, Pong>
     {
         private readonly Logger _output;
@@ -613,5 +745,6 @@ public class PipelineTests
             return Task.CompletedTask;
         }
     }
+#pragma warning restore S1144
 }
 #pragma warning restore CA1812

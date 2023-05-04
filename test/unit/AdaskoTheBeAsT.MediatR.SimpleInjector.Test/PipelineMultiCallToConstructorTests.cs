@@ -166,6 +166,7 @@ public class PipelineMultiCallToConstructorTests
         public string? Message { get; set; }
     }
 
+#pragma warning disable S1144
     internal sealed class ConstructorTestHandler : IRequestHandler<ConstructorTestRequest, ConstructorTestResponse>
     {
         private readonly Logger _logger;
@@ -181,5 +182,6 @@ public class PipelineMultiCallToConstructorTests
             return Task.FromResult(new ConstructorTestResponse { Message = request.Message + " ConstructorPong" });
         }
     }
+#pragma warning restore S1144
 }
 #pragma warning restore CA1812

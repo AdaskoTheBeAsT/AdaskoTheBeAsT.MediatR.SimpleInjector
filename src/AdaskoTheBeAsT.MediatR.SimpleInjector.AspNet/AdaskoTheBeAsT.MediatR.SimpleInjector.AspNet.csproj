@@ -10,7 +10,7 @@
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>Allows easy configuration of MediatR and its registration in SimpleInjector in connection to ASP NET Full Framework (4.6.1 until 4.8).</Description>
-    <PackageVersion>8.0.0</PackageVersion>
+    <PackageVersion>8.1.0</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -22,7 +22,7 @@
     <Copyright>Adam "AdaskoTheBeAsT" Pluciński</Copyright>
     <PackageTags>MediatR;SimpleInjector</PackageTags>
     <PackageReleaseNotes>
-      - MediatR 12.0.0 release
+      - added ability to order RequestPreProcessors, RequestPostProcessors, RequestExceptionHandlers, RequestExceptionActions
     </PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="8.0.0" />
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="8.1.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
