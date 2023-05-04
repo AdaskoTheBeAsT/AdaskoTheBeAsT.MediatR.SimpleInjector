@@ -5,8 +5,7 @@ MediatR extensions for SimpleInjector.
 ## Badges
 
 [![CodeFactor](https://www.codefactor.io/repository/github/adaskothebeast/adaskothebeast.mediatr.simpleinjector/badge)](https://www.codefactor.io/repository/github/adaskothebeast/adaskothebeast.mediatr.simpleinjector)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/alerts/)
-[![Build Status](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_apis/build/status/AdaskoTheBeAsT.AdaskoTheBeAsT.MediatR.SimpleInjector?branchName=master)](https://adaskothebeast.visualstudio.com/AdaskoTheBeAsT.MediatR.SimpleInjector/_build/latest?definitionId=7&branchName=master)
+[![Build Status](https://img.shields.io/azure-devops/build/adaskothebeast/AdaskoTheBeAsT.MediatR.SimpleInjector/17)](https://img.shields.io/azure-devops/build/adaskothebeast/AdaskoTheBeAsT.MediatR.SimpleInjector/17)
 ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/17)
 ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/AdaskoTheBeAsT/AdaskoTheBeAsT.MediatR.SimpleInjector/17?style=plastic)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector&metric=alert_status)](https://sonarcloud.io/dashboard?id=AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector)
