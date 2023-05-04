@@ -24,7 +24,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
         {
             var response = _httpContextAccessor.Response;
 
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (response == null)
             {
                 return cancellationToken;
