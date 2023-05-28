@@ -19,13 +19,6 @@ variables:
 
 steps:
   - task: UseDotNet@2
-    displayName: "Use .NET Core SDK 3.1.x"
-    inputs:
-      packageType: "sdk"
-      version: 3.1.x
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-
-  - task: UseDotNet@2
     displayName: "Use .NET Core SDK 6.0.x"
     inputs:
       packageType: "sdk"
@@ -42,7 +35,7 @@ steps:
     displayName: Restore
     inputs:
       command: restore
-      arguments: AdaskoTheBeAsT.MediatR.SimpleInjector.sln
+      arguments: AdaskoTheBeAsT.MediatR.SimpleInjector.sln --verbosity quiet
 
   - task: SonarCloudPrepare@1
     displayName: "Prepare analysis on SonarCloud"
@@ -81,7 +74,7 @@ steps:
       command: test
       projects: "$(unitTestProjects)"
       publishTestResults: false
-      arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --collect:"XPlat Code Coverage" --logger:"trx" --results-directory $(testResultsDirectory)'
+      arguments: '--configuration $(buildConfiguration) --collect:"Code Coverage" --collect:"XPlat Code Coverage;Format=opencover,cobertura" --logger:"trx" --results-directory $(testResultsDirectory)'
 
   - task: ResharperCli@2
     inputs:
