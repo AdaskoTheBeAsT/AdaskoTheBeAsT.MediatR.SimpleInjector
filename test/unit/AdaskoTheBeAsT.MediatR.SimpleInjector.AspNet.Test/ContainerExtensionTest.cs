@@ -48,7 +48,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                         .WithHandlerAssemblyMarkerTypes(typeof(ContainerExtensionTest))
                         .AsSingleton());
 
-            // Act & Assert
+            // Act and Assert
             action.Should().Throw<InvalidAspNetLifetimeException>();
         }
 
@@ -379,7 +379,8 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
             _container.Dispose();
         }
 
-        private TResult? GetInstanceFieldValue<T, TResult>(object instance, string fieldName)
+#pragma warning disable MA0038 // Make method static
+        private static TResult? GetInstanceFieldValue<T, TResult>(object instance, string fieldName)
             where TResult : class
         {
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
@@ -389,5 +390,6 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
 
             return value as TResult;
         }
+#pragma warning restore MA0038 // Make method static
     }
 }

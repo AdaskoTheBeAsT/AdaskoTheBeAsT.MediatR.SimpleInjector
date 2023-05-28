@@ -8,6 +8,7 @@ using SimpleInjector;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
 {
+#pragma warning disable RCS1247 // Fix documentation comment tag.
     /// <summary>
     /// Extensions to scan for MediatR handlers and registers them in SimpleInjector.
     /// - Scans for any handler interface implementations and registers them as <see cref="Lifestyle.Transient"/>
@@ -29,6 +30,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
     /// <code>container.Register&lt;Type, Type&gt;();</code>
     /// </summary>
     public static class ContainerExtension
+#pragma warning restore RCS1247 // Fix documentation comment tag.
     {
         /// <summary>
         /// Registers handlers and mediator types from the specified assemblies.

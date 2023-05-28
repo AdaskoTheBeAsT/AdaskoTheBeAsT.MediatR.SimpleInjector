@@ -323,7 +323,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with <see cref="IPipelineBehavior{TRequest,TResponse}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration UsingPipelineProcessorBehaviors(params Type[] pipelineBehaviorTypes)
     {
-        if (pipelineBehaviorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IPipelineBehavior<,>))))
+        if (Array.Exists(pipelineBehaviorTypes, t => !t.IsAssignableToGenericType(typeof(IPipelineBehavior<,>))))
         {
             throw new InvalidPipelineBehaviorTypeException(
                 "Elements should implement interface IPipelineBehavior<,>");
@@ -360,7 +360,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with <see cref="IStreamPipelineBehavior{TRequest,TResponse}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration UsingStreamPipelineBehaviors(params Type[] pipelineBehaviorTypes)
     {
-        if (pipelineBehaviorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IStreamPipelineBehavior<,>))))
+        if (Array.Exists(pipelineBehaviorTypes, t => !t.IsAssignableToGenericType(typeof(IStreamPipelineBehavior<,>))))
         {
             throw new InvalidStreamPipelineBehaviorTypeException(
                 "Elements should implement interface IStreamPipelineBehavior<,>");
@@ -431,7 +431,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with <see cref="IRequestPreProcessor{TRequest}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration WithRequestPreProcessorTypes(params Type[] requestPreProcessorTypes)
     {
-        if (requestPreProcessorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestPreProcessor<>))))
+        if (Array.Exists(requestPreProcessorTypes, t => !t.IsAssignableToGenericType(typeof(IRequestPreProcessor<>))))
         {
             throw new InvalidRequestPreProcessorTypeException(
                 "Elements should implement interface IRequestPreProcessor<>");
@@ -468,7 +468,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with <see cref="IRequestPostProcessor{TRequest, TResponse}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration WithRequestPostProcessorTypes(params Type[] requestPostProcessorTypes)
     {
-        if (requestPostProcessorTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestPostProcessor<,>))))
+        if (Array.Exists(requestPostProcessorTypes, t => !t.IsAssignableToGenericType(typeof(IRequestPostProcessor<,>))))
         {
             throw new InvalidRequestPostProcessorTypeException(
                 "Elements should implement interface IRequestPostProcessor<,>");
@@ -505,7 +505,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with <see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration WithRequestExceptionHandlerTypes(params Type[] requestExceptionHandlerTypes)
     {
-        if (requestExceptionHandlerTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,>))))
+        if (Array.Exists(requestExceptionHandlerTypes, t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,>))))
         {
             throw new InvalidRequestExceptionHandlerTypeException(
                 "Elements should implement interface IRequestExceptionHandler<,>");
@@ -542,7 +542,7 @@ public class MediatRSimpleInjectorConfiguration
     /// with <see cref="IRequestExceptionAction{TRequest, TException}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration WithRequestExceptionActionTypes(params Type[] requestExceptionActionTypes)
     {
-        if (requestExceptionActionTypes.Any(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionAction<,>))))
+        if (Array.Exists(requestExceptionActionTypes, t => !t.IsAssignableToGenericType(typeof(IRequestExceptionAction<,>))))
         {
             throw new InvalidRequestExceptionActionTypeException(
                 "Elements should implement interface IRequestExceptionAction<,>");
