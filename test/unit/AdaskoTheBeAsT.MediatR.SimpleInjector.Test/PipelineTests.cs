@@ -656,7 +656,7 @@ public class PipelineTests
 #pragma warning restore S1144
 
 #pragma warning disable S1144
-    internal sealed class PingPongGenericExceptionAction : IRequestExceptionAction<Ping>
+    internal sealed class PingPongGenericExceptionAction : IRequestExceptionAction<Ping, Exception>
     {
         private readonly Logger _output;
 
@@ -732,7 +732,7 @@ public class PipelineTests
 #pragma warning restore S1144
 
 #pragma warning disable S1144
-    internal sealed class PingPongGenericExceptionHandler : IRequestExceptionHandler<Ping, Pong>
+    internal sealed class PingPongGenericExceptionHandler : IRequestExceptionHandler<Ping, Pong, Exception>
     {
         private readonly Logger _output;
 

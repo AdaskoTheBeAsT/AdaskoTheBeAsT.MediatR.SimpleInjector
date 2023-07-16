@@ -524,7 +524,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
     public void WithRequestExceptionHandlerTypesShouldSetProcessorCorrectlyWhenPassedParams()
     {
         // Arrange
-        var pipelineType = typeof(FakeRequestExceptionHandler<,>);
+        var pipelineType = typeof(FakeRequestExceptionHandler<,,>);
 
         // Act
         var result = _sut.WithRequestExceptionHandlerTypes(pipelineType);
@@ -551,7 +551,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
     public void WithRequestExceptionHandlerTypesShouldSetProcessorCorrectlyWhenPassedEnumerable()
     {
         // Arrange
-        var pipelineType = typeof(FakeRequestExceptionHandler<,>);
+        var pipelineType = typeof(FakeRequestExceptionHandler<,,>);
 
         // Act
         var result = _sut.WithRequestExceptionHandlerTypes(new List<Type> { pipelineType });
@@ -737,13 +737,14 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         }
     }
 
-    private sealed class FakeRequestExceptionHandler<TRequest, TResponse>
-        : IRequestExceptionHandler<TRequest, TResponse>
+    private sealed class FakeRequestExceptionHandler<TRequest, TResponse, TException>
+        : IRequestExceptionHandler<TRequest, TResponse, TException>
         where TRequest : notnull
+        where TException : Exception
     {
         public Task Handle(
             TRequest request,
-            Exception exception,
+            TException exception,
             RequestExceptionHandlerState<TResponse> state,
             CancellationToken cancellationToken)
         {

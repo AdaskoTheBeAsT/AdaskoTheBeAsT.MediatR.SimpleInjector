@@ -35,6 +35,7 @@ steps:
     displayName: Restore
     inputs:
       command: restore
+      verbosityRestore: Quiet
       arguments: AdaskoTheBeAsT.MediatR.SimpleInjector.sln --verbosity quiet
 
   - task: SonarCloudPrepare@1

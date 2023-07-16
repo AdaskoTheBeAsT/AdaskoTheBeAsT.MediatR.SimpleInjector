@@ -116,7 +116,7 @@ public class MediatRSimpleInjectorConfiguration
     public ICollection<Type> RequestPostProcessorTypes { get; private set; }
 
     /// <summary>
-    /// Custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse}"/>.
+    /// Custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/>.
     /// </summary>
     public ICollection<Type> RequestExceptionHandlerTypes { get; private set; }
 
@@ -479,18 +479,18 @@ public class MediatRSimpleInjectorConfiguration
     }
 
     /// <summary>
-    /// Setup additional custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse}"/>.
+    /// Setup additional custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/>.
     /// </summary>
-    /// <param name="requestExceptionHandlerTypes"><see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types.</param>
+    /// <param name="requestExceptionHandlerTypes"><see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/> implementation types.</param>
     /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
-    /// with <see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types configured.</returns>
+    /// with <see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration WithRequestExceptionHandlerTypes(IEnumerable<Type> requestExceptionHandlerTypes)
     {
         var requestExceptionHandlerTypeList = requestExceptionHandlerTypes.ToList();
-        if (requestExceptionHandlerTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,>))))
+        if (requestExceptionHandlerTypeList.Exists(t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,,>))))
         {
             throw new InvalidRequestExceptionHandlerTypeException(
-                "Elements should implement interface IRequestExceptionHandler<,>");
+                "Elements should implement interface IRequestExceptionHandler<,,>");
         }
 
         RequestExceptionHandlerTypes = requestExceptionHandlerTypeList;
@@ -498,17 +498,17 @@ public class MediatRSimpleInjectorConfiguration
     }
 
     /// <summary>
-    /// Setup additional custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse}"/>.
+    /// Setup additional custom implementations of <see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/>.
     /// </summary>
-    /// <param name="requestExceptionHandlerTypes"><see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types.</param>
+    /// <param name="requestExceptionHandlerTypes"><see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/> implementation types.</param>
     /// <returns><see cref="MediatRSimpleInjectorConfiguration"/>
-    /// with <see cref="IRequestExceptionHandler{TRequest, TResponse}"/> implementation types configured.</returns>
+    /// with <see cref="IRequestExceptionHandler{TRequest, TResponse, TException}"/> implementation types configured.</returns>
     public MediatRSimpleInjectorConfiguration WithRequestExceptionHandlerTypes(params Type[] requestExceptionHandlerTypes)
     {
-        if (Array.Exists(requestExceptionHandlerTypes, t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,>))))
+        if (Array.Exists(requestExceptionHandlerTypes, t => !t.IsAssignableToGenericType(typeof(IRequestExceptionHandler<,,>))))
         {
             throw new InvalidRequestExceptionHandlerTypeException(
-                "Elements should implement interface IRequestExceptionHandler<,>");
+                "Elements should implement interface IRequestExceptionHandler<,,>");
         }
 
         RequestExceptionHandlerTypes = requestExceptionHandlerTypes;

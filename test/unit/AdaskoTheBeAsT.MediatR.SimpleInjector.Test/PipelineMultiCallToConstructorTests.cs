@@ -9,6 +9,7 @@ using SimpleInjector;
 using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
+
 #pragma warning disable CA1812
 public class PipelineMultiCallToConstructorTests
 {
