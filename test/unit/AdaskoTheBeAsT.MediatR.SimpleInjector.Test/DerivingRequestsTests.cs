@@ -25,14 +25,18 @@ public sealed class DerivingRequestsTests
     [Fact]
     public async Task ShouldReturnPingPongAsync()
     {
+#pragma warning disable CC0021 // Use nameof
         var pong = await _mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
         pong.Message.Should().Be("Ping Pong");
     }
 
     [Fact]
     public async Task ShouldReturnDerivedPingPongAsync()
     {
+#pragma warning disable CC0021 // Use nameof
         var pong = await _mediator.Send(new DerivedPing { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
         pong.Message.Should().Be("DerivedPing Pong");
     }
 

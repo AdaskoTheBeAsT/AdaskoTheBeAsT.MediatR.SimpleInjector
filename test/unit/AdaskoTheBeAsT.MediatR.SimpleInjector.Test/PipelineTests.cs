@@ -38,7 +38,9 @@ public class PipelineTests
 
         var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable CC0021 // Use nameof
         var response = await mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
 
         response.Message.Should().Be("Ping Pong");
 
@@ -84,7 +86,9 @@ public class PipelineTests
 
         var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable CC0021 // Use nameof
         var response = await mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
 
         response.Message.Should().Be("Ping Pong");
 
@@ -127,7 +131,9 @@ public class PipelineTests
 
         var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable CC0021 // Use nameof
         var response = await mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
 
         response.Message.Should().Be("Ping Pong");
 
@@ -176,7 +182,9 @@ public class PipelineTests
 
         var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable CC0021 // Use nameof
         var response = await mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
 
         response.Message.Should().Be("Ping Pong");
 
@@ -231,7 +239,9 @@ public class PipelineTests
 
         var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable CC0021 // Use nameof
         var response = await mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
 
         response.Message.Should().Be("Ping Pong");
 
@@ -274,7 +284,9 @@ public class PipelineTests
         Func<Task> action = async () => await mediator.Send(
                 new Ping
                 {
+#pragma warning disable CC0021 // Use nameof
                     Message = "Ping",
+#pragma warning restore CC0021 // Use nameof
                     ThrowAction = msg => throw new Exception(msg.Message + " Thrown"),
                 })
             .ConfigureAwait(false);
@@ -313,7 +325,9 @@ public class PipelineTests
         Func<Task> action = async () => await mediator.Send(
                 new Ping
                 {
+#pragma warning disable CC0021 // Use nameof
                     Message = "Ping",
+#pragma warning restore CC0021 // Use nameof
                     ThrowAction = msg => throw new SystemException(msg.Message + " Thrown"),
                 })
             .ConfigureAwait(false);
@@ -347,7 +361,9 @@ public class PipelineTests
 
         var mediator = container.GetInstance<IMediator>();
 
+#pragma warning disable CC0021 // Use nameof
         var response = await mediator.Send(new Ping { Message = "Ping" });
+#pragma warning restore CC0021 // Use nameof
 
         response.Message.Should().Be("Ping Pong");
 
@@ -362,7 +378,9 @@ public class PipelineTests
 
         output.Messages.Clear();
 
+#pragma warning disable CC0021 // Use nameof
         var zingResponse = await mediator.Send(new Zing { Message = "Zing" });
+#pragma warning restore CC0021 // Use nameof
 
         zingResponse.Message.Should().Be("Zing Zong");
 
