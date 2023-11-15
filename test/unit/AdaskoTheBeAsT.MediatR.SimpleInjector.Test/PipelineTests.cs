@@ -288,11 +288,10 @@ public class PipelineTests
                     Message = "Ping",
 #pragma warning restore CC0021 // Use nameof
                     ThrowAction = msg => throw new Exception(msg.Message + " Thrown"),
-                })
-            .ConfigureAwait(false);
+                });
 #pragma warning restore S3626 // Jump statements should not be redundant
 
-        await action.Should().ThrowAsync<Exception>().ConfigureAwait(false);
+        await action.Should().ThrowAsync<Exception>();
 
         output.Messages.Should().Contain("Ping Thrown Logged by Generic Type");
         output.Messages.Should().Contain("Logging generic exception");
@@ -329,11 +328,10 @@ public class PipelineTests
                     Message = "Ping",
 #pragma warning restore CC0021 // Use nameof
                     ThrowAction = msg => throw new SystemException(msg.Message + " Thrown"),
-                })
-            .ConfigureAwait(false);
+                });
 #pragma warning restore S3626 // Jump statements should not be redundant
 
-        await action.Should().ThrowAsync<SystemException>().ConfigureAwait(false);
+        await action.Should().ThrowAsync<SystemException>();
 
         output.Messages.Should().Contain("Logging exception 1");
         output.Messages.Should().Contain("Logging exception 2");
