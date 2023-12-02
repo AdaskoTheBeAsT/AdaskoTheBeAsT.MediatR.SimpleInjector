@@ -135,7 +135,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Assert
         using (new AssertionScope())
         {
-            result.AssembliesToScan.Should().HaveCount(1);
+            result.AssembliesToScan.Should().ContainSingle();
             result.AssembliesToScan.First().Should().BeSameAs(assemblyToScan);
         }
     }
@@ -155,7 +155,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Assert
         using (new AssertionScope())
         {
-            result.AssembliesToScan.Should().HaveCount(1);
+            result.AssembliesToScan.Should().ContainSingle();
             result.AssembliesToScan.First().Should().BeSameAs(assemblyToScan);
         }
     }
@@ -174,7 +174,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Assert
         using (new AssertionScope())
         {
-            result.AssembliesToScan.Should().HaveCount(1);
+            result.AssembliesToScan.Should().ContainSingle();
             result.AssembliesToScan.First().Should().BeSameAs(handlerAssemblyMarkerType.GetTypeInfo().Assembly);
         }
     }
@@ -195,7 +195,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         // Assert
         using (new AssertionScope())
         {
-            result.AssembliesToScan.Should().HaveCount(1);
+            result.AssembliesToScan.Should().ContainSingle();
             result.AssembliesToScan.First().Should().BeSameAs(handlerAssemblyMarkerType.GetTypeInfo().Assembly);
         }
     }

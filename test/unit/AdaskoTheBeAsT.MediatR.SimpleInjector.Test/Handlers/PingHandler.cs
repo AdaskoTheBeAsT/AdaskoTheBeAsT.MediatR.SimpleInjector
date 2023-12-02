@@ -16,10 +16,16 @@ public class PingHandler : IRequestHandler<Ping, Pong>
 
     public Task<Pong> Handle(Ping request, CancellationToken cancellationToken)
     {
+#if NET462_OR_GREATER
         if (request is null)
         {
             throw new ArgumentNullException(nameof(request));
         }
+#endif
+
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(request);
+#endif
 
         _logger.Messages.Add("Handler");
 
