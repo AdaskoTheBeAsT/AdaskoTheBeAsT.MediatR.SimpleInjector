@@ -38,8 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="8.2.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
