@@ -10,7 +10,7 @@
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>Allows easy configuration of MediatR and its registration in SimpleInjector in connection to ASP NET Core and ASP NET 5.</Description>
-    <PackageVersion>9.0.0</PackageVersion>
+    <PackageVersion>9.0.1</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="9.0.0" />
+    <PackageReference Include="AdaskoTheBeAsT.MediatR.SimpleInjector" Version="9.0.1" />
   </ItemGroup>
 
 </Project>
