@@ -51,7 +51,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
             object notification,
             CancellationToken cancellationToken = default)
         {
+#pragma warning disable VSTHRD003 // Avoid awaiting foreign Tasks
             return Unit.Task;
+#pragma warning restore VSTHRD003 // Avoid awaiting foreign Tasks
         }
 
         public Task Publish<TNotification>(
@@ -59,7 +61,9 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
             CancellationToken cancellationToken = default)
             where TNotification : INotification
         {
+#pragma warning disable VSTHRD003 // Avoid awaiting foreign Tasks
             return Unit.Task;
+#pragma warning restore VSTHRD003 // Avoid awaiting foreign Tasks
         }
     }
 }
