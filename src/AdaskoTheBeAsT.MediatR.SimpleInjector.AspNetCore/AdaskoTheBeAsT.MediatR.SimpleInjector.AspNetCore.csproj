@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\..\SharedVersion.props" />
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <ProjectGuid>A5FD8204-683F-49D4-9722-2B2C27D13407</ProjectGuid>
@@ -10,7 +10,6 @@
     <RepositoryType>github</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Description>Allows easy configuration of MediatR and its registration in SimpleInjector in connection to ASP NET Core and ASP NET 5.</Description>
-    <PackageVersion>9.0.1</PackageVersion>
     <Authors>Adam "AdaskoTheBeAsT" Pluciński</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>

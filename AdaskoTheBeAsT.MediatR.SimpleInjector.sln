@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{AADC3A
 		README.md = README.md
 		SecurityCodeScan.config.yml = SecurityCodeScan.config.yml
 		Settings.StyleCop = Settings.StyleCop
+		SharedVersion.props = SharedVersion.props
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
