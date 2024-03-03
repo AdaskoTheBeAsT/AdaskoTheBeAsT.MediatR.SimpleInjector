@@ -172,7 +172,7 @@ public static class ContainerExtension
             container,
             uniqueAssemblies,
             typeof(INotificationHandler<>),
-            Array.Empty<Type>());
+            Type.EmptyTypes);
     }
 
     internal static void RegisterBehaviors(
