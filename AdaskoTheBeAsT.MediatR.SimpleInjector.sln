@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{AADC3A
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		.runsettings = .runsettings
 		AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings = AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings
 		AdaskoTheBeAsT.ruleset = AdaskoTheBeAsT.ruleset
 		azure-pipelines.yml = azure-pipelines.yml
@@ -44,6 +45,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet", "src\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.csproj", "{92A84247-5189-4EBD-9D85-15392D85E4B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test", "test\unit\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test\AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test.csproj", "{D36DCE32-DB95-4B74-8DF3-6C903D3704B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sarif", ".sarif", "{05D6B6B1-FD4E-42BD-B68C-C7EF8FE04E58}"
+	ProjectSection(SolutionItems) = preProject
+		.sarif\.gitkeep = .sarif\.gitkeep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dotcover", ".dotcover", "{16B44DD7-D931-429E-AE5B-8BE270C55927}"
+	ProjectSection(SolutionItems) = preProject
+		.dotcover\.gitkeep = .dotcover\.gitkeep
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
