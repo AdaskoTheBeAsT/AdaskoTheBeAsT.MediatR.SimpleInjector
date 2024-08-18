@@ -314,7 +314,7 @@ public sealed class ContainerExtensionTest
         _container.Dispose();
     }
 
-#pragma warning disable MA0038 // Make method static
+#pragma warning disable MA0038,S2325 // Make method static
     private TResult? GetInstanceFieldValue<T, TResult>(object instance, string fieldName)
         where TResult : class
     {
@@ -325,5 +325,5 @@ public sealed class ContainerExtensionTest
 
         return value as TResult;
     }
-#pragma warning restore MA0038 // Make method static
+#pragma warning restore MA0038,S2325 // Make method static
 }
