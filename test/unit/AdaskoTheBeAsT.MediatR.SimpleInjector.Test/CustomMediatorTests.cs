@@ -59,7 +59,7 @@ public sealed class CustomMediatorTests
     [Fact]
     public void ShouldResolveMediatorWhenCustomMediatorInstanceRegistered()
     {
-        var customMediator = new Mock<IMediator>().Object;
+        var customMediator = new Mock<IMediator>(MockBehavior.Strict).Object;
         _container.AddMediatR(
             cfg =>
             {
@@ -73,7 +73,7 @@ public sealed class CustomMediatorTests
     [Fact]
     public void ShouldResolveRequestHandlerWhenCustomMediatorInstanceRegistered()
     {
-        var customMediator = new Mock<IMediator>().Object;
+        var customMediator = new Mock<IMediator>(MockBehavior.Strict).Object;
         _container.AddMediatR(
             cfg =>
             {
@@ -86,7 +86,7 @@ public sealed class CustomMediatorTests
     [Fact]
     public void ShouldResolveNotificationHandlersWhenCustomMediatorInstanceRegistered()
     {
-        var customMediator = new Mock<IMediator>().Object;
+        var customMediator = new Mock<IMediator>(MockBehavior.Strict).Object;
         _container.AddMediatR(
             cfg =>
             {

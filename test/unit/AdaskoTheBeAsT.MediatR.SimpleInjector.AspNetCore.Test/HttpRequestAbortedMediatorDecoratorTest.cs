@@ -19,10 +19,10 @@ public sealed class HttpRequestAbortedMediatorDecoratorTest
 
     public HttpRequestAbortedMediatorDecoratorTest()
     {
-        _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+        _httpContextAccessorMock = new Mock<IHttpContextAccessor>(MockBehavior.Strict);
         _cancellationTokenSource = new CancellationTokenSource();
         _cancellationToken = _cancellationTokenSource.Token;
-        var mediatorMock = new Mock<IMediator>();
+        var mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
         _sut = new HttpRequestAbortedMediatorDecorator(
             mediatorMock.Object,
             _httpContextAccessorMock.Object);

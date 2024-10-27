@@ -107,7 +107,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
     public void UsingMediatorInstanceCreatorShouldSetCorrectInstance()
     {
         // Arrange
-        var instance = new Mock<IMediator>().Object;
+        var instance = new Mock<IMediator>(MockBehavior.Strict).Object;
 
         // Act
         var result = _sut.Using(() => instance);

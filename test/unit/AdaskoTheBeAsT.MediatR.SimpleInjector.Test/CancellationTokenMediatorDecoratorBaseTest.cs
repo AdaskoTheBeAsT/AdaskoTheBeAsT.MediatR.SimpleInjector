@@ -22,10 +22,10 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
 
     public CancellationTokenMediatorDecoratorBaseTest()
     {
-        _cancellationTokenAccessorMock = new Mock<ICancellationTokenAccessor>();
+        _cancellationTokenAccessorMock = new Mock<ICancellationTokenAccessor>(MockBehavior.Strict);
         _cancellationTokenSource = new CancellationTokenSource();
         _cancellationToken = _cancellationTokenSource.Token;
-        _mediatorMock = new Mock<IMediator>();
+        _mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
         _sut = new SampleCancellationTokenMediatorDecorator(
             _mediatorMock.Object,
             _cancellationTokenAccessorMock.Object);
@@ -62,7 +62,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<object>().Object;
+        var request = new Mock<object>(MockBehavior.Strict).Object;
 
         // Act
         object? result = null;
@@ -114,7 +114,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<object>().Object;
+        var request = new Mock<object>(MockBehavior.Strict).Object;
 
         // Act
         object? result = null;
@@ -166,7 +166,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<IStreamRequest<object>>().Object;
+        var request = new Mock<IStreamRequest<object>>(MockBehavior.Strict).Object;
 
         // Act
         object? result = null;
@@ -218,7 +218,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<IStreamRequest<object>>().Object;
+        var request = new Mock<IStreamRequest<object>>(MockBehavior.Strict).Object;
 
         // Act
         object? result = null;
@@ -261,13 +261,14 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Send(
                         It.IsAny<IRequest<object>>(),
                         It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new object())
             .Callback<IRequest<object>, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<IRequest<object>>().Object;
+        var request = new Mock<IRequest<object>>(MockBehavior.Strict).Object;
 
         // Act
         await _sut.Send(request, savedCancellationToken);
@@ -305,13 +306,14 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Send(
                         It.IsAny<IRequest<object>>(),
                         It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new object())
             .Callback<IRequest<object>, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<IRequest<object>>().Object;
+        var request = new Mock<IRequest<object>>(MockBehavior.Strict).Object;
 
         // Act
         await _sut.Send(request, _cancellationToken);
@@ -349,6 +351,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Send(
                         It.IsAny<Ding>(),
                         It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask)
             .Callback<Ding, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -393,6 +396,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Send(
                         It.IsAny<Ding>(),
                         It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask)
             .Callback<Ding, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -437,6 +441,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Send(
                         It.IsAny<object>(),
                         It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new object())
             .Callback<object, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -481,6 +486,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Send(
                         It.IsAny<object>(),
                         It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new object())
             .Callback<object, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -525,6 +531,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Publish(
                         It.IsAny<object>(),
                         It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask)
             .Callback<object, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -569,6 +576,7 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Publish(
                         It.IsAny<object>(),
                         It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask)
             .Callback<object, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -613,13 +621,14 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Publish(
                         It.IsAny<INotification>(),
                         It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask)
             .Callback<INotification, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<INotification>().Object;
+        var request = new Mock<INotification>(MockBehavior.Strict).Object;
 
         // Act
         await _sut.Publish(request, savedCancellationToken);
@@ -657,13 +666,14 @@ public sealed class CancellationTokenMediatorDecoratorBaseTest
                     m.Publish(
                         It.IsAny<INotification>(),
                         It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask)
             .Callback<INotification, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
                 savedCancellationToken = token;
             });
 
-        var request = new Mock<INotification>().Object;
+        var request = new Mock<INotification>(MockBehavior.Strict).Object;
 
         // Act
         await _sut.Publish(request, _cancellationToken);

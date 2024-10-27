@@ -26,11 +26,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         {
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-            var httpResponseMock = new Mock<HttpResponseBase>();
+            var httpResponseMock = new Mock<HttpResponseBase>(MockBehavior.Strict);
             httpResponseMock
                 .SetupGet(h => h.ClientDisconnectedToken)
                 .Returns(() => _cancellationToken);
-            _httpContextAccessorMock = new Mock<HttpContextBase>();
+            _httpContextAccessorMock = new Mock<HttpContextBase>(MockBehavior.Strict);
             _httpContextAccessorMock
                 .SetupGet(h => h.Response)
                 .Returns(httpResponseMock.Object);
@@ -233,7 +233,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         public void DecoratorShouldHaveFakeIMediatorInstance()
         {
             // Arrange
-            var mediatorMock = new Mock<IMediator>().Object;
+            var mediatorMock = new Mock<IMediator>(MockBehavior.Strict).Object;
             _container.AddMediatRAspNet(
                 config =>
                 {
@@ -269,7 +269,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         public async Task DecoratorShouldPassTypedRequestToInnerMediatorAsync()
         {
             // Arrange
-            var mediatorMock = new Mock<IMediator>();
+            var mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
             IRequest<object>? savedRequest = null;
             var savedCancellationToken = default(CancellationToken);
             mediatorMock.Setup(
@@ -277,6 +277,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                         m.Send(
                             It.IsAny<IRequest<object>>(),
                             It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new object())
                 .Callback<IRequest<object>, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;
@@ -292,7 +293,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
 
             _container.Verify();
 
-            var request = new Mock<IRequest<object>>().Object;
+            var request = new Mock<IRequest<object>>(MockBehavior.Strict).Object;
 
             using (ThreadScopedLifestyle.BeginScope(_container))
             {
@@ -323,7 +324,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         public async Task DecoratorShouldPassObjectToInnerMediatorAsync()
         {
             // Arrange
-            var mediatorMock = new Mock<IMediator>();
+            var mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
             object? savedRequest = null;
             var savedCancellationToken = default(CancellationToken);
             mediatorMock.Setup(
@@ -331,6 +332,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                         m.Send(
                             It.IsAny<object>(),
                             It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new object())
                 .Callback<object, CancellationToken>((req, token) =>
                     {
                         savedRequest = req;

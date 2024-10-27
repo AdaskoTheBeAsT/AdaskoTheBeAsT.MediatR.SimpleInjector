@@ -19,10 +19,10 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
 
         public HttpResponseClientDisconnectedTokenMediatorDecoratorTest()
         {
-            _httpContextAccessorMock = new Mock<HttpContextBase>();
+            _httpContextAccessorMock = new Mock<HttpContextBase>(MockBehavior.Strict);
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-            var mediatorMock = new Mock<IMediator>();
+            var mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
             _sut = new HttpResponseClientDisconnectedTokenMediatorDecorator(
                 mediatorMock.Object,
                 _httpContextAccessorMock.Object);
@@ -52,7 +52,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         public void GetCustomOrDefaultCancellationTokenShouldUseLinkedToken()
         {
             // Arrange
-            var httpResponseMock = new Mock<HttpResponseBase>();
+            var httpResponseMock = new Mock<HttpResponseBase>(MockBehavior.Strict);
             var httpCancellationToken = default(CancellationToken);
             httpResponseMock
                 .SetupGet(h => h.ClientDisconnectedToken)

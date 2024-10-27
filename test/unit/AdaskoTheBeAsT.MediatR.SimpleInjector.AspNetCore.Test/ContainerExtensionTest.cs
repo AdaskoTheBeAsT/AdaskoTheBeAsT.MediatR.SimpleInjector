@@ -23,7 +23,7 @@ public sealed class ContainerExtensionTest
 
     public ContainerExtensionTest()
     {
-        _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+        _httpContextAccessorMock = new Mock<IHttpContextAccessor>(MockBehavior.Strict);
         _cancellationTokenSource = new CancellationTokenSource();
         _cancellationToken = _cancellationTokenSource.Token;
         _httpContextAccessorMock
@@ -177,7 +177,7 @@ public sealed class ContainerExtensionTest
     public void DecoratorShouldHaveFakeIMediatorInstance()
     {
         // Arrange
-        var mediatorMock = new Mock<IMediator>().Object;
+        var mediatorMock = new Mock<IMediator>(MockBehavior.Strict).Object;
         _container.AddMediatRAspNetCore(
             config =>
             {
@@ -210,7 +210,7 @@ public sealed class ContainerExtensionTest
     public async Task DecoratorShouldPassTypedRequestToInnerMediatorAsync()
     {
         // Arrange
-        var mediatorMock = new Mock<IMediator>();
+        var mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
         IRequest<object>? savedRequest = null;
         var savedCancellationToken = default(CancellationToken);
         mediatorMock.Setup(
@@ -218,6 +218,7 @@ public sealed class ContainerExtensionTest
                     m.Send(
                         It.IsAny<IRequest<object>>(),
                         It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new object())
             .Callback<IRequest<object>, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
@@ -233,7 +234,7 @@ public sealed class ContainerExtensionTest
 
         _container.Verify();
 
-        var request = new Mock<IRequest<object>>().Object;
+        var request = new Mock<IRequest<object>>(MockBehavior.Strict).Object;
 
         // Act
         var mediator = _container.GetInstance<IMediator>();
@@ -261,7 +262,7 @@ public sealed class ContainerExtensionTest
     public async Task DecoratorShouldPassObjectToInnerMediatorAsync()
     {
         // Arrange
-        var mediatorMock = new Mock<IMediator>();
+        var mediatorMock = new Mock<IMediator>(MockBehavior.Strict);
         object? savedRequest = null;
         var savedCancellationToken = default(CancellationToken);
         mediatorMock.Setup(
@@ -269,6 +270,7 @@ public sealed class ContainerExtensionTest
                     m.Send(
                         It.IsAny<object>(),
                         It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new object())
             .Callback<object, CancellationToken>((req, token) =>
             {
                 savedRequest = req;
