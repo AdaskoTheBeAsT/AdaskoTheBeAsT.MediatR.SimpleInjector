@@ -14,6 +14,7 @@ MediatR extensions for SimpleInjector.
 ![Sonar Test Execution Time](https://img.shields.io/sonar/test_execution_time/AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector?server=https%3A%2F%2Fsonarcloud.io)
 ![Sonar Coverage](https://img.shields.io/sonar/coverage/AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector?server=https%3A%2F%2Fsonarcloud.io&style=plastic)
 ![Nuget](https://img.shields.io/nuget/dt/AdaskoTheBeAsT.MediatR.SimpleInjector)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdaskoTheBeAsT%2FAdaskoTheBeAsT.MediatR.SimpleInjector.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAdaskoTheBeAsT%2FAdaskoTheBeAsT.MediatR.SimpleInjector?ref=badge_shield)
 
 ## Usage in AspNetCore
 
@@ -270,3 +271,7 @@ This will register following stream behaviors:
 - Konrad Rudolph for [idea of IsAssignableToGenericType](https://gist.github.com/klmr/4174727)
 
 Code originates from MediatR.Extensions.Microsoft.DependencyInjection and was changed to work with SimpleInjector.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdaskoTheBeAsT%2FAdaskoTheBeAsT.MediatR.SimpleInjector.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FAdaskoTheBeAsT%2FAdaskoTheBeAsT.MediatR.SimpleInjector?ref=badge_large)
