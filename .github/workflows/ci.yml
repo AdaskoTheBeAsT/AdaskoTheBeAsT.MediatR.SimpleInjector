@@ -51,21 +51,9 @@ jobs:
         shell: pwsh
         run: dotnet restore $env:SOLUTION --verbosity quiet
 
-      - name: Install SonarScanner for .NET
+      - name: Install tools for .NET
         shell: pwsh
-        run: dotnet tool install --global dotnet-sonarscanner
-
-      - name: Install Dotnet Coverage for .NET
-        shell: pwsh
-        run: dotnet tool install --global dotnet-coverage
-
-      - name: Install Report Generator for .NET
-        shell: pwsh
-        run: dotnet tool install --global dotnet-reportgenerator-globaltool
-
-      - name: Add .NET global tools to PATH
-        shell: pwsh
-        run: echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        run: dotnet tool restore
 
       - name: SonarCloud begin
         if: ${{ env.SONAR_TOKEN != '' }}
@@ -93,7 +81,7 @@ jobs:
       - name: Test and collect coverage (trx + vscoveragexml)
         shell: pwsh
         run: >
-          dotnet tool run dotnet-coverage collect
+          dotnet dotnet-coverage collect
           "dotnet test $env:SOLUTION
           --no-restore
           --no-build
