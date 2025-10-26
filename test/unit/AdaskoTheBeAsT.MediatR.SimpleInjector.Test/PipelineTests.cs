@@ -3,27 +3,44 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
-using FluentAssertions;
+using AwesomeAssertions;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
 
-#pragma warning disable CA1812
-public class PipelineTests
+#pragma warning disable CA1812,MA0051
+public class PipelineTests(ITestOutputHelper output)
 {
     [Fact]
     public async Task ShouldWrapWithBehaviorAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -44,7 +61,7 @@ public class PipelineTests
 
         response.Message.Should().Be("Ping Pong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "Outer before",
             "Inner before",
             "First concrete pre processor",
@@ -63,13 +80,27 @@ public class PipelineTests
     [Fact]
     public async Task ShouldWrapGenericsWithBehaviorAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -92,7 +123,7 @@ public class PipelineTests
 
         response.Message.Should().Be("Ping Pong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "Outer generic before",
             "Inner generic before",
             "First concrete pre processor",
@@ -111,13 +142,27 @@ public class PipelineTests
     [Fact]
     public async Task ShouldPickUpPreAndPostProcessorsAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -137,7 +182,7 @@ public class PipelineTests
 
         response.Message.Should().Be("Ping Pong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "First concrete pre processor",
             "Next concrete pre processor",
             "First pre processor",
@@ -152,13 +197,27 @@ public class PipelineTests
     [Fact]
     public async Task ShouldPickUpPreAndPostProcessorsWithCustomProcessorOrderInParamsAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -188,7 +247,7 @@ public class PipelineTests
 
         response.Message.Should().Be("Ping Pong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "Next pre processor",
             "First pre processor",
             "Next concrete pre processor",
@@ -203,13 +262,27 @@ public class PipelineTests
     [Fact]
     public async Task ShouldPickUpPreAndPostProcessorsWithCustomProcessorOrderInEnumerableAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -245,7 +318,7 @@ public class PipelineTests
 
         response.Message.Should().Be("Ping Pong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "Next pre processor",
             "First pre processor",
             "Next concrete pre processor",
@@ -260,13 +333,27 @@ public class PipelineTests
     [Fact]
     public async Task ShouldPickUpBaseExceptionBehaviorsAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -293,20 +380,34 @@ public class PipelineTests
 
         await action.Should().ThrowAsync<Exception>();
 
-        output.Messages.Should().Contain("Ping Thrown Logged by Generic Type");
-        output.Messages.Should().Contain("Logging generic exception");
+        logger.Messages.Should().Contain("Ping Thrown Logged by Generic Type");
+        logger.Messages.Should().Contain("Logging generic exception");
     }
 
     [Fact]
     public async Task ShouldPickUpExceptionActionsAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -333,20 +434,34 @@ public class PipelineTests
 
         await action.Should().ThrowAsync<SystemException>();
 
-        output.Messages.Should().Contain("Logging exception 1");
-        output.Messages.Should().Contain("Logging exception 2");
+        logger.Messages.Should().Contain("Logging exception 1");
+        logger.Messages.Should().Contain("Logging exception 2");
     }
 
     [Fact]
     public async Task ShouldHandleConstrainedGenericsAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -365,7 +480,7 @@ public class PipelineTests
 
         response.Message.Should().Be("Ping Pong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "Outer generic before",
             "Inner generic before",
             "Constrained before",
@@ -374,7 +489,7 @@ public class PipelineTests
             "Inner generic after",
             "Outer generic after");
 
-        output.Messages.Clear();
+        logger.Messages.Clear();
 
 #pragma warning disable CC0021 // Use nameof
         var zingResponse = await mediator.Send(new Zing { Message = "Zing" });
@@ -382,7 +497,7 @@ public class PipelineTests
 
         zingResponse.Message.Should().Be("Zing Zong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "Outer generic before",
             "Inner generic before",
             "Handler",
@@ -407,7 +522,7 @@ public class PipelineTests
         {
             _output.Messages.Add("Outer before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
-            var response = await next().ConfigureAwait(false);
+            var response = await next(cancellationToken).ConfigureAwait(false);
 #pragma warning restore CC0031 // Check for null before calling a delegate
             _output.Messages.Add("Outer after");
 
@@ -432,7 +547,7 @@ public class PipelineTests
         {
             _output.Messages.Add("Inner before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
-            var response = await next().ConfigureAwait(false);
+            var response = await next(cancellationToken).ConfigureAwait(false);
 #pragma warning restore CC0031 // Check for null before calling a delegate
             _output.Messages.Add("Inner after");
 
@@ -458,7 +573,7 @@ public class PipelineTests
         {
             _output.Messages.Add("Inner generic before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
-            var response = await next().ConfigureAwait(false);
+            var response = await next(cancellationToken).ConfigureAwait(false);
 #pragma warning restore CC0031 // Check for null before calling a delegate
             _output.Messages.Add("Inner generic after");
 
@@ -484,7 +599,7 @@ public class PipelineTests
         {
             _output.Messages.Add("Outer generic before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
-            var response = await next().ConfigureAwait(false);
+            var response = await next(cancellationToken).ConfigureAwait(false);
 #pragma warning restore CC0031 // Check for null before calling a delegate
             _output.Messages.Add("Outer generic after");
 
@@ -511,7 +626,7 @@ public class PipelineTests
         {
             _output.Messages.Add("Constrained before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
-            var response = await next().ConfigureAwait(false);
+            var response = await next(cancellationToken).ConfigureAwait(false);
 #pragma warning restore CC0031 // Check for null before calling a delegate
             _output.Messages.Add("Constrained after");
 
@@ -763,4 +878,4 @@ public class PipelineTests
     }
 #pragma warning restore S1144
 }
-#pragma warning restore CA1812
+#pragma warning restore CA1812,MA0051

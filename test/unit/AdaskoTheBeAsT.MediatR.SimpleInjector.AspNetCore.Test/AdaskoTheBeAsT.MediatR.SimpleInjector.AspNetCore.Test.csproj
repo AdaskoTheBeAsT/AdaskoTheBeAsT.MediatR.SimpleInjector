@@ -1,12 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ProjectGuid>DE305CEE-2884-4883-ADF8-B2E81C261957</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    <Compile Include="..\AdaskoTheBeAsT.MediatR.SimpleInjector.Test\XunitTestOutputLogger.cs" Link="XunitTestOutputLogger.cs" />
+    <Compile Include="..\AdaskoTheBeAsT.MediatR.SimpleInjector.Test\XunitTestOutputLoggerProvider.cs" Link="XunitTestOutputLoggerProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,10 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{AADC3A
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		.runsettings = .runsettings
 		AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings = AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings
 		AdaskoTheBeAsT.ruleset = AdaskoTheBeAsT.ruleset
 		azure-pipelines.yml = azure-pipelines.yml
+		coverage.settings.xml = coverage.settings.xml
 		DeterministicBuild.targets = DeterministicBuild.targets
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
@@ -54,6 +54,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".dotcover", ".dotcover", "{16B44DD7-D931-429E-AE5B-8BE270C55927}"
 	ProjectSection(SolutionItems) = preProject
 		.dotcover\.gitkeep = .dotcover\.gitkeep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
 	EndProjectSection
 EndProject
 Global

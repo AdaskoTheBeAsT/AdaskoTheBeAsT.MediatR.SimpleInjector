@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.Extensions.DependencyInjection;
 using SimpleInjector;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector;
@@ -128,6 +129,12 @@ public static class ContainerExtension
         {
             if (serviceConfig.MediatorImplementationType == typeof(Mediator))
             {
+                container.RegisterSingleton(
+                    () => new MediatRServiceConfiguration
+                    {
+                        LicenseKey = serviceConfig.LicenseKey,
+                    });
+
                 container.Register<IServiceProvider>(
                     () => new SimpleInjectorServiceProvider(container),
                     Lifestyle.Singleton);

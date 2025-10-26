@@ -1,6 +1,6 @@
 using System;
 using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
-using FluentAssertions;
+using AwesomeAssertions;
 using MediatR;
 using Moq;
 using SimpleInjector;
@@ -29,7 +29,7 @@ public sealed class CustomMediatorTests
                 cfg.WithHandlerAssemblyMarkerTypes(typeof(CustomMediatorTests));
             });
         _container.GetInstance<IMediator>().Should().NotBeNull();
-        _container.GetInstance<IMediator>().GetType().Should().Be(typeof(MyCustomMediator));
+        _container.GetInstance<IMediator>().GetType().Should().Be<MyCustomMediator>();
     }
 
     [Fact]

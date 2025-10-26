@@ -27,6 +27,7 @@ public class MediatRSimpleInjectorConfiguration
         RequestPostProcessorTypes = Array.Empty<Type>();
         RequestExceptionHandlerTypes = Array.Empty<Type>();
         RequestExceptionActionTypes = Array.Empty<Type>();
+        LicenseKey = string.Empty;
     }
 
     /// <summary>
@@ -124,6 +125,11 @@ public class MediatRSimpleInjectorConfiguration
     /// Custom implementations of <see cref="IRequestExceptionAction{TRequest, TException}"/>.
     /// </summary>
     public ICollection<Type> RequestExceptionActionTypes { get; private set; }
+
+    /// <summary>
+    /// Gets the license key associated with the MediatR.
+    /// </summary>
+    public string LicenseKey { get; private set; }
 
     /// <summary>
     /// Register custom implementation of <see cref="IMediator"/> type
@@ -549,6 +555,17 @@ public class MediatRSimpleInjectorConfiguration
         }
 
         RequestExceptionActionTypes = requestExceptionActionTypes;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the license key for the configuration and returns the updated instance.
+    /// </summary>
+    /// <param name="licenseKey">The license key to associate with the configuration. Cannot be <see langword="null"/>.</param>
+    /// <returns>The updated <see cref="MediatRSimpleInjectorConfiguration"/> instance.</returns>
+    public MediatRSimpleInjectorConfiguration WithLicenseKey(string licenseKey)
+    {
+        LicenseKey = licenseKey;
         return this;
     }
 }

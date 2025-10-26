@@ -4,13 +4,16 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
+using AwesomeAssertions;
+using AwesomeAssertions.Execution;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Moq;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
 {
@@ -22,7 +25,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         private readonly Mock<HttpContextBase> _httpContextAccessorMock;
         private readonly Container _container;
 
-        public ContainerExtensionTest()
+        public ContainerExtensionTest(ITestOutputHelper output)
         {
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
@@ -36,6 +39,21 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
                 .Returns(httpResponseMock.Object);
             _container = new Container();
             _container.Options.DefaultScopedLifestyle = new ThreadScopedLifestyle();
+            _container.RegisterInstance(output);
+
+            // ILoggerFactory that writes to test output
+            _container.RegisterSingleton<ILoggerFactory>(() =>
+                LoggerFactory.Create(builder =>
+                {
+                    builder.ClearProviders();
+#pragma warning disable IDISP004
+                    builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                    builder.SetMinimumLevel(LogLevel.Trace);
+                }));
+
+            // Wire up ILogger<T> using the factory
+            _container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
         }
 
         [Fact]

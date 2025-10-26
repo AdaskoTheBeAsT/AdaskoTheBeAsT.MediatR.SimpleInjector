@@ -1,5 +1,5 @@
 using System;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;

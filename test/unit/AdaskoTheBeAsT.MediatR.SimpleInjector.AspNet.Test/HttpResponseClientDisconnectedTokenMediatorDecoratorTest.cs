@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Web;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using AwesomeAssertions;
+using AwesomeAssertions.Execution;
 using MediatR;
 using Moq;
 using Xunit;

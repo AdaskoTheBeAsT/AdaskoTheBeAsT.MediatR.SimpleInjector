@@ -221,3 +221,5 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix = 
 dotnet_naming_style.begins_with_i.word_separator = 
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+dotnet_code_quality.CA2000.excluded_symbol_names = M:System.Net.Http.IHttpClientFactory.CreateClient|  M:System.Net.Http.IHttpClientFactory.CreateClient(System.String)

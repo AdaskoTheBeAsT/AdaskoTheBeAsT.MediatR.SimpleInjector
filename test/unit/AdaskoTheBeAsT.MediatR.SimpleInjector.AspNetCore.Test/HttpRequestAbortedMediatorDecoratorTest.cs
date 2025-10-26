@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using AwesomeAssertions;
+using AwesomeAssertions.Execution;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Moq;

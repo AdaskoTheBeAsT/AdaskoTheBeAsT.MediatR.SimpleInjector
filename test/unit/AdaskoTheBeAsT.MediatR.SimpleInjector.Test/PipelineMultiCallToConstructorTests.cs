@@ -3,26 +3,42 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaskoTheBeAsT.MediatR.SimpleInjector.Test.Handlers;
-using FluentAssertions;
+using AwesomeAssertions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
 
 #pragma warning disable CA1812
-public class PipelineMultiCallToConstructorTests
+public class PipelineMultiCallToConstructorTests(ITestOutputHelper output)
 {
     [Fact]
     public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAPipelineAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -41,7 +57,7 @@ public class PipelineMultiCallToConstructorTests
 
         response.Message.Should().Be("ConstructorPing ConstructorPong");
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "ConstructorTestBehavior before",
             "First pre processor",
             "Next pre processor",
@@ -54,13 +70,27 @@ public class PipelineMultiCallToConstructorTests
     [Fact]
     public async Task ShouldNotCallConstructorMultipleTimesWhenUsingAStreamPipelineAsync()
     {
-        var output = new Logger();
+        var logger = new Logger();
 #if NET6_0_OR_GREATER
         await using var container = new Container();
 #else
         using var container = new Container();
 #endif
-        container.RegisterInstance(output);
+
+        // ILoggerFactory that writes to test output
+        container.RegisterSingleton<ILoggerFactory>(() =>
+            LoggerFactory.Create(builder =>
+            {
+                builder.ClearProviders();
+#pragma warning disable IDISP004
+                builder.AddProvider(new XunitTestOutputLoggerProvider(output));
+#pragma warning restore IDISP004
+                builder.SetMinimumLevel(LogLevel.Trace);
+            }));
+
+        // Wire up ILogger<T> using the factory
+        container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+        container.RegisterInstance(logger);
         container.AddMediatR(
             config =>
             {
@@ -81,7 +111,7 @@ public class PipelineMultiCallToConstructorTests
             item.Message.Should().Be("ConstructorPing ConstructorPong");
         }
 
-        output.Messages.Should().BeEquivalentTo(
+        logger.Messages.Should().BeEquivalentTo(
             "StreamConstructorTestBehavior before", "Handler");
     }
 
@@ -149,7 +179,7 @@ public class PipelineMultiCallToConstructorTests
         {
             _output.Messages.Add("ConstructorTestBehavior before");
 #pragma warning disable CC0031 // Check for null before calling a delegate
-            var response = await next().ConfigureAwait(false);
+            var response = await next(cancellationToken).ConfigureAwait(false);
 #pragma warning restore CC0031 // Check for null before calling a delegate
             _output.Messages.Add("ConstructorTestBehavior after");
 

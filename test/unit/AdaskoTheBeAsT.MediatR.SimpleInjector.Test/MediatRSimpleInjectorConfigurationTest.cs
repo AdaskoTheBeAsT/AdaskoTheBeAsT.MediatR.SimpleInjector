@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using AwesomeAssertions;
+using AwesomeAssertions.Execution;
 using MediatR;
 using MediatR.NotificationPublishers;
 using MediatR.Pipeline;
@@ -399,7 +399,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
             _sut.WithNotificationPublisherCustom<FakeNotificationPublisher>();
 
         // Assert
-        result.NotificationPublisherType.Should().Be(typeof(FakeNotificationPublisher));
+        result.NotificationPublisherType.Should().Be<FakeNotificationPublisher>();
     }
 
     [Fact]

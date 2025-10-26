@@ -154,12 +154,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet
                 () =>
                 {
                     var instance = serviceConfig.HttpContextCreator();
-                    if (instance is null)
-                    {
-                        throw new HttpContextCreatorReturnsNullException("HttpContext creator returned null");
-                    }
-
-                    return instance;
+                    return instance ?? throw new HttpContextCreatorReturnsNullException("HttpContext creator returned null");
                 },
                 Lifestyle.Scoped);
             return containerRef;

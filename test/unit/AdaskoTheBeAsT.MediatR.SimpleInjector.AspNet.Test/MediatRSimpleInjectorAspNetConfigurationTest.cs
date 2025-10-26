@@ -1,6 +1,6 @@
 using System;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using AwesomeAssertions;
+using AwesomeAssertions.Execution;
 using Xunit;
 
 namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
