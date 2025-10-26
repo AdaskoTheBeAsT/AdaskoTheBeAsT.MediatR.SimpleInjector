@@ -45,6 +45,19 @@ steps:
       custom: 'tool'
       arguments: 'restore'
 
+  # - task: SonarCloudPrepare@3
+  #   displayName: "Prepare analysis on SonarCloud"
+  #   inputs:
+  #     scannerMode: "dotnet"
+  #     SonarCloud: "Sonar.AdaskoTheBeAsT.MediatR.SimpleInjector"
+  #     organization: "adaskothebeast-github"
+  #     projectKey: "AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector"
+  #     projectName: AdaskoTheBeAsT.MediatR.SimpleInjector
+  #     extraProperties: |
+  #       sonar.cs.vstest.reportsPaths="$(testResultsDirectory)/*.trx"
+  #       sonar.cs.vscoveragexml.reportsPaths="$(Build.SourcesDirectory)/coverage.xml"
+  #       sonar.resharper.cs.reportPath=$(Build.SourcesDirectory)/CodeQualityResults.xml
+
   - task: SonarCloudPrepare@3
     displayName: "Prepare analysis on SonarCloud"
     inputs:
@@ -54,8 +67,6 @@ steps:
       projectKey: "AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector"
       projectName: AdaskoTheBeAsT.MediatR.SimpleInjector
       extraProperties: |
-        sonar.cs.vstest.reportsPaths="$(testResultsDirectory)/*.trx"
-        sonar.cs.vscoveragexml.reportsPaths="$(Build.SourcesDirectory)/coverage.xml"
         sonar.resharper.cs.reportPath=$(Build.SourcesDirectory)/CodeQualityResults.xml
 
   - task: DotNetCoreCLI@2
@@ -78,24 +89,41 @@ steps:
       SourceFolder: "$(testResultsDirectory)"
       Contents: "**/*"
 
+  # - task: DotNetCoreCLI@2
+  #   displayName: "Test and collect coverage"
+  #   inputs:
+  #     command: "custom"
+  #     custom: "dotnet-coverage"
+  #     arguments: >
+  #       collect "dotnet test AdaskoTheBeAsT.MediatR.SimpleInjector.sln
+  #       --no-restore
+  #       --no-build
+  #       --configuration $(buildConfiguration)
+  #       --logger trx
+  #       --results-directory $(testResultsDirectory)
+  #       -p:RunCodeAnalysis=false
+  #       -p:TreatWarningsAsErrors=false
+  #       -p:TestTfmsInParallel=false"
+  #       --settings $(Build.SourcesDirectory)/coverage.settings.xml
+  #       -f xml
+  #       -o $(Build.SourcesDirectory)/coverage.xml
+
   - task: DotNetCoreCLI@2
-    displayName: "Test and collect coverage"
+    displayName: Test
     inputs:
-      command: "custom"
-      custom: "dotnet-coverage"
-      arguments: >
-        collect "dotnet test AdaskoTheBeAsT.MediatR.SimpleInjector.sln
-        --no-restore
-        --no-build
+      command: test
+      projects: "$(unitTestProjects)"
+      publishTestResults: false
+      arguments: >-
         --configuration $(buildConfiguration)
-        --logger trx
+        --collect:"Code Coverage"
+        --collect:"XPlat Code Coverage"
+        --logger:"trx"
         --results-directory $(testResultsDirectory)
-        -p:RunCodeAnalysis=false
-        -p:TreatWarningsAsErrors=false
-        -p:TestTfmsInParallel=false"
-        --settings $(Build.SourcesDirectory)/coverage.settings.xml
-        -f xml
-        -o $(Build.SourcesDirectory)/coverage.xml
+        --no-build
+        --no-restore
+        --settings $(Build.SourcesDirectory)/.runsettings
+        /p:RunCodeAnalysis=false
 
   - task: DotNetCoreCLI@2
     displayName: "Launch ReSharper inspect code"
@@ -113,6 +141,12 @@ steps:
     inputs:
       pollingTimeoutSec: "300"
 
+  - task: DeleteFiles@1
+    displayName: "Clear coverage files"
+    inputs:
+      SourceFolder: "$(testResultsDirectory)"
+      Contents: "**/*.coverage"
+
   - task: PublishTestResults@2
     displayName: "Publish Test Results"
     inputs:
@@ -120,16 +154,26 @@ steps:
       testResultsFiles: "*.trx"
       searchFolder: "$(testResultsDirectory)"
 
-  - task: reportgenerator@5
-    displayName: "Convert coverage to Cobertura + HTML"
-    inputs:
-      reports: "$(Build.SourcesDirectory)/coverage.xml"
-      targetdir: "$(testResultsDirectory)/coverage"
-      reporttypes: "Cobertura"
+  # - task: reportgenerator@5
+  #   displayName: "Convert coverage to Cobertura + HTML"
+  #   inputs:
+  #     reports: "$(Build.SourcesDirectory)/coverage.xml"
+  #     targetdir: "$(testResultsDirectory)/coverage"
+  #     reporttypes: "Cobertura"
 
-  - task: PublishCodeCoverageResults@2
+  - task: reportgenerator@5
     inputs:
-      summaryFileLocation: "$(testResultsDirectory)/coverage/Cobertura.xml"
+      reports: "$(testResultsDirectory)/**/coverage.cobertura.xml"
+      targetdir: "$(testResultsDirectory)/coverage"
+
+  # - task: PublishCodeCoverageResults@2
+  #   inputs:
+  #     summaryFileLocation: "$(testResultsDirectory)/coverage/Cobertura.xml"
+  #     pathToSources: "$(Build.SourcesDirectory)"
+
+   - task: PublishCodeCoverageResults@2
+    inputs:
+      summaryFileLocation: "$(testResultsDirectory)/**/coverage.cobertura.xml"
       pathToSources: "$(Build.SourcesDirectory)"
 
   - task: CopyFiles@2

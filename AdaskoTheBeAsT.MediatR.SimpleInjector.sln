@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{AADC3A
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		.runsettings = .runsettings
 		AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings = AdaskoTheBeAsT.MediatR.SimpleInjector.sln.DotSettings
 		AdaskoTheBeAsT.ruleset = AdaskoTheBeAsT.ruleset
 		azure-pipelines.yml = azure-pipelines.yml
@@ -65,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{BB16
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{7833D6AE-F5F3-4050-83E4-53CF42DB22B6}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\ci.yml.txt = .github\workflows\ci.yml.txt
 	EndProjectSection
 EndProject
 Global
