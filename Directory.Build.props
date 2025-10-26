@@ -19,7 +19,7 @@
     <PackageReference Include="AdaskoTheBeAsT.AsyncFixer" Version="1.6.0.14" PrivateAssets="all" ExcludeAssets="runtime" />
     <PackageReference Include="AdaskoTheBeAsT.Asyncify" Version="0.9.7.14" PrivateAssets="all" ExcludeAssets="runtime" />
     <PackageReference Include="AdaskoTheBeAsT.CodeCracker.CSharp" Version="1.1.0.72" PrivateAssets="all" ExcludeAssets="runtime" />
-    <PackageReference Include="AdaskoTheBeAsT.ConcurrencyLab.ParallelChecker" Version="2.7.0.14" PrivateAssets="all" ExcludeAssets="runtime" />
+    <PackageReference Include="AdaskoTheBeAsT.ConcurrencyLab.ParallelChecker" Version="2.7.0.15" PrivateAssets="all" ExcludeAssets="runtime" />
     <PackageReference Include="AdaskoTheBeAsT.IDisposableAnalyzers" Version="4.0.7.21" PrivateAssets="all" ExcludeAssets="runtime" />
     <PackageReference Include="AdaskoTheBeAsT.Puma.Security.Rules.2022" Version="2.3.1.14" PrivateAssets="all" ExcludeAssets="runtime" />
     <PackageReference Include="AdaskoTheBeAsT.ReflectionAnalyzer" Version="0.3.1.14" PrivateAssets="all" ExcludeAssets="runtime" />

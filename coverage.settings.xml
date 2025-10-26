@@ -4,11 +4,11 @@
         <ModulePaths>
             <Include>
                 <!-- instrument all managed modules by default -->
-                <ModulePath>(?i)(^|.*[\\/])adaskothebeast\..*\.(dll|exe)$</ModulePath>
+                <ModulePath>(?i)(^|.*[\\/])adaskothebeast\.[^\\/]*\.(dll|exe)$</ModulePath>
             </Include>
             <Exclude>
                 <!-- exclude test assemblies -->
-                <ModulePath>(?i).*[\\/].*\.(test|tests|integrationtest|integrationtests)\.dll$</ModulePath>
+                <ModulePath>(?i)(^|.*[\\/])[^\\/]*\.(test|tests|integrationtest|integrationtests)\.dll$</ModulePath>
             </Exclude>
         </ModulePaths>
 
