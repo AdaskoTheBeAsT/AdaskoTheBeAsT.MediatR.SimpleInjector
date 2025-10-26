@@ -90,6 +90,47 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         }
 
         [Fact]
+        public void Resolving_HttpContextBase_Throws_When_HttpContextCreator_Returns_Null()
+        {
+            // Arrange
+            using var container = new Container();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+            container.AddMediatRAspNet(cfg =>
+            {
+                // Force HttpContextCreator to return null to trigger the exception
+                cfg.UsingHttpContextCreator(() => null!);
+            });
+
+            // Act + Assert
+            using (AsyncScopedLifestyle.BeginScope(container))
+            {
+                Assert.Throws<HttpContextCreatorReturnsNullException>(
+                    () => container.GetInstance<HttpContextBase>());
+            }
+        }
+
+        [Fact]
+        public void Resolving_HttpContextBase_Throws_Expected_Exception_Even_If_Wrapped()
+        {
+            // Some Simple Injector versions may wrap with ActivationException.
+            using var container = new Container();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+            container.AddMediatRAspNet(cfg => cfg.UsingHttpContextCreator(() => null!));
+
+            using (AsyncScopedLifestyle.BeginScope(container))
+            {
+                var ex = Record.Exception(() => container.GetInstance<HttpContextBase>());
+                Assert.NotNull(ex);
+                Assert.True(
+                    ex is HttpContextCreatorReturnsNullException ||
+                    ex.InnerException is HttpContextCreatorReturnsNullException,
+                    $"Expected HttpContextCreatorReturnsNullException, got: {ex}");
+            }
+        }
+
+        [Fact]
         public void ShouldUseDecoratorAfterRegisteringAspNetMediator()
         {
             // Arrange
