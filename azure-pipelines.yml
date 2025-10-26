@@ -171,7 +171,7 @@ steps:
   #     summaryFileLocation: "$(testResultsDirectory)/coverage/Cobertura.xml"
   #     pathToSources: "$(Build.SourcesDirectory)"
 
-   - task: PublishCodeCoverageResults@2
+  - task: PublishCodeCoverageResults@2
     inputs:
       summaryFileLocation: "$(testResultsDirectory)/**/coverage.cobertura.xml"
       pathToSources: "$(Build.SourcesDirectory)"
