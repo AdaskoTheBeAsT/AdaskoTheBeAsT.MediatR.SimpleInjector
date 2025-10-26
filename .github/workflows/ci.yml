@@ -29,15 +29,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET SDK 8.x
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
-
-      - name: Setup .NET from global.json
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: global.json
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
       - name: Cache NuGet
         uses: actions/cache@v4
@@ -53,13 +50,17 @@ jobs:
         shell: pwsh
         run: dotnet restore $env:SOLUTION --verbosity quiet
 
-      - name: Restore .NET tools
-        shell: pwsh
-        run: dotnet tool restore
-
       - name: Install SonarScanner for .NET
         shell: pwsh
         run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Install Dotnet Coverage for .NET
+        shell: pwsh
+        run: dotnet tool install --global dotnet-coverage
+
+      - name: Install Report Generator for .NET
+        shell: pwsh
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
       - name: Add .NET global tools to PATH
         shell: pwsh
@@ -125,7 +126,6 @@ jobs:
       - name: Convert coverage to Cobertura + HTML
         shell: pwsh
         run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool
           reportgenerator -reports:"${{ github.workspace }}\coverage.xml" -targetdir:"$env:TEST_RESULTS_DIR\coverage" -reporttypes:"Cobertura;Html"
 
       - name: Publish unit test results to GitHub
