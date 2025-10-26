@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoFixture;
 using AwesomeAssertions;
 using AwesomeAssertions.Execution;
 using MediatR;
@@ -18,6 +19,7 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.Test;
 public sealed class MediatRSimpleInjectorConfigurationTest
 {
     private readonly MediatRSimpleInjectorConfiguration _sut;
+    private readonly Fixture _fixture = new();
 
     public MediatRSimpleInjectorConfigurationTest()
     {
@@ -48,6 +50,7 @@ public sealed class MediatRSimpleInjectorConfigurationTest
             config.RequestPostProcessorTypes.Should().BeEmpty();
             config.RequestExceptionHandlerTypes.Should().BeEmpty();
             config.RequestExceptionActionTypes.Should().BeEmpty();
+            config.LicenseKey.Should().BeEmpty();
         }
     }
 
@@ -615,6 +618,23 @@ public sealed class MediatRSimpleInjectorConfigurationTest
         {
             result.RequestExceptionActionTypes.Should().NotBeEmpty();
             result.RequestExceptionActionTypes.First().Should().Be(pipelineType);
+        }
+    }
+
+    [Fact]
+    public void WithLicenseKeyShouldSetLicenseKey()
+    {
+        // Arrange
+        var licenseKey = _fixture.Create<string>();
+
+        // Act
+        var result = _sut.WithLicenseKey(licenseKey);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.LicenseKey.Should().NotBeEmpty();
+            result.LicenseKey.Should().Be(licenseKey);
         }
     }
 
