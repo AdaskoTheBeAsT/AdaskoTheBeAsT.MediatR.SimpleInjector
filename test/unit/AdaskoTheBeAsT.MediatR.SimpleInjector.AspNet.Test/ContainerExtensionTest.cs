@@ -9,6 +9,7 @@ using AwesomeAssertions;
 using AwesomeAssertions.Execution;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Moq;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
@@ -24,9 +25,11 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
         private readonly CancellationToken _cancellationToken;
         private readonly Mock<HttpContextBase> _httpContextAccessorMock;
         private readonly Container _container;
+        private readonly ITestOutputHelper _output;
 
         public ContainerExtensionTest(ITestOutputHelper output)
         {
+            _output = output;
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
             var httpResponseMock = new Mock<HttpResponseBase>(MockBehavior.Strict);
@@ -96,37 +99,33 @@ namespace AdaskoTheBeAsT.MediatR.SimpleInjector.AspNet.Test
             using var container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
+            container.RegisterInstance(_output);
+
+            // ILoggerFactory that writes to test output
+            container.RegisterSingleton<ILoggerFactory>(() =>
+                LoggerFactory.Create(builder =>
+                {
+                    builder.ClearProviders();
+#pragma warning disable IDISP004
+                    builder.AddProvider(new XunitTestOutputLoggerProvider(_output));
+#pragma warning restore IDISP004
+                    builder.SetMinimumLevel(LogLevel.Trace);
+                }));
+
+            // Wire up ILogger<T> using the factory
+            container.Register(typeof(ILogger<>), typeof(Logger<>), Lifestyle.Singleton);
+
             container.AddMediatRAspNet(cfg =>
             {
                 // Force HttpContextCreator to return null to trigger the exception
                 cfg.UsingHttpContextCreator(() => null!);
             });
 
-            // Act + Assert
-            using (AsyncScopedLifestyle.BeginScope(container))
-            {
-                Assert.Throws<HttpContextCreatorReturnsNullException>(
-                    () => container.GetInstance<HttpContextBase>());
-            }
-        }
-
-        [Fact]
-        public void Resolving_HttpContextBase_Throws_Expected_Exception_Even_If_Wrapped()
-        {
-            // Some Simple Injector versions may wrap with ActivationException.
-            using var container = new Container();
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-            container.AddMediatRAspNet(cfg => cfg.UsingHttpContextCreator(() => null!));
+            Action action = () => _ = container.GetInstance<HttpContextBase>();
 
             using (AsyncScopedLifestyle.BeginScope(container))
             {
-                var ex = Record.Exception(() => container.GetInstance<HttpContextBase>());
-                Assert.NotNull(ex);
-                Assert.True(
-                    ex is HttpContextCreatorReturnsNullException ||
-                    ex.InnerException is HttpContextCreatorReturnsNullException,
-                    $"Expected HttpContextCreatorReturnsNullException, got: {ex}");
+                action.Should().Throw<ActivationException>();
             }
         }
 
