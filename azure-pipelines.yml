@@ -26,6 +26,13 @@ steps:
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
   - task: UseDotNet@2
+    displayName: "Use .NET Core SDK 9.0.x"
+    inputs:
+      packageType: "sdk"
+      version: 9.0.x
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: UseDotNet@2
     displayName: "Use .NET Core SDK from global.json"
     inputs:
       packageType: "sdk"
@@ -67,6 +74,7 @@ steps:
       projectKey: "AdaskoTheBeAsT_AdaskoTheBeAsT.MediatR.SimpleInjector"
       projectName: AdaskoTheBeAsT.MediatR.SimpleInjector
       extraProperties: |
+        sonar.working.directory=$(Build.ArtifactStagingDirectory)/.sonar
         sonar.resharper.cs.reportPath=$(Build.SourcesDirectory)/CodeQualityResults.xml
 
   - task: DotNetCoreCLI@2

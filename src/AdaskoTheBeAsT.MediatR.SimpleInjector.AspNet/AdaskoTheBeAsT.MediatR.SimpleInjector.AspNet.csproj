@@ -21,7 +21,7 @@
     <Copyright>Adam "AdaskoTheBeAsT" Pluciński</Copyright>
     <PackageTags>MediatR;SimpleInjector</PackageTags>
     <PackageReleaseNotes>
-      - added ability to order RequestPreProcessors, RequestPostProcessors, RequestExceptionHandlers, RequestExceptionActions
+      - update to .net 10
     </PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

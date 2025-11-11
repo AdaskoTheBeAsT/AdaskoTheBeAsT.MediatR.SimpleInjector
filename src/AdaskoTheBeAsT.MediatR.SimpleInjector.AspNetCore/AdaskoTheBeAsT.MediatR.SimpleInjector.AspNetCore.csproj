@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\SharedVersion.props" />
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <ProjectGuid>A5FD8204-683F-49D4-9722-2B2C27D13407</ProjectGuid>
   </PropertyGroup>
 
@@ -21,7 +21,7 @@
     <Copyright>Adam "AdaskoTheBeAsT" Pluciński</Copyright>
     <PackageTags>MediatR;SimpleInjector</PackageTags>
     <PackageReleaseNotes>
-      - added ability to order RequestPreProcessors, RequestPostProcessors, RequestExceptionHandlers, RequestExceptionActions
+      - update to .net 10
     </PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
